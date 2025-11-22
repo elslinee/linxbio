@@ -29,6 +29,6 @@
     "**/*.mts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "utils/client/auth.js"  ],
   "exclude": ["node_modules"]
 }

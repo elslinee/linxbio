@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,21 +14,59 @@ import {
   faChevronDown,
   faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
-
+import { useAuthStore } from "@/stores/useAuthStore";
+import { useRouter } from "next/navigation";
+import { logout } from "@/utils/client/auth";
 export default function Home() {
+  const router = useRouter();
+  const user = useAuthStore((s) => s.user);
+  const loading = useAuthStore((s) => s.loading);
+  console.log(user);
+  const logoutRequest = async () => {
+    try {
+      await logout();
+
+      useAuthStore.getState().clearUser();
+
+      router.push("/login");
+    } catch (error) {
+      console.log("Logout error:", error);
+    }
+  };
   return (
     <div className="selection:bg-primary min-h-screen bg-white font-sans text-black selection:text-black">
-      <header className="cont flex w-full items-center justify-between py-4">
+      <header className="cont flex h-18 w-full items-center justify-between py-4">
         <div className="">
-          <Image src={"/logo-nowall.png"} width={100} height={100} alt="logo" />
+          <Image src={"/logo-nowall.png"} width={100} height={22} alt="logo" />
         </div>
         <nav className="flex items-center gap-6">
-          <Link href="/login" className="text-sm font-bold hover:underline">
-            Log in
-          </Link>
+          {loading ? (
+            ""
+          ) : (
+            <>
+              {" "}
+              {user ? (
+                <Link
+                  onClick={logoutRequest}
+                  href="/dashboard"
+                  className="text-sm font-bold hover:underline"
+                >
+                  My Account
+                </Link>
+              ) : (
+                <Link
+                  href="/login"
+                  className={`text-sm font-bold hover:underline`}
+                >
+                  Log in
+                </Link>
+              )}
+            </>
+          )}
+
           <Link
             href="/register"
-            className="hover:bg-primary   rounded-full bg-black px-5 py-2.5 text-sm font-bold text-white transition-colors hover:text-black"
+            className="hover:bg-primary rounded-full bg-black px-5 py-2.5 text-sm font-bold text-white transition-colors hover:text-black"
           >
             Start Now
           </Link>
@@ -66,10 +105,11 @@ export default function Home() {
 
               <div className="relative -mt-12 flex flex-col items-center px-6">
                 <div className="relative h-24 w-24 overflow-hidden rounded-full border-4 border-white bg-white shadow-md">
-                  <img
+                  <Image
                     src="/hero/hero-avatar.png"
                     alt="Profile"
-                    className="h-full w-full object-cover"
+                    width={100}
+                    height={100}
                   />
                 </div>
 
@@ -121,7 +161,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="mt-6 flex flex-1 flex-col rounded-t-[2rem] bg-[#D0E6F5] px-6 pt-6 pb-4">
+              <div className="mt-6 flex flex-1 flex-col rounded-t-4xl bg-[#D0E6F5] px-6 pt-6 pb-4">
                 <h3 className="mb-4 text-center text-xs font-bold tracking-wider text-black uppercase">
                   My Links
                 </h3>

@@ -2,6 +2,7 @@ import { Wix_Madefor_Text, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import AuthInit from "@/components/AuthInit";
 
 config.autoAddCss = false;
 
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${wixMadeforText.variable} ${geistMono.variable} antialiased`}
       >
+        <AuthInit />
         {children}
       </body>
     </html>
