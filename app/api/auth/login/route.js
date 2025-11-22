@@ -36,6 +36,7 @@ export async function POST(request) {
       id: user.id,
       fullName: user.fullName,
       email: user.email,
+      role: user.role,
     });
   } catch (error) {
     return apiResponse.error(error.message, 500);

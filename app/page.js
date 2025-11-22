@@ -47,7 +47,6 @@ export default function Home() {
               {" "}
               {user ? (
                 <Link
-                  onClick={logoutRequest}
                   href="/dashboard"
                   className="text-sm font-bold hover:underline"
                 >
