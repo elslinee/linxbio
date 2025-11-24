@@ -3,11 +3,34 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
-import Button from "@/app/(routes)/(auth)/_components/Button";
+import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import { login } from "@/utils/client/auth";
 import { useAuthStore } from "@/stores/useAuthStore";
+import {
+  faFacebook,
+  faGoogle,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
 
+const signInMethods = [
+  {
+    id: "google",
+    icon: faGoogle,
+    name: "Google",
+    href: "/api/auth/google",
+  },
+  // {
+  //   id: "facebook",
+  //   icon: faFacebook,
+  //   name: "Facebook",
+  // },
+  // {
+  //   id: "instagram",
+  //   icon: faInstagram,
+  //   name: "Instagram",
+  // },
+];
 export default function LoginPage() {
   const setUser = useAuthStore((state) => state.setUser);
   const router = useRouter();
@@ -141,7 +164,6 @@ export default function LoginPage() {
                 {errors.email && <p className="text-red-500">{errors.email}</p>}
               </div>
 
-              {/* Password Input */}
               <div className="relative">
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
@@ -185,15 +207,32 @@ export default function LoginPage() {
               Sign In
             </Button>
           </form>
-
-          <div className="text-center text-sm text-gray-600">
-            New here?{" "}
-            <Link
-              href="/register"
-              className="font-bold text-black hover:underline"
-            >
-              Create an Account
-            </Link>
+          <div className="flex flex-col justify-end gap-4">
+            <div className="flex flex-col items-center justify-center gap-4 pb-4">
+              <p className="text-center text-sm text-gray-600">
+                Or Sign In Using
+              </p>
+              <div className="flex items-center justify-center gap-4">
+                {signInMethods.map((method) => (
+                  <Link
+                    key={method.id}
+                    href={method.href}
+                    className="font-bold text-black hover:opacity-60"
+                  >
+                    <FontAwesomeIcon icon={method.icon} className="text-3xl" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div className="text-center text-sm text-gray-600">
+              New here?{" "}
+              <Link
+                href="/register"
+                className="font-bold text-black hover:underline"
+              >
+                Create an Account
+              </Link>
+            </div>
           </div>
         </div>
       </div>

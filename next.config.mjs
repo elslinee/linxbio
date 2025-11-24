@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
-  reactCompiler: true,
+  experimental: {
+    turbo: false, // 👈 أوقف Turbopack
+  },
+  reactCompiler: true, // لو عايز تسيبه شغال سيبه، مفيش مشكلة
 };
 
 export default nextConfig;

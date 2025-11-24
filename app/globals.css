@@ -14,6 +14,19 @@
   --color-secondary: var(--secondary);
   --font-sans: var(--font-wix-madefor-text);
   --font-mono: var(--font-geist-mono);
+  --font-poppins: var(--font-poppins);
+  --font-inter: var(--font-inter);
+  --font-montserrat: var(--font-montserrat);
+  --font-nunito: var(--font-nunito);
+  --font-urbanist: var(--font-urbanist);
+  --font-roboto: var(--font-roboto);
+  --font-playfair-display: var(--font-playfair-display);
+  --font-mulish: var(--font-mulish);
+  --font-caveat: var(--font-caveat);
+  --font-fjord-one: var(--font-fjord-one);
+  --font-plus-jakarta-sans: var(--font-plus-jakarta-sans);
+  --font-saira: var(--font-saira);
+  --font-barlow: var(--font-barlow);
 }
 
 body {
@@ -31,4 +44,38 @@ body {
     padding-right: 60px;
     padding-left: 60px;
   }
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 4px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* Hide scrollbar arrows */
+.custom-scroll::-webkit-scrollbar-button {
+  display: none;
 }

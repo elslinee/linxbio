@@ -64,7 +64,7 @@ export default function Home() {
           )}
 
           <Link
-            href="/register"
+            href="/get_started"
             className="hover:bg-primary rounded-full bg-black px-5 py-2.5 text-sm font-bold text-white transition-colors hover:text-black"
           >
             Start Now

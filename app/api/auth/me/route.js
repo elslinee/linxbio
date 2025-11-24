@@ -33,6 +33,9 @@ export async function GET() {
       id: user.id,
       fullName: user.fullName,
       email: user.email,
+      avatar: user.avatar,
+      username: user.username,
+      isGetStartedDone: user.isGetStartedDone,
     });
   } catch (error) {
     return apiResponse.error(error.message, 500);

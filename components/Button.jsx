@@ -6,6 +6,7 @@ function Button({
   className,
   onClick,
   loading = false,
+  ...props
 }) {
   const LoadingSpinner = () => {
     return (
@@ -22,7 +23,8 @@ function Button({
     <button
       type={type}
       onClick={onClick}
-      className={`bg-primary shadow-primary/20 w-full transform cursor-pointer rounded-xl py-3.5 text-sm font-bold text-black shadow-lg transition-all hover:scale-[1.02] hover:opacity-90 active:scale-95 ${className}`}
+      disabled={loading || props.disabled}
+      className={`bg-primary shadow-primary/20 w-full transform cursor-pointer rounded-xl py-3.5 text-sm font-bold text-black shadow-lg transition-all hover:scale-[1.02] hover:opacity-90 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 ${className}`}
     >
       {loading ? <LoadingSpinner /> : children}
     </button>

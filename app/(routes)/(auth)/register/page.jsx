@@ -3,9 +3,35 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import Button from "@/app/(routes)/(auth)/_components/Button";
+import Button from "@/components/Button";
 import { register } from "@/utils/client/auth";
 import { useRouter } from "next/navigation";
+import {
+  faFacebook,
+  faGoogle,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
+
+const signUpMethods = [
+  {
+    id: "google",
+    icon: faGoogle,
+    name: "Google",
+    href: "/api/auth/google",
+  },
+  // {
+  //   id: "facebook",
+  //   icon: faFacebook,
+  //   name: "Facebook",
+  //   href: "/api/auth/facebook",
+  // },
+  // {
+  //   id: "instagram",
+  //   icon: faInstagram,
+  //   name: "Instagram",
+  //   href: "/api/auth/instagram",
+  // },
+];
 export default function RegisterPage() {
   const router = useRouter();
   const [userData, setUserData] = useState({
@@ -242,15 +268,32 @@ export default function RegisterPage() {
               Create Account
             </Button>
           </form>
-
-          <div className="text-center text-sm text-gray-600">
-            Already have an account?{" "}
-            <Link
-              href="/login"
-              className="font-bold text-black hover:underline"
-            >
-              Log in
-            </Link>
+          <div className="flex flex-col items-center justify-center gap-4">
+            <div className="flex flex-col items-center justify-center gap-4 pb-4">
+              <p className="text-center text-sm text-gray-600">
+                Or Sign Up Using
+              </p>
+              <div className="flex items-center justify-center gap-4">
+                {signUpMethods.map((method) => (
+                  <Link
+                    key={method.id}
+                    href={method.href}
+                    className="font-bold text-black hover:opacity-60"
+                  >
+                    <FontAwesomeIcon icon={method.icon} className="text-3xl" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div className="text-center text-sm text-gray-600">
+              Already have an account?{" "}
+              <Link
+                href="/login"
+                className="font-bold text-black hover:underline"
+              >
+                Log in
+              </Link>
+            </div>
           </div>
         </div>
       </div>
