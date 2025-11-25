@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
-import { login } from "@/utils/client/auth";
+import { login } from "@/utils/client/user/auth";
 import { useAuthStore } from "@/stores/useAuthStore";
 import {
   faFacebook,
@@ -82,6 +82,7 @@ export default function LoginPage() {
       const res = await login(userData);
       setUser(res.data.data);
       setUserData({ email: "", password: "" });
+      // ????
       setServerError("");
       router.push("/");
     } catch (err) {

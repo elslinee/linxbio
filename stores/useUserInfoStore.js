@@ -9,6 +9,7 @@ const useUserInfoStore = create(
         username: "",
         avatar: "",
       },
+
       socials: {
         instagram: "",
         tiktok: "",
@@ -28,6 +29,8 @@ const useUserInfoStore = create(
         telegram: "",
       },
 
+      errors: {},
+
       setProfile: (data) =>
         set((state) => ({
           profile: { ...state.profile, ...data },
@@ -37,14 +40,52 @@ const useUserInfoStore = create(
         set((state) => ({
           socials: { ...state.socials, ...data },
         })),
+      setError: (name, value) =>
+        set((state) => ({
+          errors: { ...state.errors, [name]: value },
+        })),
+
+      resetErrors: () =>
+        set({
+          errors: {},
+        }),
+
+      resetUserInfo: () =>
+        set({
+          profile: {
+            displayName: "",
+            username: "",
+            avatar: "",
+          },
+          socials: {
+            instagram: "",
+            tiktok: "",
+            x: "",
+            threads: "",
+            twitch: "",
+            facebook: "",
+            email: "",
+            whatsapp: "",
+            website: "",
+            github: "",
+            linkedin: "",
+            pinterest: "",
+            behance: "",
+            youtube: "",
+            discord: "",
+            telegram: "",
+          },
+          errors: {}, // مهم جداً
+        }),
     }),
     {
       name: "user-info-store",
       storage: createJSONStorage(() => localStorage),
 
-      // 🟦 هنا السحر: خزّن بس profile
       partialize: (state) => ({
         profile: state.profile,
+        socials: state.socials,
+        errors: state.errors, // ← حفظ الأخطاء
       }),
     },
   ),

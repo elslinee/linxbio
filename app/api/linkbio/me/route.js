@@ -2,7 +2,7 @@ import { connectDB } from "@/utils/server/db/connectDB";
 import { LinkBio } from "@/utils/server/schemas/link.bio.schema";
 import { apiResponse } from "@/utils/server/responses/apiResponse";
 import { getUserFromCookies } from "@/utils/server/auth/getUserFromCookies";
-
+import { User } from "@/utils/server/schemas/user.schema";
 export async function GET() {
   try {
     await connectDB();
@@ -52,7 +52,12 @@ export async function DELETE() {
 
     if (!deleted) return apiResponse.fail("LinkBio not found", 404);
 
-    return apiResponse.success("LinkBio deleted successfully");
+    await User.findByIdAndUpdate(user.id, {
+      username: "",
+      isGetStartedDone: false,
+    });
+
+    return apiResponse.success("LinkBio deleted successfully & user reset");
   } catch (error) {
     return apiResponse.fail(error.message, 500);
   }

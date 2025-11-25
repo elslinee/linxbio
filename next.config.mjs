@@ -1,9 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    turbo: false, // 👈 أوقف Turbopack
+  reactCompiler: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "http",
+        hostname: "res.cloudinary.com",
+      },
+    ],
   },
-  reactCompiler: true, // لو عايز تسيبه شغال سيبه، مفيش مشكلة
+  productionBrowserSourceMaps: false,
+  experimental: {
+    serverSourceMaps: false,
+  },
 };
 
 export default nextConfig;

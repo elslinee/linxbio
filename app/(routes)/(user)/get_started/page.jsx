@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import PhonePreview from "@/components/PhonePreview";
-import CustomizeTemplate from "./_components/CustomizeTemplate";
+import CustomizeTemplate from "@/app/(routes)/(user)/get_started/_components/CustomizeTemplate";
 import Button from "@/components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -31,26 +31,27 @@ import useTemplateStore from "@/stores/useTemplateStore";
 import useUserInfoStore from "@/stores/useUserInfoStore";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Image from "next/image";
-import Link from "next/link";
-import { checkUsername, finishGetStarted } from "@/utils/client/usersApi";
-import { createLinkBioData } from "@/utils/client/linkBioApi";
-import { upload } from "@/utils/client/upload";
+import { checkUsername } from "@/utils/client/user/usersApi";
+import { createLinkBioData } from "@/utils/client/user/linkBioApi";
+import { upload } from "@/utils/client/user/upload";
+import { me } from "@/utils/client/user/auth";
 
 function GetStartedPage() {
   const [isChecking, setIsChecking] = useState(false);
   const [isAvailable, setIsAvailable] = useState(true);
   const [usernameError, setUsernameError] = useState("");
-
+  const [linkBioUploadLoading, setLinkBioUploadLoading] = useState(false);
   const { header, colors, font, buttons } = useTemplateStore();
-  const router = useRouter();
-  const [step, setStep] = useState(1);
   const profile = useUserInfoStore((state) => state.profile);
   const socials = useUserInfoStore((state) => state.socials);
   const setProfile = useUserInfoStore((state) => state.setProfile);
   const setSocials = useUserInfoStore((state) => state.setSocials);
+  const errors = useUserInfoStore((state) => state.errors);
+  const setError = useUserInfoStore((state) => state.setError);
   const user = useAuthStore((state) => state.user);
   const loading = useAuthStore((state) => state.loading);
-  const [errors, setErrors] = useState({});
+  const router = useRouter();
+  const [step, setStep] = useState(1);
   const validateField = (name, value) => {
     let error = "";
     if (value) {
@@ -64,14 +65,36 @@ function GetStartedPage() {
             error = "Only letters, numbers, and hyphens allowed";
           break;
         case "whatsapp":
-          if (!/^\+?[0-9\s-]{10,20}$/.test(value))
-            error = "Invalid phone number";
+          const raw = value.replace(/\s+/g, ""); // احذف المسافات
+
+          if (raw.length === 0) {
+            error = "";
+            break;
+          }
+
+          // لازم يبدأ بـ +
+          if (!raw.startsWith("+")) {
+            error = "Number must start with +";
+            break;
+          }
+
+          const digits = raw.slice(1); // احذف +
+
+          // لازم تكون أرقام فقط
+          if (!/^[0-9]+$/.test(digits)) {
+            error = "Only numbers are allowed";
+            break;
+          }
+
+          // الطول
+          if (digits.length < 10 || digits.length > 20) {
+            error = "Phone number must be 10–20 digits";
+            break;
+          }
+
+          error = "";
           break;
-        case "facebook":
         case "website":
-        case "linkedin":
-        case "pinterest":
-        case "behance":
         case "discord":
         case "youtube":
           // Stricter URL validation
@@ -92,7 +115,7 @@ function GetStartedPage() {
           break;
       }
     }
-    setErrors((prev) => ({ ...prev, [name]: error }));
+    setError(name, error);
   };
 
   const handleProfileChange = (e) => {
@@ -129,9 +152,28 @@ function GetStartedPage() {
     }
   }, [profile.username]);
   const handleSocialChange = (e) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+    if (name === "whatsapp") {
+      let cleaned = value.replace(/\s+/g, ""); // احذف المسافات
 
-    setSocials({ [name]: value }); // ← الصح مع Zustand
+      // لو فاضي → سيبه فاضي
+      if (cleaned === "") {
+        setSocials({ whatsapp: "" });
+        validateField("whatsapp", "");
+        return;
+      }
+
+      // لو المستخدم كتب أرقام بدون +
+      if (!cleaned.startsWith("+")) {
+        cleaned = "+" + cleaned.replace(/^\+/, "");
+      }
+
+      setSocials({ whatsapp: cleaned });
+      validateField("whatsapp", cleaned);
+      return;
+    }
+
+    setSocials({ [name]: value });
     validateField(name, value);
   };
 
@@ -162,33 +204,92 @@ function GetStartedPage() {
       setDisableBtn(false);
     }, 500);
   }, []);
-  const createLinkBioDataRequest = () => {
-    createLinkBioData(user?.id, profile, socials, {
-      colors,
-      font,
-      buttons,
-      header,
-    })
-      .then((res) => {
-        console.log(res);
-        if (res?.data?.statusCode === 200) {
-          finishGetStarted(true);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        // router.push("/dashboard");
-      });
-  };
-  if (loading) return null;
+  const step1Fields = ["displayName", "username"];
+  const step2Fields = [
+    "instagram",
+    "tiktok",
+    "x",
+    "threads",
+    "twitch",
+    "facebook",
+    "email",
+    "whatsapp",
+    "website",
+    "github",
+    "linkedin",
+    "pinterest",
+    "behance",
+    "youtube",
+    "discord",
+    "telegram",
+  ];
 
-  // 🟩 2) لو خلص الـ Get Started → روح داشبورد فوراً بدون فلاش
-  if (user?.isGetStartedDone) {
-    router.replace("/dashboard");
-    return null;
-  }
+  const hasStepErrors = (step) => {
+    if (step === 1) {
+      return step1Fields.some((f) => errors[f] && errors[f].trim() !== "");
+    }
+    if (step === 2) {
+      return step2Fields.some((f) => errors[f] && errors[f].trim() !== "");
+    }
+    return false;
+  };
+  const createLinkBioDataRequest = async () => {
+    try {
+      setLinkBioUploadLoading(true);
+      const res = await createLinkBioData(user?.id, profile, socials, {
+        colors,
+        font,
+        buttons,
+        header,
+      });
+
+      if (res?.data?.statusCode === 200) {
+        useUserInfoStore.getState().resetUserInfo();
+        useTemplateStore.getState().resetTemplateInfo();
+
+        const updated = await me();
+
+        useAuthStore.getState().setUser(updated.data.data);
+
+        router.replace("/dashboard");
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLinkBioUploadLoading(false);
+    }
+  };
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const upload_ = async (file) => {
+    try {
+      setUploadLoading(true);
+      const url = await upload(file);
+      return url;
+    } catch (err) {
+      console.error(err);
+      return null; // مهم
+    } finally {
+      setUploadLoading(false);
+    }
+  };
+  useEffect(() => {
+    if (loading) return;
+
+    if (!user) {
+      router.replace("/login");
+      return;
+    }
+
+    if (user.isGetStartedDone === true) {
+      router.replace("/dashboard");
+      return;
+    }
+  }, [loading, user, router]);
+
+  if (loading) return null;
+  if (!user) return null;
+  if (user.isGetStartedDone) return null;
+
   return (
     <div className="flex min-h-screen w-full overflow-y-hidden">
       {/* Left Side - Form */}
@@ -220,25 +321,40 @@ function GetStartedPage() {
                     Profile Picture
                   </label>
                   <div className="flex items-center gap-4 md:flex-row">
-                    <div className="relative h-20 w-20 overflow-hidden rounded-full border border-gray-200 bg-gray-50">
-                      {profile.avatar ? (
-                        <Image
-                          src={profile.avatar}
-                          alt="Avatar"
-                          fill
-                          className="object-cover"
-                          onError={() =>
-                            setProfile({
-                              avatar: "/hero/hero-avatar.png",
-                            })
-                          }
-                        />
-                      ) : (
-                        <div className="flex h-full w-full items-center justify-center text-gray-400">
-                          <FontAwesomeIcon icon={faUser} className="h-8 w-8" />
+                    {uploadLoading ? (
+                      <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border border-gray-200 bg-gray-50">
+                        <div className="flex items-center justify-center">
+                          <div
+                            className="h-6 w-6 animate-spin rounded-full border-3 border-black border-t-transparent"
+                            aria-label="Loading"
+                          />
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    ) : (
+                      <div className="relative h-20 w-20 overflow-hidden rounded-full border border-gray-200 bg-gray-50">
+                        {profile.avatar ? (
+                          <Image
+                            src={profile.avatar}
+                            alt="Avatar"
+                            fill
+                            className="object-cover"
+                            onError={() =>
+                              setProfile({
+                                avatar: "/hero/hero-avatar.png",
+                              })
+                            }
+                          />
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center text-gray-400">
+                            <FontAwesomeIcon
+                              icon={faUser}
+                              className="h-8 w-8"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )}
+
                     <label
                       htmlFor="avatar-upload"
                       className="cursor-pointer rounded-full bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800"
@@ -254,11 +370,13 @@ function GetStartedPage() {
                         if (!file) return;
 
                         try {
-                          // 🔥 ارفع الصورة للسيرفر
-                          const imageUrl = await upload(file);
+                          const imageUrl = await upload_(file); // ← ← ← المهم
 
-                          // 🔥 احفظ الرابط فقط
-                          setProfile({ avatar: imageUrl });
+                          if (imageUrl) {
+                            setProfile({ avatar: imageUrl });
+                          } else {
+                            console.log("Upload returned null");
+                          }
                         } catch (err) {
                           console.error("Upload failed:", err);
                         }
@@ -345,7 +463,7 @@ function GetStartedPage() {
                     isChecking ||
                     !profile.displayName ||
                     !profile.username ||
-                    Object.values(errors).some((err) => err)
+                    hasStepErrors(1)
                   }
                 >
                   Next
@@ -367,7 +485,7 @@ function GetStartedPage() {
                 <SocialInput
                   icon={faInstagram}
                   name="instagram"
-                  placeholder="Instagram Username (@username)"
+                  placeholder="Instagram (@username) or Url"
                   value={socials.instagram}
                   onChange={handleSocialChange}
                   error={errors.instagram}
@@ -375,7 +493,7 @@ function GetStartedPage() {
                 <SocialInput
                   icon={faTiktok}
                   name="tiktok"
-                  placeholder="TikTok Username (@username)"
+                  placeholder="TikTok (@username) or Url"
                   value={socials.tiktok}
                   onChange={handleSocialChange}
                   error={errors.tiktok}
@@ -383,7 +501,7 @@ function GetStartedPage() {
                 <SocialInput
                   icon={faXTwitter}
                   name="x"
-                  placeholder="X Username (@username)"
+                  placeholder="X (@username) or Url"
                   value={socials.x}
                   onChange={handleSocialChange}
                   error={errors.x}
@@ -391,7 +509,7 @@ function GetStartedPage() {
                 <SocialInput
                   icon={faThreads}
                   name="threads"
-                  placeholder="Threads Username (@username)"
+                  placeholder="Threads (@username) or Url"
                   value={socials.threads}
                   onChange={handleSocialChange}
                   error={errors.threads}
@@ -399,7 +517,7 @@ function GetStartedPage() {
                 <SocialInput
                   icon={faTwitch}
                   name="twitch"
-                  placeholder="Twitch Username (@username)"
+                  placeholder="Twitch (@username) or Url"
                   value={socials.twitch}
                   onChange={handleSocialChange}
                   error={errors.twitch}
@@ -407,7 +525,7 @@ function GetStartedPage() {
                 <SocialInput
                   icon={faFacebook}
                   name="facebook"
-                  placeholder="Facebook Page URL"
+                  placeholder="Facebook Profile / Page (@username) or Url"
                   value={socials.facebook}
                   onChange={handleSocialChange}
                   error={errors.facebook}
@@ -415,7 +533,7 @@ function GetStartedPage() {
                 <SocialInput
                   icon={faGithub}
                   name="github"
-                  placeholder="GitHub Username (@username)"
+                  placeholder="GitHub (@username) or Url"
                   value={socials.github}
                   onChange={handleSocialChange}
                   error={errors.github}
@@ -423,7 +541,7 @@ function GetStartedPage() {
                 <SocialInput
                   icon={faLinkedin}
                   name="linkedin"
-                  placeholder="LinkedIn Profile URL"
+                  placeholder="LinkedIn (@username) or Url"
                   value={socials.linkedin}
                   onChange={handleSocialChange}
                   error={errors.linkedin}
@@ -431,7 +549,7 @@ function GetStartedPage() {
                 <SocialInput
                   icon={faPinterest}
                   name="pinterest"
-                  placeholder="Pinterest Profile URL"
+                  placeholder="Pinterest (@username) or Url"
                   value={socials.pinterest}
                   onChange={handleSocialChange}
                   error={errors.pinterest}
@@ -439,7 +557,7 @@ function GetStartedPage() {
                 <SocialInput
                   icon={faBehance}
                   name="behance"
-                  placeholder="Behance Profile URL"
+                  placeholder="Behance (@username) or Url"
                   value={socials.behance}
                   onChange={handleSocialChange}
                   error={errors.behance}
@@ -455,7 +573,7 @@ function GetStartedPage() {
                 <SocialInput
                   icon={faDiscord}
                   name="discord"
-                  placeholder="Discord Server/User Url"
+                  placeholder="Discord Server Url"
                   value={socials.discord}
                   onChange={handleSocialChange}
                   error={errors.discord}
@@ -463,7 +581,7 @@ function GetStartedPage() {
                 <SocialInput
                   icon={faTelegram}
                   name="telegram"
-                  placeholder="Telegram Username/Link"
+                  placeholder="Telegram (@username) or Url"
                   value={socials.telegram}
                   onChange={handleSocialChange}
                   error={errors.telegram}
@@ -498,7 +616,7 @@ function GetStartedPage() {
                 <Button
                   onClick={handleNext}
                   className="px-12"
-                  disabled={Object.values(errors).some((err) => err)}
+                  disabled={hasStepErrors(2)}
                 >
                   Next
                 </Button>
@@ -506,6 +624,7 @@ function GetStartedPage() {
             </div>
           ) : (
             <CustomizeTemplate
+              loading={linkBioUploadLoading}
               onFinish={() => createLinkBioDataRequest()}
               onBack={() => setStep(2)}
             />
@@ -514,7 +633,7 @@ function GetStartedPage() {
       </div>
 
       {/* Right Side - Preview */}
-      <div className="hidden min-h-full w-1/2 overflow-hidden bg-red-50 lg:flex">
+      <div className="hidden min-h-full w-1/2 overflow-hidden bg-[#d5f75815] lg:flex">
         <div className="sticky mx-auto flex items-center justify-center">
           <PhonePreview
             font={font}

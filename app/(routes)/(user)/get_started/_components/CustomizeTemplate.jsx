@@ -8,7 +8,7 @@ import {
 import Button from "@/components/Button";
 import useTemplateStore from "@/stores/useTemplateStore";
 
-function CustomizeTemplate({ onFinish, onBack }) {
+function CustomizeTemplate({ onFinish, loading, onBack }) {
   const {
     selectedHeader,
     selectedColor,
@@ -480,7 +480,7 @@ function CustomizeTemplate({ onFinish, onBack }) {
       </div>
 
       <div className="flex items-center justify-between gap-4 border-t border-gray-100 pt-6">
-        <Button onClick={onFinish} className="px-8">
+        <Button loading={loading} onClick={onFinish} className="px-8">
           Use this template
         </Button>
       </div>

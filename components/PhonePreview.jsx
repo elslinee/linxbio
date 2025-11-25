@@ -548,7 +548,7 @@ const PhonePreview = ({
             alt="Profile"
             width={100}
             height={100}
-            className="h-[128px] w-[128px] rounded-[8px]"
+            className="h-[128px] w-[128px] object-cover rounded-[8px]"
           />
           <Image
             src={profile.avatar || "/hero/hero-avatar.png"}

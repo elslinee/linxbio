@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Button from "@/components/Button";
-import { register } from "@/utils/client/auth";
+import { register } from "@/utils/client/user/auth";
 import { useRouter } from "next/navigation";
 import {
   faFacebook,

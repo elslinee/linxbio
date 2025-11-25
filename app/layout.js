@@ -19,6 +19,7 @@ import "./globals.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import AuthInit from "@/components/AuthInit";
+import { AlertDialogProvider } from "@/components/AlertDialogProvider";
 
 config.autoAddCss = false;
 
@@ -113,7 +114,7 @@ export default function RootLayout({ children }) {
         className={`${wixMadeforText.variable} ${geistMono.variable} ${poppins.variable} ${inter.variable} ${montserrat.variable} ${nunito.variable} ${urbanist.variable} ${roboto.variable} ${playfairDisplay.variable} ${mulish.variable} ${caveat.variable} ${fjordOne.variable} ${plusJakartaSans.variable} ${saira.variable} ${barlow.variable} antialiased`}
       >
         <AuthInit />
-        {children}
+        <AlertDialogProvider>{children}</AlertDialogProvider>
       </body>
     </html>
   );

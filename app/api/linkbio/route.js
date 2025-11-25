@@ -1,6 +1,7 @@
 import { connectDB } from "@/utils/server/db/connectDB";
 import { LinkBio } from "@/utils/server/schemas/link.bio.schema";
 import { apiResponse } from "@/utils/server/responses/apiResponse";
+import { User } from "@/utils/server/schemas/user.schema";
 export async function POST(req) {
   try {
     await connectDB();
@@ -23,6 +24,10 @@ export async function POST(req) {
       template,
     });
 
+    await User.findByIdAndUpdate(userId, {
+      username: profile.username,
+      isGetStartedDone: true,
+    });
     return apiResponse.success("LinkBio created", created, 200);
   } catch (error) {
     return apiResponse.fail(error.message, 500);

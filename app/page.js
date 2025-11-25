@@ -16,7 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useRouter } from "next/navigation";
-import { logout } from "@/utils/client/auth";
+import { logout } from "@/utils/client/user/auth";
 export default function Home() {
   const router = useRouter();
   const user = useAuthStore((s) => s.user);
@@ -82,8 +82,8 @@ export default function Home() {
             and presence
           </p>
           <div>
-            <Link href="/register">
-              <button className="bg-primary shadow-primary/20 cursor-pointer rounded-full px-8 py-4 text-lg font-bold text-black shadow-lg transition-all hover:scale-95 hover:opacity-90">
+            <Link href="/get_started">
+              <button className="bg-primary shadow-primary/20 cursor-pointer rounded-full px-6 py-3 text-lg font-bold text-black shadow-lg transition-all hover:scale-95 hover:opacity-90 lg:px-8 lg:py-4">
                 Start Now
               </button>
             </Link>

@@ -1,17 +1,23 @@
 import { connectDB } from "@/utils/server/db/connectDB";
 import { LinkBio } from "@/utils/server/schemas/link.bio.schema";
 import { apiResponse } from "@/utils/server/responses/apiResponse";
-import { getUserFromCookies } from "@/utils/server/auth/getUserFromCookies";
+import { cookies } from "next/headers";
+import { verifyToken } from "@/utils/server/auth/jwt";
+import { User } from "@/utils/server/schemas/user.schema";
 
 export async function GET(request) {
   try {
     await connectDB();
 
-    // // 🔐 check admin
-    // const user = await getUserFromCookies();
-    // if (!user || user.role !== "admin") {
-    //   return apiResponse.fail("Unauthorized", 403);
-    // }
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
+    if (!token) return apiResponse.fail("Unauthorized", 401);
+    const decoded = verifyToken(token);
+    const currentUser = await User.findById(decoded.id);
+
+    if (currentUser.role !== "admin") {
+      return apiResponse.fail("Admins only", 403);
+    }
 
     // 📌 Pagination
     const { searchParams } = new URL(request.url);

@@ -75,6 +75,18 @@ const useTemplateStore = create(
           selectedButton: index,
           buttons: state.buttonOptions[index],
         })),
+      resetTemplateInfo: () =>
+        set({
+          selectedHeader: 0,
+          selectedColor: 0,
+          selectedFont: 0,
+          selectedButton: 0,
+
+          header: 1,
+          colors: { bg: "#ffffff", text: "#000000", accent: "#000000" },
+          font: "font-poppins",
+          buttons: "btns_style_1",
+        }),
     }),
     {
       name: "template-store",
