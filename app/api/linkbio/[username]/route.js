@@ -18,6 +18,7 @@ export async function GET(req, { params }) {
       profile: linkBio.profile,
       socials: linkBio.socials,
       template: linkBio.template,
+      socialsOrder: linkBio.socialsOrder,
       blocks: linkBio.blocks,
     };
 

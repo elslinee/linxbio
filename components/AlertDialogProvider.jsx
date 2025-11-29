@@ -30,13 +30,13 @@ export function AlertDialogProvider({ children }) {
   };
 
   return (
-    <AlertDialogContext.Provider value={{ showDialog }}>
+    <AlertDialogContext.Provider value={{ showDialog, closeDialog }}>
       {children}
 
       <AnimatePresence>
         {dialog.open && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-99999 flex items-center justify-center bg-black/50 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -51,28 +51,6 @@ export function AlertDialogProvider({ children }) {
             >
               {/* 🆕 هنا يظهر المحتوى المخصص */}
               <div>{dialog.content}</div>
-
-              {/* 🆕 امكانية إظهار او إخفاء الأزرار */}
-              {!dialog.hideActions && (
-                <div className="mt-6 flex justify-end gap-3">
-                  <button
-                    onClick={closeDialog}
-                    className="rounded-lg bg-gray-200 px-4 py-2 text-sm transition hover:bg-gray-300"
-                  >
-                    {dialog.cancelText}
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      dialog.onConfirm?.();
-                      closeDialog();
-                    }}
-                    className="bg-primary hover:bg-primary/80 rounded-lg px-4 py-2 text-sm text-black transition"
-                  >
-                    {dialog.confirmText}
-                  </button>
-                </div>
-              )}
             </motion.div>
           </motion.div>
         )}

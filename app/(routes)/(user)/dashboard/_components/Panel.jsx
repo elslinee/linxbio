@@ -5,19 +5,18 @@ import SocialLinksTab from "@/app/(routes)/(user)/dashboard/_components/tabs/Soc
 import DesignTab from "@/app/(routes)/(user)/dashboard/_components/tabs/DesignTab";
 import SettingsTab from "@/app/(routes)/(user)/dashboard/_components/tabs/SettingsTab";
 import { useSideBarTabsStore } from "@/stores/useSideBarTabsStore";
-function Panel() {
+import { AnimatePresence } from "framer-motion";
+function Panel({ desktop }) {
   const { tab } = useSideBarTabsStore();
   console.log(tab);
-  return tab === "Page" ? (
-    <PageTab />
-  ) : tab === "Header" ? (
-    <HeaderTab />
-  ) : tab === "Social Links" ? (
-    <SocialLinksTab />
-  ) : tab === "Design" ? (
-    <DesignTab />
-  ) : tab === "Settings" ? (
-    <SettingsTab />
-  ) : null;
+  return (
+    <AnimatePresence mode="wait">
+      {tab === "Page" && <PageTab key="page" />}
+      {tab === "Header" && <HeaderTab desktop={desktop} key="header" />}
+      {tab === "Social Links" && <SocialLinksTab key="social" />}
+      {tab === "Design" && <DesignTab key="design" />}
+      {tab === "Settings" && <SettingsTab key="settings" />}
+    </AnimatePresence>
+  );
 }
 export default Panel;

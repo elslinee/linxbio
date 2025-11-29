@@ -6,15 +6,28 @@ import { User } from "@/utils/server/schemas/user.schema";
 export async function GET() {
   try {
     await connectDB();
-
     const user = await getUserFromCookies();
     if (!user) return apiResponse.fail("Unauthorized", 401);
 
     const linkBio = await LinkBio.findOne({ userId: user.id });
-
     if (!linkBio) return apiResponse.fail("LinkBio not found", 404);
 
-    return apiResponse.success("LinkBio loaded", linkBio);
+    const socials = linkBio.socials;
+    const socialsOrder = linkBio.socialsOrder;
+
+    const socialsSorted = socialsOrder.map((key) => ({
+      key,
+      value: socials[key] || "",
+    }));
+
+    return apiResponse.success("LinkBio loaded", {
+      socials,
+      socialsOrder,
+      socialsSorted,
+      profile: linkBio.profile,
+      template: linkBio.template,
+      blocks: linkBio.blocks,
+    });
   } catch (error) {
     return apiResponse.fail(error.message, 500);
   }

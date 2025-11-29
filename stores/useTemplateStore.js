@@ -1,15 +1,31 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
+const defaultTemplate = {
+  header: 1,
+  colors: { bg: "#ffffff", text: "#000000", accent: "#000000" },
+  font: "font-poppins",
+  buttons: "btns_style_1",
+};
+
 const useTemplateStore = create(
   persist(
     (set) => ({
+      /** -----------------------------
+       *  INITIAL VALUES
+       * ----------------------------- */
       selectedHeader: 0,
       selectedColor: 0,
       selectedFont: 0,
       selectedButton: 0,
 
-      headerOptions: [1, 2, 3, 4, 5, 6],
+      header: defaultTemplate.header,
+      colors: defaultTemplate.colors,
+      font: defaultTemplate.font,
+      buttons: defaultTemplate.buttons,
+
+      /** OPTIONS */
+      headerOptions: [1, 2, 3, 4, 5],
 
       colorOptions: [
         { bg: "#ffffff", text: "#000000", accent: "#000000" },
@@ -47,10 +63,9 @@ const useTemplateStore = create(
         "btns_style_5",
       ],
 
-      header: 1,
-      colors: { bg: "#ffffff", text: "#000000", accent: "#000000" },
-      font: "font-poppins",
-      buttons: "btns_style_1",
+      /** ---------------------------------
+       * SETTERS (BY INDEX) — زي ما هي
+       * --------------------------------- */
 
       setSelectedHeader: (index) =>
         set((state) => ({
@@ -75,17 +90,48 @@ const useTemplateStore = create(
           selectedButton: index,
           buttons: state.buttonOptions[index],
         })),
+
+      /** ---------------------------------
+       * DIRECT SETTERS (API SAFE)
+       * --------------------------------- */
+
+      setHeader: (header) =>
+        set({
+          header: header ?? defaultTemplate.header,
+        }),
+
+      setColors: (colors) =>
+        set({
+          colors: colors ?? defaultTemplate.colors,
+        }),
+
+      setFont: (font) =>
+        set({
+          font: font ?? defaultTemplate.font,
+        }),
+
+      setButtons: (buttons) =>
+        set({
+          buttons: buttons ?? defaultTemplate.buttons,
+        }),
+
+      /** تعيين Template كامل مرة واحدة من الـ API */
+      setTemplate: (template) =>
+        set({
+          header: template?.header ?? defaultTemplate.header,
+          colors: template?.colors ?? defaultTemplate.colors,
+          font: template?.font ?? defaultTemplate.font,
+          buttons: template?.buttons ?? defaultTemplate.buttons,
+        }),
+
+      /** RESET */
       resetTemplateInfo: () =>
         set({
           selectedHeader: 0,
           selectedColor: 0,
           selectedFont: 0,
           selectedButton: 0,
-
-          header: 1,
-          colors: { bg: "#ffffff", text: "#000000", accent: "#000000" },
-          font: "font-poppins",
-          buttons: "btns_style_1",
+          ...defaultTemplate,
         }),
     }),
     {

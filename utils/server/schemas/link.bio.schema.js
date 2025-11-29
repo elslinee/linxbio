@@ -9,10 +9,33 @@ const linkBioSchema = new mongoose.Schema(
     },
 
     profile: {
+      verifiedBadge: { type: Boolean, default: false },
+      keyEntered: { type: Boolean, default: false },
       displayName: String,
+      showName: { type: Boolean, default: true },
       username: { type: String, unique: true },
+      language: { type: String, default: "en" },
       avatar: String,
+      backgroundColor: String,
+      cover: String,
+      bio: String,
+      showBio: { type: Boolean, default: true },
     },
+    blocks: [
+      {
+        type: {
+          type: String,
+          enum: ["button", "Gallery", "Email"],
+          required: true,
+        },
+        title: String,
+        subtitle: String,
+        data: {
+          type: Object,
+          default: {},
+        },
+      },
+    ],
 
     socials: {
       instagram: String,
@@ -31,6 +54,27 @@ const linkBioSchema = new mongoose.Schema(
       whatsapp: String,
       email: String,
       website: String,
+    },
+    socialsOrder: {
+      type: [String],
+      default: [
+        "instagram",
+        "tiktok",
+        "x",
+        "threads",
+        "twitch",
+        "facebook",
+        "github",
+        "linkedin",
+        "pinterest",
+        "behance",
+        "youtube",
+        "discord",
+        "telegram",
+        "whatsapp",
+        "email",
+        "website",
+      ],
     },
 
     template: {

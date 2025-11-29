@@ -15,16 +15,15 @@ const createLinkBioData = async (
 const getLinkBioData = async () => {
   return await axiosClient.get(`/linkbio/me`);
 };
-const updateLinkBioData = async (
-  profile,
-  socials,
-  { colors, font, buttons, header },
-) => {
-  return await axiosClient.patch(`/linkbio/me`, {
-    profile,
-    socials,
-    template: { colors, font, buttons, header },
-  });
+const getLinkBioByUsername = async (username) => {
+  return await axiosClient.get(`/linkbio/${username}`);
+};
+const updateLinkBioData = async (data) => {
+  return await axiosClient.patch(`/linkbio/me`, data);
+};
+
+const updateSocialOrder = async (order) => {
+  return await axiosClient.patch(`/linkbio/me/social-order`, { order });
 };
 const deleteLinkBioData = async () => {
   return axiosClient.delete("/linkbio/me");
@@ -33,6 +32,8 @@ const deleteLinkBioData = async () => {
 export {
   createLinkBioData,
   getLinkBioData,
+  getLinkBioByUsername,
   updateLinkBioData,
   deleteLinkBioData,
+  updateSocialOrder,
 };

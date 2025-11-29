@@ -14,18 +14,19 @@ function Sidebar() {
   const tabs = [
     {
       id: 1,
-      name: "Page",
-      icon: Layers,
-    },
-    {
-      id: 2,
       name: "Header",
       icon: LayoutPanelTop,
     },
+
     {
-      id: 3,
+      id: 2,
       name: "Social Links",
       icon: ThumbsUp,
+    },
+    {
+      id: 3,
+      name: "Page",
+      icon: Layers,
     },
     {
       id: 4,
@@ -43,7 +44,7 @@ function Sidebar() {
 
   return (
     <div className="">
-      <div className="fixed top-20 left-4 hidden w-fit rounded-[8px] bg-white py-2 transition-all duration-300 ease-in-out md:flex">
+      <div className="fixed top-20 left-4 z-9999 hidden w-fit rounded-[8px] bg-white py-2 transition-all duration-300 ease-in-out md:flex">
         <div className="flex flex-col px-1">
           {tabs.map((section) => (
             <button
@@ -59,7 +60,7 @@ function Sidebar() {
           ))}
         </div>
       </div>
-      <div className="fixed bottom-4 left-1/2 flex w-fit -translate-x-1/2 rounded-[8px] bg-white py-2 transition-all duration-300 ease-in-out md:hidden">
+      <div className="fixed bottom-4 left-1/2 z-9999 flex w-fit -translate-x-1/2 rounded-[8px] bg-white py-2 transition-all duration-300 ease-in-out md:hidden">
         <div className="flex flex-row px-2">
           {tabs.map((section) => (
             <button
@@ -74,6 +75,12 @@ function Sidebar() {
           ))}
         </div>
       </div>
+      {tab && (
+        <div
+          className="fixed inset-0 z-50 bg-black/10 transition-all duration-300 ease-in-out md:hidden"
+          onClick={() => setTab(null)}
+        ></div>
+      )}
     </div>
   );
 }

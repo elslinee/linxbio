@@ -6,8 +6,16 @@ const useUserInfoStore = create(
     (set) => ({
       profile: {
         displayName: "",
+        showName: true,
         username: "",
         avatar: "",
+        verifiedBadge: false,
+        keyEntered: false,
+        language: "en",
+        cover: "",
+        backgroundColor: "",
+        bio: "",
+        showBio: true,
       },
 
       socials: {
@@ -28,23 +36,49 @@ const useUserInfoStore = create(
         discord: "",
         telegram: "",
       },
+      socialsOrder: [
+        "instagram",
+        "tiktok",
+        "x",
+        "threads",
+        "twitch",
+        "facebook",
+        "email",
+        "whatsapp",
+        "website",
+        "github",
+        "linkedin",
+        "pinterest",
+        "behance",
+        "youtube",
+        "discord",
+        "telegram",
+      ],
 
       errors: {},
+      startUploadImage: "",
 
       setProfile: (data) =>
         set((state) => ({
           profile: { ...state.profile, ...data },
         })),
-
       setSocials: (data) =>
         set((state) => ({
           socials: { ...state.socials, ...data },
+        })),
+
+      setSocialsOrder: (newOrder) =>
+        set(() => ({
+          socialsOrder: newOrder,
         })),
       setError: (name, value) =>
         set((state) => ({
           errors: { ...state.errors, [name]: value },
         })),
-
+      setStartUploadImage: (value) =>
+        set((state) => ({
+          startUploadImage: value,
+        })),
       resetErrors: () =>
         set({
           errors: {},
@@ -83,9 +117,14 @@ const useUserInfoStore = create(
       storage: createJSONStorage(() => localStorage),
 
       partialize: (state) => ({
-        profile: state.profile,
+        profile: {
+          ...state.profile,
+          avatar: undefined, // ❌ not persisted
+          cover: undefined, // ❌ not persisted
+        },
         socials: state.socials,
-        errors: state.errors, // ← حفظ الأخطاء
+        socialsOrder: state.socialsOrder,
+        errors: state.errors,
       }),
     },
   ),

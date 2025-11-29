@@ -24,11 +24,16 @@ export default function AnimatedTab({ children, className }) {
       }}
       initial={{
         opacity: 0,
-        y: isMobile ? 30 : 0,
+        y: isMobile ? 20 : 0,
         x: !isMobile ? -20 : 0,
       }}
       animate={{ opacity: 1 }} // only opacity here
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+      exit={{
+        opacity: 0,
+        y: isMobile ? 20 : 0,
+        x: !isMobile ? -20 : 0,
+      }}
+      transition={{ duration: 0.2, ease: "easeInOut" }}
       className={`tab ${className}`}
     >
       {children}
