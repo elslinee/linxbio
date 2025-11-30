@@ -123,7 +123,9 @@ function SerialKeysTable() {
                 </td>
                 <td className="px-6 py-4">
                   {k.usedBy ? (
-                    <span className="text-gray-900">{k.usedBy}</span>
+                    <span className="text-gray-900">
+                      {k.usedBy.email || k.usedBy.fullName || k.usedBy}
+                    </span>
                   ) : (
                     <span className="text-gray-400">-</span>
                   )}

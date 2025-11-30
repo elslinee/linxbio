@@ -136,7 +136,7 @@ const Desktop = ({
             >
               <FontAwesomeIcon
                 icon={iconObj.icon}
-                className="h-5 w-5 text-xl hover:opacity-70"
+                className="h-5 w-5 text-2xl hover:opacity-70"
               />
             </Link>
           );
@@ -701,7 +701,7 @@ const Desktop = ({
     >
       <div
         style={{ backgroundColor: colors.bg }}
-        className={`scrollbar-hide relative mx-auto h-fit max-h-[600px] w-full max-w-[600px] overflow-y-auto rounded-xl ${font}`}
+        className={`scrollbar-hide relative mx-auto min-h-[calc(100%-10rem)] w-full max-w-[600px] overflow-y-auto rounded-xl ${font}`}
       >
         {type == 2 ? (
           <Type_2 />

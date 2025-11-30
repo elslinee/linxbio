@@ -21,6 +21,8 @@ function LinkBiosTable() {
   const [search, setSearch] = useState("");
   const [editLinkBio, setEditLinkBio] = useState(null);
   const [editLoading, setEditLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   const fetchLinkBios = async () => {
     try {
@@ -80,6 +82,20 @@ function LinkBiosTable() {
       lb.profile?.displayName?.toLowerCase().includes(search.toLowerCase()),
   );
 
+  // Pagination calculations
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredLinkBios.slice(
+    indexOfFirstItem,
+    indexOfLastItem,
+  );
+  const totalPages = Math.ceil(filteredLinkBios.length / itemsPerPage);
+
+  // Reset to page 1 when search changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
+
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
@@ -117,7 +133,7 @@ function LinkBiosTable() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {filteredLinkBios.map((lb, index) => (
+            {currentItems.map((lb, index) => (
               <tr key={lb._id || index} className="hover:bg-gray-50/50">
                 <td className="px-6 py-4">
                   <div className="font-medium text-gray-900">
@@ -167,6 +183,73 @@ function LinkBiosTable() {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination Controls */}
+      {filteredLinkBios.length > 0 && (
+        <div className="flex items-center justify-between border-t border-gray-100 px-6 py-4">
+          <div className="text-sm text-gray-600">
+            Showing {indexOfFirstItem + 1} to{" "}
+            {Math.min(indexOfLastItem, filteredLinkBios.length)} of{" "}
+            {filteredLinkBios.length} linkbios
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
+            >
+              Previous
+            </button>
+
+            <div className="flex items-center gap-1">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => {
+                  // Show first page, last page, current page, and pages around current
+                  if (
+                    page === 1 ||
+                    page === totalPages ||
+                    (page >= currentPage - 1 && page <= currentPage + 1)
+                  ) {
+                    return (
+                      <button
+                        key={page}
+                        onClick={() => setCurrentPage(page)}
+                        className={`h-8 w-8 rounded-lg text-sm font-medium transition-colors ${
+                          currentPage === page
+                            ? "bg-[#d4f758] text-black"
+                            : "text-gray-600 hover:bg-gray-100"
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    );
+                  } else if (
+                    page === currentPage - 2 ||
+                    page === currentPage + 2
+                  ) {
+                    return (
+                      <span key={page} className="px-1 text-gray-400">
+                        ...
+                      </span>
+                    );
+                  }
+                  return null;
+                },
+              )}
+            </div>
+
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+              className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
 
       <EditModal
         isOpen={!!editLinkBio}

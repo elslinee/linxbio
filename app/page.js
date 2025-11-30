@@ -29,14 +29,23 @@ export default function Home() {
             ""
           ) : (
             <>
-              {" "}
               {user ? (
-                <Link
-                  href="/dashboard"
-                  className="text-sm font-bold hover:underline"
-                >
-                  My Account
-                </Link>
+                <>
+                  <Link
+                    href="/dashboard"
+                    className="text-sm font-bold hover:underline"
+                  >
+                    My Account
+                  </Link>
+                  {user?.role === "admin" && (
+                    <Link
+                      href="/admin/dashboard"
+                      className="text-sm font-bold hover:underline"
+                    >
+                      Admin
+                    </Link>
+                  )}
+                </>
               ) : (
                 <Link
                   href="/login"

@@ -4,6 +4,36 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/utils/server/db/connectDB";
 import { User } from "@/utils/server/schemas/user.schema";
 
+// Helper function to generate a unique username from email
+async function generateUniqueUsername(email) {
+  // Extract base username from email (part before @)
+  let baseUsername = email.split("@")[0].toLowerCase();
+
+  // Remove any non-alphanumeric characters except underscores and hyphens
+  baseUsername = baseUsername.replace(/[^a-z0-9_-]/g, "");
+
+  // Ensure it's at least 3 characters
+  if (baseUsername.length < 3) {
+    baseUsername = baseUsername.padEnd(3, "0");
+  }
+
+  // Truncate to max 30 characters
+  baseUsername = baseUsername.substring(0, 30);
+
+  let username = baseUsername;
+  let counter = 1;
+
+  // Check if username exists and append number if needed
+  while (await User.findOne({ username })) {
+    const suffix = counter.toString();
+    const maxBaseLength = 30 - suffix.length;
+    username = baseUsername.substring(0, maxBaseLength) + suffix;
+    counter++;
+  }
+
+  return username;
+}
+
 export async function GET(req) {
   try {
     await connectDB();
@@ -48,9 +78,13 @@ export async function GET(req) {
     let user = await User.findOne({ email: userInfo.email });
 
     if (!user) {
+      // Generate a unique username from the email
+      const username = await generateUniqueUsername(userInfo.email);
+
       user = await User.create({
         fullName: userInfo.name,
         email: userInfo.email,
+        username: username,
         password: null,
         provider: "google",
         picture: userInfo.picture,
@@ -74,7 +108,9 @@ export async function GET(req) {
       path: "/",
     });
 
-    return NextResponse.redirect("http://localhost:3000");
+    return NextResponse.redirect(
+      process.env.NEXTAUTH_URL || "https://linxbio.vercel.app",
+    );
   } catch (err) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }

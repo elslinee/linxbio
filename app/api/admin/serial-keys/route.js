@@ -21,7 +21,9 @@ export async function GET(request) {
       return apiResponse.fail("Admins only", 403);
     }
 
-    const keys = await SerialKey.find().sort({ createdAt: -1 });
+    const keys = await SerialKey.find()
+      .populate("usedBy", "email fullName")
+      .sort({ createdAt: -1 });
 
     return apiResponse.success("Serial keys list", keys);
   } catch (error) {

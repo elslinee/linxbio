@@ -136,7 +136,7 @@ const Phone = ({
             >
               <FontAwesomeIcon
                 icon={iconObj.icon}
-                className="h-5 w-5 text-xl hover:opacity-70"
+                className="h-5 w-5 text-2xl hover:opacity-70"
               />
             </Link>
           );
