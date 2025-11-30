@@ -1,13 +1,35 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminNavbar from "./_components/AdminNavbar";
 import AdminSidebar from "./_components/AdminSidebar";
 import UsersTable from "./_components/UsersTable";
 import LinkBiosTable from "./_components/LinkBiosTable";
 import SerialKeysTable from "./_components/SerialKeysTable";
+import { useAuthStore } from "@/stores/useAuthStore";
+import { useRouter } from "next/navigation";
 
 function page() {
   const [activeTab, setActiveTab] = useState("users");
+  const router = useRouter();
+  const { loading, user } = useAuthStore();
+
+  useEffect(() => {
+    if (loading) return;
+
+    if (!user) {
+      router.replace("/login");
+      return;
+    }
+
+    if (user.role !== "admin") {
+      router.replace("/");
+      return;
+    }
+  }, [loading, user, router]);
+
+  if (loading) return null;
+  if (!user) return null;
+  if (user.role !== "admin") return null;
 
   return (
     <div className="min-h-screen bg-gray-50">
