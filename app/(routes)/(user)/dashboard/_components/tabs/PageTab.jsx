@@ -4,7 +4,6 @@ import {
   Link,
   Trash2,
   X,
-  Search,
   Image,
   Mail,
   Phone,
@@ -21,9 +20,9 @@ import useBlocksStore from "@/stores/useBlocksStore";
 import { updateLinkBioData } from "@/utils/client/user/linkBioApi";
 
 function PageTab() {
-  const [selectedPage, setSelectedPage] = useState(""); // "", "choose_block", "block_form"
+  const [selectedPage, setSelectedPage] = useState("");
   const [editingBlock, setEditingBlock] = useState(null);
-  const [selectedType, setSelectedType] = useState(null); // { type, subType }
+  const [selectedType, setSelectedType] = useState(null);
 
   const { setTab } = useSideBarTabsStore();
 
@@ -82,7 +81,6 @@ const BlockForm = ({ selectedType, setSelectedPage, editingBlock }) => {
         phone: editingBlock.data?.phone || "",
       });
     } else if (selectedType) {
-      // Set default title based on type
       setFormData((prev) => ({
         ...prev,
         title: selectedType.subType
@@ -92,7 +90,9 @@ const BlockForm = ({ selectedType, setSelectedPage, editingBlock }) => {
     }
   }, [editingBlock, selectedType]);
 
-  const handleSave = async () => {
+  const handleSave = async (e) => {
+    e.preventDefault();
+
     const newBlockData = {
       type: selectedType.type,
       title: formData.title,
@@ -112,19 +112,12 @@ const BlockForm = ({ selectedType, setSelectedPage, editingBlock }) => {
         b._id === editingBlock._id ? { ...b, ...newBlockData } : b,
       );
     } else {
-      updatedBlocks = [...blocks, newBlockData];
+      const tempId = `temp_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      updatedBlocks = [...blocks, { ...newBlockData, _id: tempId }];
     }
 
-    // Optimistic update
     setBlocks(updatedBlocks);
     setSelectedPage("");
-
-    // try {
-    //   await updateLinkBioData({ blocks: updatedBlocks });
-    // } catch (error) {
-    //   console.error("Failed to save block:", error);
-    //   // Revert logic could be added here
-    // }
   };
 
   const renderSpecificFields = () => {
@@ -132,7 +125,7 @@ const BlockForm = ({ selectedType, setSelectedPage, editingBlock }) => {
     const type = selectedType?.type?.toLowerCase();
 
     if (type === "gallery") {
-      return null; // No specific fields for now
+      return null;
     }
 
     if (subType === "email" || type === "email") {
@@ -162,6 +155,7 @@ const BlockForm = ({ selectedType, setSelectedPage, editingBlock }) => {
             Phone Number
           </label>
           <input
+            required
             type="tel"
             value={formData.phone}
             onChange={(e) =>
@@ -191,11 +185,11 @@ const BlockForm = ({ selectedType, setSelectedPage, editingBlock }) => {
       );
     }
 
-    // Default to URL for standard buttons
     return (
       <div className="flex flex-col gap-2">
         <label className="text-sm font-medium text-gray-700">Url</label>
         <input
+          required
           type="url"
           value={formData.url}
           onChange={(e) => setFormData({ ...formData, url: e.target.value })}
@@ -205,9 +199,8 @@ const BlockForm = ({ selectedType, setSelectedPage, editingBlock }) => {
       </div>
     );
   };
-  console.log(formData);
   return (
-    <div className="flex flex-col gap-6">
+    <form onSubmit={handleSave} className="flex flex-col gap-6">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
           <label className="text-sm font-medium text-gray-700">Title</label>
@@ -236,15 +229,15 @@ const BlockForm = ({ selectedType, setSelectedPage, editingBlock }) => {
         {renderSpecificFields()}
       </div>
 
-      <Button onClick={handleSave} className="w-full py-3!">
+      <Button type="submit" className="w-full py-3!">
         {editingBlock ? "Save Changes" : "Add Block"}
       </Button>
-    </div>
+    </form>
   );
 };
 
 const ChooseBlock = ({ setSelectedPage, setSelectedType }) => {
-  const [view, setView] = useState("main"); // main, button_options
+  const [view, setView] = useState("main");
 
   const handleSelect = (type, subType = null) => {
     setSelectedType({ type, subType });
@@ -364,7 +357,7 @@ const ChooseBlock = ({ setSelectedPage, setSelectedType }) => {
               className="flex flex-col gap-3 rounded-xl border border-gray-200 bg-white p-4 text-left transition-all hover:border-gray-300 hover:shadow-sm"
             >
               <div className="flex h-42 w-full items-center justify-center rounded-lg bg-gray-100 py-8">
-                {/* Placeholder for preview image/icon */}
+     
                 <div className="flex h-10 min-w-10/12 items-center justify-center rounded-full bg-black text-xs font-bold text-white">
                   My Website Link
                 </div>
@@ -489,12 +482,6 @@ const Tab = ({ setTab, handleAddBlockClick, handleEditBlockClick }) => {
   const handleDelete = async (blockId) => {
     const updatedBlocks = blocks.filter((b) => b._id !== blockId);
     setBlocks(updatedBlocks);
-    // try {
-    //   await updateLinkBioData({ blocks: updatedBlocks });
-    // } catch (error) {
-    //   console.error("Failed to delete block", error);
-    //   setBlocks(blocks); // Revert
-    // }
   };
 
   return (
@@ -523,7 +510,7 @@ const Tab = ({ setTab, handleAddBlockClick, handleEditBlockClick }) => {
           </Button>
         </div>
 
-        {/* BLOCKS LIST */}
+
         <div className="flex flex-col gap-4 pt-4">
           {blocks.map((item, i) => (
             <div key={i} className="flex items-center justify-between gap-2">

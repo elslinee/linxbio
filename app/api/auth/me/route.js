@@ -15,20 +15,20 @@ export async function GET() {
       return apiResponse.fail("Unauthorized", 401);
     }
 
-    // 2) تحقق من التوكين
+ 
     const decoded = verifyToken(token);
     if (!decoded) {
       return apiResponse.fail("Invalid or expired token", 401);
     }
 
-    // 3) هات بيانات اليوزر من DB
+
     const user = await User.findById(decoded.id);
 
     if (!user) {
       return apiResponse.fail("User not found", 404);
     }
 
-    // 4) رجّع بيانات اليوزر (بدون الباسورد)
+
     return apiResponse.success("User data", {
       id: user.id,
       fullName: user.fullName,

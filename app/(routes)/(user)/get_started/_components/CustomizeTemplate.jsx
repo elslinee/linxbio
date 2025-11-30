@@ -27,7 +27,7 @@ function CustomizeTemplate({ onFinish, loading, onBack }) {
     font,
     buttons,
   } = useTemplateStore();
-  // Vertical Scroll Logic
+ 
   const scrollContainerRef = useRef(null);
   const [showScrollButton, setShowScrollButton] = useState(true);
 
@@ -49,7 +49,7 @@ function CustomizeTemplate({ onFinish, loading, onBack }) {
     }
   };
 
-  // Header Horizontal Scroll Logic
+ 
   const headerScrollRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
@@ -74,7 +74,7 @@ function CustomizeTemplate({ onFinish, loading, onBack }) {
     }
   };
 
-  // Color Horizontal Scroll Logic
+
   const colorScrollRef = useRef(null);
   const [showColorLeftArrow, setShowColorLeftArrow] = useState(false);
   const [showColorRightArrow, setShowColorRightArrow] = useState(true);
@@ -99,7 +99,6 @@ function CustomizeTemplate({ onFinish, loading, onBack }) {
     }
   };
 
-  // Font Horizontal Scroll Logic
   const fontScrollRef = useRef(null);
   const [showFontLeftArrow, setShowFontLeftArrow] = useState(false);
   const [showFontRightArrow, setShowFontRightArrow] = useState(true);
@@ -131,8 +130,6 @@ function CustomizeTemplate({ onFinish, loading, onBack }) {
     handleFontScroll();
   }, []);
 
-  console.log(header, colors, font, buttons);
-
   return (
     <div className="relative flex flex-col">
       <div className="mb-6 flex items-center justify-between">
@@ -151,7 +148,7 @@ function CustomizeTemplate({ onFinish, loading, onBack }) {
         onScroll={handleScroll}
         className="scrollbar-hide relative my-2 max-h-[65vh] space-y-8 overflow-y-auto px-1"
       >
-        {/* Header Style */}
+
         <section className="relative">
           <h3 className="mb-3 text-sm font-bold text-gray-900">Header style</h3>
 
@@ -231,7 +228,6 @@ function CustomizeTemplate({ onFinish, loading, onBack }) {
                         : "border-gray-200 hover:border-gray-300"
                     }`}
                   >
-                    {/* <div className="absolute mx-auto h-8 w-full bg-gray-200" /> */}
                     <div className="h-full w-full bg-gray-50 p-2 pt-3">
                       <div className="relative mx-auto h-6 w-6 rounded-full bg-gray-300" />
                       <div className="mx-auto mt-2 h-1.5 w-16 rounded bg-gray-200" />
@@ -291,7 +287,6 @@ function CustomizeTemplate({ onFinish, loading, onBack }) {
                         : "border-gray-200 hover:border-gray-300"
                     }`}
                   >
-                    {/* <div className="absolute mx-auto h-8 w-full bg-gray-200" /> */}
                     <div className="h-full w-full bg-gray-50 p-2 pt-3">
                       <div className="relative mx-auto h-6 w-6 rounded-full bg-gray-300" />
                       <div className="mx-auto mt-2 h-1.5 w-16 rounded bg-gray-200" />
@@ -311,7 +306,6 @@ function CustomizeTemplate({ onFinish, loading, onBack }) {
           </div>
         </section>
 
-        {/* Color Scheme */}
         <section className="relative">
           <h3 className="mb-3 text-sm font-bold text-gray-900">
             Choose a color scheme
@@ -370,7 +364,7 @@ function CustomizeTemplate({ onFinish, loading, onBack }) {
           </div>
         </section>
 
-        {/* Font */}
+  
         <section className="relative">
           <h3 className="mb-3 text-sm font-bold text-gray-900">Font</h3>
 
@@ -413,7 +407,7 @@ function CustomizeTemplate({ onFinish, loading, onBack }) {
           </div>
         </section>
 
-        {/* Buttons Style */}
+
         <section>
           <h3 className="mb-3 text-sm font-bold text-gray-900">
             Buttons style

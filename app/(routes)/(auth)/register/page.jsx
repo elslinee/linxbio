@@ -6,11 +6,8 @@ import { faUser, faLock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Button from "@/components/Button";
 import { register } from "@/utils/client/user/auth";
 import { useRouter } from "next/navigation";
-import {
-  faFacebook,
-  faGoogle,
-  faInstagram,
-} from "@fortawesome/free-brands-svg-icons";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 const signUpMethods = [
   {
@@ -33,6 +30,7 @@ const signUpMethods = [
   // },
 ];
 export default function RegisterPage() {
+  const setUser = useAuthStore((state) => state.setUser);
   const router = useRouter();
   const [userData, setUserData] = useState({
     fullName: "",
@@ -87,7 +85,6 @@ export default function RegisterPage() {
       [name]: value,
     }));
 
-    // Validate real-time
     validateField(name, value);
   };
 
@@ -101,14 +98,11 @@ export default function RegisterPage() {
       setLoading(true);
       const res = await register(userData);
 
-      console.log("Success:", res);
-
+      setUser(res.data.data);
       setUserData({ fullName: "", email: "", password: "" });
       setServerError("");
       router.push("/");
     } catch (err) {
-      console.log("Server error:", err);
-
       const errMesg = err?.response?.data?.message;
       if (errMesg) {
         setServerError(errMesg);
@@ -125,16 +119,13 @@ export default function RegisterPage() {
 
   return (
     <div className="flex min-h-screen w-full font-sans">
-      {/* Left Side - Decorative */}
       <div className="relative hidden w-1/2 flex-col items-center justify-center overflow-hidden bg-black p-10 text-center lg:flex">
-        {/* Abstract Background Elements */}
         <div className="absolute top-0 left-0 h-full w-full opacity-20">
           <div className="absolute -top-24 -right-24 h-96 w-96 animate-pulse rounded-full bg-purple-600 blur-3xl filter"></div>
           <div className="bg-primary absolute top-1/2 left-0 h-64 w-64 animate-pulse rounded-full blur-2xl filter"></div>
           <div className="absolute right-1/4 -bottom-12 h-80 w-80 animate-pulse rounded-full bg-white blur-2xl filter"></div>
         </div>
 
-        {/* Content */}
         <div className="z-10 max-w-lg">
           <h1 className="mb-6 text-5xl font-black tracking-tight text-white">
             Join the Revolution
@@ -145,7 +136,6 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        {/* Abstract Line Pattern Overlay */}
         <svg
           className="absolute bottom-0 left-0 h-full w-full opacity-10"
           viewBox="0 0 100 100"
@@ -166,7 +156,7 @@ export default function RegisterPage() {
         </svg>
       </div>
 
-      {/* Right Side - Form */}
+
       <div className="flex w-full flex-col items-center justify-center bg-white p-8 lg:w-1/2">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center lg:text-left">
@@ -180,7 +170,7 @@ export default function RegisterPage() {
 
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
-              {/* Name Input */}
+      
               {serverError && <p className="text-red-500">{serverError}</p>}
               <div className="relative">
                 <div className="relative">
@@ -200,7 +190,8 @@ export default function RegisterPage() {
                 )}
               </div>
 
-              {/* Email Input */}
+   
+   
               <div className="relative">
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
@@ -219,7 +210,7 @@ export default function RegisterPage() {
                 )}
               </div>
 
-              {/* Password Input */}
+         
               <div className="relative">
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
@@ -238,7 +229,7 @@ export default function RegisterPage() {
                 )}
               </div>
 
-              {/* Confirm Password Input */}
+  
               <div className="relative">
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">

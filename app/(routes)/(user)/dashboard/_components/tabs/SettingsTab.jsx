@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { ArrowLeft, Trash2, X } from "lucide-react";
+import { Trash2, X } from "lucide-react";
 import AnimatedTab from "@/app/(routes)/(user)/dashboard/_components/AnimatedTab";
 import { useSideBarTabsStore } from "@/stores/useSideBarTabsStore";
-import CustomBtn from "@/app/(routes)/(user)/dashboard/_components/CustomBtn";
 import useTemplateStore from "@/stores/useTemplateStore";
 import useUserInfoStore from "@/stores/useUserInfoStore";
 import { checkUsername } from "@/utils/client/user/usersApi";
 import { useAlertDialog } from "@/components/AlertDialogProvider";
 import { deleteLinkBioData } from "@/utils/client/user/linkBioApi";
+import { useRouter } from "next/navigation";
+import { me } from "@/utils/client/user/auth";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 const languages = [
   { code: "en", name: "English", native: "English" },
@@ -110,10 +112,23 @@ const Tab = ({ setTab }) => {
     }
   }, [profile.username]);
   const { showDialog, closeDialog } = useAlertDialog();
+  const resetUserInfo = useUserInfoStore((state) => state.resetUserInfo);
+  const resetTemplateInfo = useTemplateStore(
+    (state) => state.resetTemplateInfo,
+  );
+  const router = useRouter();
+  const { setUser } = useAuthStore();
   const DeleteLinxBioProfile = () => {
-    deleteLinkBioData().then((res) => {
+    deleteLinkBioData().then(async (res) => {
       if (res.status === 200) {
+        await me().then((res) => {
+          setUser(res.data?.data);
+        });
         closeDialog();
+        router.push("/");
+        resetUserInfo();
+        resetTemplateInfo();
+        setTab("");
       }
     });
   };
@@ -193,7 +208,7 @@ const Tab = ({ setTab }) => {
           </div>
         </div>
       </div>
-      {/* Profile userName Check */}
+
       <div className="custom-scroll flex flex-1 flex-col gap-4 overflow-y-auto px-4 pb-6">
         <div className="flex w-full items-center justify-center gap-4">
           <div className="flex flex-1 flex-col gap-3">

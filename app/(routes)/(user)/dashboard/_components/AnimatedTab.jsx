@@ -9,25 +9,23 @@ export default function AnimatedTab({ children, className }) {
 
   useEffect(() => {
     if (isMobile) {
-      // animate Y only — does NOT touch translateX from Tailwind
       animate(y, 0, { duration: 0.3, ease: "easeInOut" });
     } else {
-      // animate X only — desktop
       animate(x, 0, { duration: 0.3, ease: "easeInOut" });
     }
   }, []);
   return (
     <motion.div
       style={{
-        y: isMobile ? y : 0, // safe
-        x: !isMobile ? x : 0, // safe
+        y: isMobile ? y : 0, 
+        x: !isMobile ? x : 0, 
       }}
       initial={{
         opacity: 0,
         y: isMobile ? 20 : 0,
         x: !isMobile ? -20 : 0,
       }}
-      animate={{ opacity: 1 }} // only opacity here
+      animate={{ opacity: 1 }} 
       exit={{
         opacity: 0,
         y: isMobile ? 20 : 0,

@@ -65,28 +65,25 @@ function GetStartedPage() {
             error = "Only letters, numbers, and hyphens allowed";
           break;
         case "whatsapp":
-          const raw = value.replace(/\s+/g, ""); // احذف المسافات
+          const raw = value.replace(/\s+/g, "");
 
           if (raw.length === 0) {
             error = "";
             break;
           }
 
-          // لازم يبدأ بـ +
           if (!raw.startsWith("+")) {
             error = "Number must start with +";
             break;
           }
 
-          const digits = raw.slice(1); // احذف +
+          const digits = raw.slice(1);
 
-          // لازم تكون أرقام فقط
           if (!/^[0-9]+$/.test(digits)) {
             error = "Only numbers are allowed";
             break;
           }
 
-          // الطول
           if (digits.length < 10 || digits.length > 20) {
             error = "Phone number must be 10–20 digits";
             break;
@@ -97,7 +94,6 @@ function GetStartedPage() {
         case "website":
         case "discord":
         case "youtube":
-          // Stricter URL validation
           if (
             !/^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/.test(
               value,
@@ -154,16 +150,14 @@ function GetStartedPage() {
   const handleSocialChange = (e) => {
     let { name, value } = e.target;
     if (name === "whatsapp") {
-      let cleaned = value.replace(/\s+/g, ""); // احذف المسافات
+      let cleaned = value.replace(/\s+/g, "");
 
-      // لو فاضي → سيبه فاضي
       if (cleaned === "") {
         setSocials({ whatsapp: "" });
         validateField("whatsapp", "");
         return;
       }
 
-      // لو المستخدم كتب أرقام بدون +
       if (!cleaned.startsWith("+")) {
         cleaned = "+" + cleaned.replace(/^\+/, "");
       }
@@ -183,7 +177,6 @@ function GetStartedPage() {
     } else if (step === 2) {
       setStep(3);
     } else {
-      // Finish
       router.push("/dashboard");
     }
   };
@@ -254,7 +247,6 @@ function GetStartedPage() {
         router.replace("/dashboard");
       }
     } catch (err) {
-      console.error(err);
     } finally {
       setLinkBioUploadLoading(false);
     }
@@ -266,8 +258,7 @@ function GetStartedPage() {
       const url = await upload(file);
       return url;
     } catch (err) {
-      console.error(err);
-      return null; // مهم
+      return null;
     } finally {
       setUploadLoading(false);
     }
@@ -292,17 +283,16 @@ function GetStartedPage() {
 
   return (
     <div className="flex min-h-screen w-full overflow-y-hidden">
-      {/* Left Side - Form */}
-      <div className="flex w-full flex-col justify-center overflow-y-hidden bg-white px-4 lg:w-1/2">
-        <button
-          onClick={handleBack}
-          className="mb-6 flex cursor-pointer items-center gap-2 text-sm font-semibold text-gray-600 hover:text-black"
-        >
-          <FontAwesomeIcon icon={faArrowLeft} className="text-[14px]" />
-          Go Back
-        </button>
 
+      <div className="flex w-full flex-col justify-center overflow-y-hidden bg-white px-4 lg:w-1/2">
         <div className="mx-auto w-full max-w-lg">
+          <button
+            onClick={handleBack}
+            className="mb-6 flex cursor-pointer items-center gap-1.5 rounded-2xl bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-600 hover:text-black"
+          >
+            <FontAwesomeIcon icon={faArrowLeft} className="text-[13px]" />
+            Back
+          </button>
           {step === 1 ? (
             <div className="space-y-6">
               <div>
@@ -370,16 +360,13 @@ function GetStartedPage() {
                         if (!file) return;
 
                         try {
-                          const imageUrl = await upload_(file); // ← ← ← المهم
+                          const imageUrl = await upload_(file);
 
                           if (imageUrl) {
                             setProfile({ avatar: imageUrl });
                           } else {
-                            console.log("Upload returned null");
                           }
-                        } catch (err) {
-                          console.error("Upload failed:", err);
-                        }
+                        } catch (err) {}
                       }}
                       className="hidden"
                     />
@@ -632,7 +619,7 @@ function GetStartedPage() {
         </div>
       </div>
 
-      {/* Right Side - Preview */}
+
       <div className="hidden min-h-full w-1/2 overflow-hidden bg-[#d5f75815] lg:flex">
         <div className="sticky mx-auto flex items-center justify-center">
           <PhonePreview

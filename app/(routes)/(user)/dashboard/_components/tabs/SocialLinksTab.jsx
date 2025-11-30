@@ -6,7 +6,7 @@ import AddSocialLinkButton from "@/app/(routes)/(user)/dashboard/_components/Add
 import SocialLinksSortable from "@/app/(routes)/(user)/dashboard/_components/SocialLinksSortable";
 import useUserInfoStore from "@/stores/useUserInfoStore";
 function SocialLinksTab() {
-  const { socials, socialsOrder } = useUserInfoStore();
+  const { socials } = useUserInfoStore();
   const { setTab } = useSideBarTabsStore();
   const calcLinks = Object.values(socials).filter((v) => !!v).length;
 
@@ -27,7 +27,6 @@ function SocialLinksTab() {
         <hr className="mb-4 text-gray-200" />
 
         <div className="custom-scroll flex flex-1 flex-col gap-4 overflow-y-auto px-4 pb-6">
-          {/* Social Links */}
           <div className="flex items-center justify-between">
             <div className="flex w-full items-center justify-between gap-3">
               <p className="text-sm font-medium">

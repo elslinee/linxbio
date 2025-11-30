@@ -19,17 +19,16 @@ export async function GET(request) {
       return apiResponse.fail("Admins only", 403);
     }
 
-    // 📌 Pagination
+
     const { searchParams } = new URL(request.url);
     const page = Number(searchParams.get("page")) || 1;
     const limit = Number(searchParams.get("limit")) || 10;
     const skip = (page - 1) * limit;
 
-    // 📌 Count all documents
     const total = await LinkBio.countDocuments();
     const totalPages = Math.ceil(total / limit);
 
-    // 📌 Fetch page data
+
     const linkbios = await LinkBio.find()
       .sort({ createdAt: -1 })
       .skip(skip)

@@ -1,6 +1,6 @@
 import { STATUS_TYPES } from "./statusTypes";
 
-// Basic schema builder (internal)
+
 const dataSchema = (status, message, data = null, statusCode = 200) => ({
   status,
   message,
@@ -8,7 +8,7 @@ const dataSchema = (status, message, data = null, statusCode = 200) => ({
   statusCode,
 });
 
-// Unified API response builder
+
 export const apiResponse = {
   success(message, data = null, statusCode = 200) {
     return new Response(

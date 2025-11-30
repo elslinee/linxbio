@@ -21,13 +21,11 @@ import {
   faEnvelope,
   faEarthAmericas,
   faPlus,
-  faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAlertDialog } from "@/components/AlertDialogProvider";
 import Button from "@/components/Button";
 import { ChevronRight, X } from "lucide-react";
 import useUserInfoStore from "@/stores/useUserInfoStore";
-import { updateLinkBioData } from "@/utils/client/user/linkBioApi";
 
 const socialOptions = [
   {

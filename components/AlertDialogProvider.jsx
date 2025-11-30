@@ -7,11 +7,11 @@ const AlertDialogContext = createContext(null);
 export function AlertDialogProvider({ children }) {
   const [dialog, setDialog] = useState({
     open: false,
-    content: null, // 🆕 custom div / JSX
+    content: null, 
     confirmText: "Confirm",
     cancelText: "Cancel",
     onConfirm: null,
-    hideActions: false, // 🆕 ability to remove buttons
+    hideActions: false, 
   });
 
   const showDialog = useCallback((options) => {
@@ -49,7 +49,7 @@ export function AlertDialogProvider({ children }) {
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* 🆕 هنا يظهر المحتوى المخصص */}
+   
               <div>{dialog.content}</div>
             </motion.div>
           </motion.div>

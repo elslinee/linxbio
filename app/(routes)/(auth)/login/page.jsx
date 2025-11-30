@@ -7,11 +7,7 @@ import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import { login } from "@/utils/client/user/auth";
 import { useAuthStore } from "@/stores/useAuthStore";
-import {
-  faFacebook,
-  faGoogle,
-  faInstagram,
-} from "@fortawesome/free-brands-svg-icons";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 const signInMethods = [
   {

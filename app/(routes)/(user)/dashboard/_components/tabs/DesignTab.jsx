@@ -1,33 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowLeft, X } from "lucide-react";
 import AnimatedTab from "@/app/(routes)/(user)/dashboard/_components/AnimatedTab";
 import { useSideBarTabsStore } from "@/stores/useSideBarTabsStore";
 import CustomBtn from "@/app/(routes)/(user)/dashboard/_components/CustomBtn";
 import useTemplateStore from "@/stores/useTemplateStore";
+import { getLinkBioData } from "@/utils/client/user/linkBioApi";
 
 function DesignTab() {
   const { setTab } = useSideBarTabsStore();
 
   const {
-    // index-based UI controls
     selectedHeader,
     selectedColor,
     selectedFont,
     selectedButton,
 
-    // options
     headerOptions,
     colorOptions,
     fontOptions,
     buttonOptions,
 
-    // setters by index
     setSelectedHeader,
     setSelectedColor,
     setSelectedFont,
     setSelectedButton,
 
-    // 🔥 NEW — real template values from API
     header,
     colors,
     font,
@@ -36,13 +33,60 @@ function DesignTab() {
 
   const [selectedPage, setSelectedPage] = useState("");
 
+  const getUserLinkBio_ = () => {
+    getLinkBioData()
+      .then((res) => {
+        const { profile, socials, template, blocks } = res?.data?.data;
+        console.log("=== Template Debug ===");
+        console.log("template from API:", template);
+        console.log("headerOptions:", headerOptions);
+        console.log("template.header value:", template.header);
+
+        // Find the index of each template value in the options arrays
+        // Convert header to number since API returns it as string
+        const headerIndex = headerOptions.findIndex(
+          (opt) => opt === Number(template.header),
+        );
+        console.log("headerIndex found:", headerIndex);
+
+        const colorIndex = colorOptions.findIndex(
+          (opt) =>
+            opt.bg === template.colors?.bg &&
+            opt.text === template.colors?.text &&
+            opt.accent === template.colors?.accent,
+        );
+        const fontIndex = fontOptions.findIndex((opt) => opt === template.font);
+        const buttonIndex = buttonOptions.findIndex(
+          (opt) => opt === template.buttons,
+        );
+
+        console.log("All indices:", {
+          headerIndex,
+          colorIndex,
+          fontIndex,
+          buttonIndex,
+        });
+
+        // Set the indices (fallback to 0 if not found)
+        setSelectedHeader(headerIndex >= 0 ? headerIndex : 0);
+        setSelectedColor(colorIndex >= 0 ? colorIndex : 0);
+        setSelectedFont(fontIndex >= 0 ? fontIndex : 0);
+        setSelectedButton(buttonIndex >= 0 ? buttonIndex : 0);
+      })
+      .catch((err) => {
+        console.error("Failed to load template", err);
+      });
+  };
+
+  useEffect(() => {
+    getUserLinkBio_();
+  }, []);
   return (
     <AnimatedTab className="absolute bottom-24 left-1/2 w-[calc(100vw-2rem)] max-w-[425px] -translate-x-1/2 md:relative md:bottom-auto md:left-auto md:w-[425px] md:translate-x-0">
       {selectedPage === "" ? (
         <Tab
           setTab={setTab}
           setSelectedPage={setSelectedPage}
-          // 🔥 passing real template values to preview
           header={header}
           colors={colors}
           font={font}
@@ -130,7 +174,6 @@ const LayoutChanges = ({
                   : "border-gray-200 hover:border-gray-300"
               }`}
             >
-              {/* <div className="absolute mx-auto h-8 w-full bg-gray-200" /> */}
               <div className="h-full w-full bg-gray-50 p-2 pt-3">
                 <div className="relative mx-auto h-6 w-6 rounded-full bg-gray-300" />
                 <div className="mx-auto mt-2 h-1.5 w-16 rounded bg-gray-200" />
@@ -388,7 +431,6 @@ const Tab = ({ setTab, setSelectedPage }) => {
       <hr className="mb-4 text-gray-200" />
 
       <div className="custom-scroll flex flex-1 flex-col gap-4 overflow-y-auto px-4 pb-6">
-        {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-3">
             <p className="text-sm font-medium">Layout</p>
@@ -409,7 +451,7 @@ const Tab = ({ setTab, setSelectedPage }) => {
             onClick={() => setSelectedPage("layout")}
           />
         </div>
-        {/* Colors */}
+
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-3">
             <p className="text-sm font-medium">Colors</p>
@@ -439,7 +481,7 @@ const Tab = ({ setTab, setSelectedPage }) => {
             onClick={() => setSelectedPage("colors")}
           />
         </div>
-        {/* Font */}
+
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-3">
             <p className="text-sm font-medium">Font</p>
@@ -455,7 +497,7 @@ const Tab = ({ setTab, setSelectedPage }) => {
             onClick={() => setSelectedPage("font")}
           />
         </div>
-        {/* Buttons */}
+
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-3">
             <p className="text-sm font-medium">Buttons</p>

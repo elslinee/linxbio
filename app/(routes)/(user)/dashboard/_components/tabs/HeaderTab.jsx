@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import Button from "@/components/Button";
 import { useAlertDialog } from "@/components/AlertDialogProvider";
-import { ArrowLeft, KeyIcon, Link, Trash, Trash2, X } from "lucide-react";
+import { Trash2, X } from "lucide-react";
 import AnimatedTab from "@/app/(routes)/(user)/dashboard/_components/AnimatedTab";
 import { useSideBarTabsStore } from "@/stores/useSideBarTabsStore";
 import CustomBtn from "@/app/(routes)/(user)/dashboard/_components/CustomBtn";
@@ -10,6 +9,8 @@ import { upload } from "@/utils/client/user/upload";
 import Image from "next/image";
 import ToggleSwitch from "@/components/ToggleSwitch";
 import { VerifiedIcon } from "@/components/VerifiedIcon";
+import { redeemSerialKey } from "@/utils/client/user/serialKeysApi";
+import { updateLinkBioData } from "@/utils/client/user/linkBioApi";
 function HeaderTab({ desktop }) {
   const { setTab } = useSideBarTabsStore();
   const cover = useUserInfoStore((state) => state.profile.cover);
@@ -80,7 +81,6 @@ const Tab = ({
         setProfile({ cover: url });
       }
     } catch (err) {
-      console.error(err);
       return null;
     } finally {
       setUploadCoverLoading(false);
@@ -96,14 +96,11 @@ const Tab = ({
         setProfile({ avatar: url });
       }
     } catch (err) {
-      console.error(err);
       return null;
     } finally {
       setUploadAvatarLoading(false);
     }
   };
-
-  // cover color changes
 
   const handleColorDrag = (e) => {
     setColor(e.target.value);
@@ -117,7 +114,6 @@ const Tab = ({
   const handleBackgroundColorCommit = () => {
     setProfile({ backgroundColor: backgroundColor });
   };
-  // cover color changes
   const coverIsImage =
     cover?.startsWith("http") ||
     cover?.startsWith("https") ||
@@ -125,17 +121,42 @@ const Tab = ({
   const { showDialog, closeDialog } = useAlertDialog();
 
   const EnterKeyDiv = () => {
-    const key = process.env.NEXT_PUBLIC_VERIFIED_KEY;
     const [value, setValue] = useState("");
     const [err, setErr] = useState("");
-    const handleKey = () => {
-      if (value === key) {
-        setProfile({ verifiedBadge: true });
-        setProfile({ keyEntered: true });
-        closeDialog();
-      } else {
-        setErr("Invalid Key");
-      }
+    const handleKey = async () => {
+      await redeemSerialKey(value)
+        .then((res) => {
+          const success = res?.data?.status === "success";
+
+          if (success) {
+            updateLinkBioData({
+              profile: {
+                verifiedBadge: true,
+                keyEntered: true,
+              },
+            })
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+            setProfile({ verifiedBadge: true });
+            setProfile({ keyEntered: true });
+            closeDialog();
+          }
+        })
+        .catch((err) => {
+          setErr(err?.response?.data?.message);
+        });
+
+      // if (value === key) {
+      //   setProfile({ verifiedBadge: true });
+      //   setProfile({ keyEntered: true });
+      //   closeDialog();
+      // } else {
+      //   setErr("Invalid Key");
+      // }
     };
 
     return (
@@ -212,7 +233,6 @@ const Tab = ({
       <hr className="mb-4 text-gray-200" />
 
       <div className="custom-scroll flex flex-1 flex-col gap-4 overflow-y-auto px-4 pb-6">
-        {/* Desktop Background color */}
         {desktop && (
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-3">
@@ -224,8 +244,8 @@ const Tab = ({
                 <div
                   style={{
                     backgroundImage: backgroundColor
-                      ? `linear-gradient(to bottom, ${backgroundColor}, ${backgroundColor})`
-                      : `linear-gradient(to bottom, #f4a8d4, #E3E595)`,
+                      ? `linear-gradient(to bottom, ${backgroundColor || "#dedede"}, ${backgroundColor || "#dedede"})`
+                      : `linear-gradient(to bottom, #dedede, #dedede)`,
                   }}
                   className="h-full w-full p-2 pt-4"
                 ></div>
@@ -235,7 +255,7 @@ const Tab = ({
               <div className="relative">
                 <input
                   type="color"
-                  value={backgroundColor}
+                  value={backgroundColor || "#dedede"}
                   onChange={handleBackgroundColorDrag}
                   onBlur={handleBackgroundColorCommit}
                   className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
@@ -243,7 +263,7 @@ const Tab = ({
                 <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 bg-white transition hover:scale-105 hover:border-gray-400">
                   <div
                     className="h-5 w-5 rounded-full shadow-inner"
-                    style={{ backgroundColor: backgroundColor }}
+                    style={{ backgroundColor: backgroundColor || "#dedede" }}
                   />
                 </div>
               </div>
@@ -251,7 +271,6 @@ const Tab = ({
           </div>
         )}
 
-        {/* Cover Image */}
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-3">
             <p className="text-sm font-medium">Cover Image </p>
@@ -283,7 +302,7 @@ const Tab = ({
                   <div
                     style={{
                       backgroundImage: color
-                        ? `linear-gradient(to bottom, ${color}, ${color})`
+                        ? `linear-gradient(to bottom, ${profile?.cover}, ${profile?.cover})`
                         : `linear-gradient(to bottom, #f4a8d4, #E3E595)`,
                     }}
                     className="h-full w-full p-2 pt-4"
@@ -322,7 +341,7 @@ const Tab = ({
               <div className="relative">
                 <input
                   type="color"
-                  value={color}
+                  value={color || "#ff0000"}
                   onChange={handleColorDrag}
                   onBlur={handleColorCommit}
                   className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
@@ -331,7 +350,7 @@ const Tab = ({
                 <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 bg-white transition hover:scale-105 hover:border-gray-400">
                   <div
                     className="h-5 w-5 rounded-full shadow-inner"
-                    style={{ backgroundColor: color }}
+                    style={{ backgroundColor: profile?.cover }}
                   />
                 </div>
               </div>
@@ -339,7 +358,6 @@ const Tab = ({
           </div>
         </div>
 
-        {/* Profile image */}
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-3">
             <p className="text-sm font-medium">Profile Image </p>
@@ -371,7 +389,6 @@ const Tab = ({
           </div>
           <div className="flex gap-4">
             <div className="flex items-center">
-              {/* Hidden input */}
               <input
                 ref={fileInputAvatarRef}
                 type="file"
@@ -380,7 +397,6 @@ const Tab = ({
                 onChange={uploadAvatar_}
               />
 
-              {/* Your custom button triggers upload */}
               <CustomBtn
                 outLine={true}
                 name="Replace"
@@ -397,7 +413,7 @@ const Tab = ({
             </button>
           </div>
         </div>
-        {/* Profile Name */}
+
         <p className="text-sm font-medium">Profile Name </p>
         <div className="flex w-full items-center justify-center gap-4">
           <div className="flex flex-1 flex-col gap-3">
@@ -419,7 +435,7 @@ const Tab = ({
             />
           </div>
         </div>
-        {/* Verified Badge*/}
+
         {showName && (
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-1">
@@ -433,7 +449,6 @@ const Tab = ({
               </p>
             </div>
             <div className="flex">
-              <button onClick={handleKey} className="flex"></button>
               {profile?.keyEntered ? (
                 <ToggleSwitch
                   checked={verified}
@@ -447,7 +462,7 @@ const Tab = ({
             </div>
           </div>
         )}
-        {/* Profile Bio */}
+
         <p className="text-sm font-medium"> Bio </p>
         <div className="flex w-full items-center justify-center gap-4">
           <div className="flex flex-1 flex-col gap-3">

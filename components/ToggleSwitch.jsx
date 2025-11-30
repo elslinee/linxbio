@@ -12,14 +12,12 @@ const ToggleSwitch = ({ checked, setChecked }) => {
           className="sr-only"
         />
 
-        {/* Track */}
         <div
           className={`h-5 w-10 rounded-full transition-colors ${
             checked ? "bg-primary" : "bg-gray-300"
           }`}
         />
 
-        {/* Thumb */}
         <div
           className={`absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-white transition-transform ${
             checked ? "translate-x-5" : ""

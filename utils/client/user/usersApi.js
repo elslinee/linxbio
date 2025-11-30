@@ -31,7 +31,7 @@ const checkUsername = (
     }
 
     setIsChecking(false);
-  }, 500); // debounce 0.5s
+  }, 500); 
 };
 const finishGetStarted = async (isGetStartedDone) => {
   try {
@@ -41,7 +41,6 @@ const finishGetStarted = async (isGetStartedDone) => {
 
     return res.data;
   } catch (err) {
-    console.log("Finish Error:", err.response?.data || err.message);
     return null;
   }
 };

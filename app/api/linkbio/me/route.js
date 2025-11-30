@@ -42,11 +42,31 @@ export async function PATCH(req) {
 
     const data = await req.json();
 
-    const updated = await LinkBio.findOneAndUpdate({ userId: user.id }, data, {
-      new: true,
-    });
+    const old = await LinkBio.findOne({ userId: user.id });
+    if (!old) return apiResponse.fail("LinkBio not found", 404);
 
-    if (!updated) return apiResponse.fail("LinkBio not found", 404);
+    const merged = {
+      profile: {
+        ...old.profile,
+        ...(data.profile || {}),
+      },
+      socials: {
+        ...old.socials,
+        ...(data.socials || {}),
+      },
+      template: {
+        ...old.template,
+        ...(data.template || {}),
+      },
+      socialsOrder: data.socialsOrder || old.socialsOrder,
+      blocks: data.blocks || old.blocks,
+    };
+
+    const updated = await LinkBio.findOneAndUpdate(
+      { userId: user.id },
+      { $set: merged },
+      { new: true },
+    );
 
     return apiResponse.success("LinkBio updated", updated);
   } catch (error) {

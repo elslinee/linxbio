@@ -109,7 +109,7 @@ const useUserInfoStore = create(
             discord: "",
             telegram: "",
           },
-          errors: {}, // مهم جداً
+          errors: {},
         }),
     }),
     {
@@ -119,8 +119,8 @@ const useUserInfoStore = create(
       partialize: (state) => ({
         profile: {
           ...state.profile,
-          avatar: undefined, // ❌ not persisted
-          cover: undefined, // ❌ not persisted
+          avatar: undefined,
+          cover: undefined,
         },
         socials: state.socials,
         socialsOrder: state.socialsOrder,

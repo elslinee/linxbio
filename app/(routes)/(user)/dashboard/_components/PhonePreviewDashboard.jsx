@@ -227,9 +227,9 @@ const PhonePreviewDashboard = ({
             style={{
               color: colors.text,
             }}
-            className="mt-2  max-w-full flex items-center gap-1  text-base font-bold tracking-wide text-black uppercase md:mt-3 md:text-lg"
+            className="mt-2 flex max-w-full items-center gap-1 text-base font-bold tracking-wide text-black uppercase md:mt-3 md:text-lg"
           >
-            <h2 className="text-center line-clamp-2">
+            <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
             </h2>
             {profile.verifiedBadge && (
@@ -307,9 +307,9 @@ const PhonePreviewDashboard = ({
         {profile?.showName && (
           <div
             style={{ color: colors.text }}
-            className="mt-1  max-w-full flex items-center gap-1  text-base font-medium tracking-wide uppercase md:mt-3 md:text-lg"
+            className="mt-1 flex max-w-full items-center gap-1 text-base font-medium tracking-wide uppercase md:mt-3 md:text-lg"
           >
-            <h2 className="text-center line-clamp-2">
+            <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
             </h2>
             {profile.verifiedBadge && (
@@ -377,9 +377,9 @@ const PhonePreviewDashboard = ({
         {profile?.showName && (
           <div
             style={{ color: colors.text }}
-            className="mt-3  max-w-full flex items-center gap-1  text-lg font-medium tracking-wide uppercase md:text-xl"
+            className="mt-3 flex max-w-full items-center gap-1 text-lg font-medium tracking-wide uppercase md:text-xl"
           >
-            <h2 className="text-center line-clamp-2">
+            <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
             </h2>
             {profile.verifiedBadge && (
@@ -462,9 +462,9 @@ const PhonePreviewDashboard = ({
         {profile?.showName && (
           <div
             style={{ color: colors.text }}
-            className="mt-1  max-w-full flex items-center gap-1  text-lg font-bold tracking-wide uppercase md:text-xl"
+            className="mt-1 flex max-w-full items-center gap-1 text-lg font-bold tracking-wide uppercase md:text-xl"
           >
-            <h2 className="text-center line-clamp-2">
+            <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
             </h2>
             {profile.verifiedBadge && (
@@ -546,9 +546,9 @@ const PhonePreviewDashboard = ({
         {profile?.showName && (
           <div
             style={{ color: colors.text }}
-            className="mt-1 max-w-full  flex items-center gap-1  text-lg font-bold tracking-wide uppercase md:text-xl"
+            className="mt-1 flex max-w-full items-center gap-1 text-lg font-bold tracking-wide uppercase md:text-xl"
           >
-            <h2 className="text-center  line-clamp-2">
+            <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
             </h2>
             {profile.verifiedBadge && (
@@ -616,9 +616,9 @@ const PhonePreviewDashboard = ({
         {profile?.showName && (
           <div
             style={{ color: colors.text }}
-            className="mt-1  max-w-full flex items-center gap-1  font-bold tracking-wide uppercase md:text-xl"
+            className="mt-1 flex max-w-full items-center gap-1 font-bold tracking-wide uppercase md:text-xl"
           >
-            <h2 className="text-center line-clamp-2   ">
+            <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
             </h2>
             {profile.verifiedBadge && (
@@ -731,7 +731,9 @@ const PhonePreviewDashboard = ({
     <div
       lang={profile?.language}
       dir={rtlLanguages.includes(profile?.language) ? "rtl" : "ltr"}
-      style={{ backgroundColor: desktop ? profile?.backgroundColor : "" }}
+      style={{
+        backgroundColor: desktop ? profile?.backgroundColor || "#dedede" : "",
+      }}
       className={
         desktop
           ? "flex h-[500px] w-[1200px] max-w-[1200px] items-center justify-center overflow-hidden md:h-[700px]"

@@ -7,18 +7,16 @@ export async function PATCH(req) {
   try {
     await connectDB();
 
-    // 1. Check auth
     const user = await getUserFromCookies();
     if (!user) return apiResponse.fail("Unauthorized", 401);
 
-    // 2. Read body
     const { order } = await req.json();
 
     if (!Array.isArray(order)) {
       return apiResponse.fail("Invalid order (must be an array)", 400);
     }
 
-    // 3. Update socialsOrder field
+
     const updated = await LinkBio.findOneAndUpdate(
       { userId: user.id },
       { socialsOrder: order },

@@ -15,24 +15,9 @@ import {
   faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { useRouter } from "next/navigation";
-import { logout } from "@/utils/client/user/auth";
 export default function Home() {
-  const router = useRouter();
   const user = useAuthStore((s) => s.user);
   const loading = useAuthStore((s) => s.loading);
-  console.log(user);
-  const logoutRequest = async () => {
-    try {
-      await logout();
-
-      useAuthStore.getState().clearUser();
-
-      router.push("/login");
-    } catch (error) {
-      console.log("Logout error:", error);
-    }
-  };
   return (
     <div className="selection:bg-primary min-h-screen bg-white font-sans text-black selection:text-black">
       <header className="cont flex h-18 w-full items-center justify-between py-4">

@@ -1,10 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import useUserInfoStore from "@/stores/useUserInfoStore";
-import {
-  updateLinkBioData,
-  updateSocialOrder,
-} from "@/utils/client/user/linkBioApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
@@ -99,7 +95,7 @@ export default function SocialLinksSortable() {
   };
 
   const onDragOverEvent = (e, index) => {
-    e.preventDefault(); // prevents the flicker
+    e.preventDefault();
     dragOverItem.current = index;
   };
 
@@ -115,8 +111,6 @@ export default function SocialLinksSortable() {
 
     setItems(arr);
     setSocialsOrder(arr);
-
-    console.log("New Order =>", arr);
   };
 
   const handleRemove = (key) => {

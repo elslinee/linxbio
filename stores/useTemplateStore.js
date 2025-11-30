@@ -11,9 +11,6 @@ const defaultTemplate = {
 const useTemplateStore = create(
   persist(
     (set) => ({
-      /** -----------------------------
-       *  INITIAL VALUES
-       * ----------------------------- */
       selectedHeader: 0,
       selectedColor: 0,
       selectedFont: 0,
@@ -24,7 +21,6 @@ const useTemplateStore = create(
       font: defaultTemplate.font,
       buttons: defaultTemplate.buttons,
 
-      /** OPTIONS */
       headerOptions: [1, 2, 3, 4, 5],
 
       colorOptions: [
@@ -63,10 +59,6 @@ const useTemplateStore = create(
         "btns_style_5",
       ],
 
-      /** ---------------------------------
-       * SETTERS (BY INDEX) — زي ما هي
-       * --------------------------------- */
-
       setSelectedHeader: (index) =>
         set((state) => ({
           selectedHeader: index,
@@ -91,10 +83,6 @@ const useTemplateStore = create(
           buttons: state.buttonOptions[index],
         })),
 
-      /** ---------------------------------
-       * DIRECT SETTERS (API SAFE)
-       * --------------------------------- */
-
       setHeader: (header) =>
         set({
           header: header ?? defaultTemplate.header,
@@ -115,7 +103,6 @@ const useTemplateStore = create(
           buttons: buttons ?? defaultTemplate.buttons,
         }),
 
-      /** تعيين Template كامل مرة واحدة من الـ API */
       setTemplate: (template) =>
         set({
           header: template?.header ?? defaultTemplate.header,
@@ -124,7 +111,6 @@ const useTemplateStore = create(
           buttons: template?.buttons ?? defaultTemplate.buttons,
         }),
 
-      /** RESET */
       resetTemplateInfo: () =>
         set({
           selectedHeader: 0,

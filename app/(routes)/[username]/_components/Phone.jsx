@@ -62,7 +62,88 @@ const Phone = ({
   const baseClasses =
     "w-full flex justify-center items-center    rounded-full border-2  py-3  text-base text-base font-bold transition-transform hover:translate-x-[2px] hover:translate-y-[2px]";
   const showBio = profile?.showBio;
+  const SocialMedia = () => {
+    return (
+      <div
+        style={{ color: colors.text }}
+        className="mt-4 flex flex-wrap justify-center gap-3"
+      >
+        {socialsOrder.map((key) => {
+          const iconObj = socialIcons.find((s) => s.key === key);
+          const value = socials[key];
 
+          if (!value) return null;
+
+          let href = value;
+
+          const isFullUrl =
+            value.startsWith("http://") || value.startsWith("https://");
+
+          if (!isFullUrl) {
+            switch (key) {
+              case "email":
+                href = `mailto:${value}`;
+                break;
+              case "whatsapp":
+                href = `https://wa.me/${value.replace(/\D/g, "")}`;
+                break;
+              case "instagram":
+                href = `https://instagram.com/${value}`;
+                break;
+              case "threads":
+                href = `https://threads.com/${value}`;
+                break;
+              case "tiktok":
+                href = `https://www.tiktok.com/@${value}`;
+                break;
+              case "x":
+                href = `https://x.com/${value}`;
+                break;
+              case "twitch":
+                href = `https://twitch.tv/${value}`;
+                break;
+              case "facebook":
+                href = `https://facebook.com/${value}`;
+                break;
+              case "github":
+                href = `https://github.com/${value}`;
+                break;
+              case "linkedin":
+                href = `https://linkedin.com/in/${value}`;
+                break;
+              case "pinterest":
+                href = `https://pinterest.com/${value}`;
+                break;
+              case "behance":
+                href = `https://behance.net/${value}`;
+                break;
+              case "telegram":
+                href = `https://t.me/${value}`;
+                break;
+              default:
+                href = value;
+                break;
+            }
+          }
+
+          return (
+            <Link
+              key={key}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cursor-pointer"
+            >
+              <FontAwesomeIcon
+                icon={iconObj.icon}
+                className="h-5 w-5 text-xl hover:opacity-70"
+              />
+            </Link>
+          );
+        })}
+      </div>
+    );
+  };
   const Button = () => {
     if (!buttons) return null;
 
@@ -240,89 +321,12 @@ const Phone = ({
         {showBio && (
           <p
             style={{ color: `${colors.text}80` }}
-            className={`line-clamp-3 max-w-full text-xs text-[10px] font-medium ${!profile?.showName ? "mt-2" : ""}`}
+            className={`line-clamp-3 max-w-full text-sm font-medium ${!profile?.showName ? "mt-2" : ""}`}
           >
             {profile?.bio}
           </p>
         )}
-        <div
-          style={{ color: colors.text }}
-          className="mt-4 flex flex-wrap justify-center gap-3"
-        >
-          {socialsOrder.map((key) => {
-            const iconObj = socialIcons.find((s) => s.key === key);
-            const value = socials[key];
-
-            if (!value) return null;
-
-            let href = value;
-
-            const isFullUrl =
-              value.startsWith("http://") || value.startsWith("https://");
-
-            if (!isFullUrl) {
-              switch (key) {
-                case "email":
-                  href = `mailto:${value}`;
-                  break;
-                case "whatsapp":
-                  href = `https://wa.me/${value.replace(/\D/g, "")}`;
-                  break;
-                case "instagram":
-                  href = `https://instagram.com/${value}`;
-                  break;
-                case "threads":
-                  href = `https://threads.com/${value}`;
-                  break;
-                case "tiktok":
-                  href = `https://www.tiktok.com/@${value}`;
-                  break;
-                case "x":
-                  href = `https://x.com/${value}`;
-                  break;
-                case "twitch":
-                  href = `https://twitch.tv/${value}`;
-                  break;
-                case "facebook":
-                  href = `https://facebook.com/${value}`;
-                  break;
-                case "github":
-                  href = `https://github.com/${value}`;
-                  break;
-                case "linkedin":
-                  href = `https://linkedin.com/in/${value}`;
-                  break;
-                case "pinterest":
-                  href = `https://pinterest.com/${value}`;
-                  break;
-                case "behance":
-                  href = `https://behance.net/${value}`;
-                  break;
-                case "telegram":
-                  href = `https://t.me/${value}`;
-                  break;
-                default:
-                  href = value;
-                  break;
-              }
-            }
-
-            return (
-              <Link
-                key={key}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cursor-pointer"
-              >
-                <FontAwesomeIcon
-                  icon={iconObj.icon}
-                  className="h-5 w-5 text-xl hover:opacity-70"
-                />
-              </Link>
-            );
-          })}
-        </div>
+        <SocialMedia />
 
         <Button />
       </div>
@@ -377,90 +381,13 @@ const Phone = ({
         {showBio && (
           <p
             style={{ color: `${colors.text}80` }}
-            className={`line-clamp-3 max-w-full text-xs text-[10px] font-medium ${!profile?.showName ? "mt-2" : ""}`}
+            className={`line-clamp-3 max-w-full text-sm font-medium ${!profile?.showName ? "mt-2" : ""}`}
           >
             {profile?.bio}
           </p>
         )}
 
-        <div
-          style={{ color: colors.text }}
-          className="mt-4 flex flex-wrap justify-center gap-3"
-        >
-          {socialsOrder.map((key) => {
-            const iconObj = socialIcons.find((s) => s.key === key);
-            const value = socials[key];
-
-            if (!value) return null;
-
-            let href = value;
-
-            const isFullUrl =
-              value.startsWith("http://") || value.startsWith("https://");
-
-            if (!isFullUrl) {
-              switch (key) {
-                case "email":
-                  href = `mailto:${value}`;
-                  break;
-                case "whatsapp":
-                  href = `https://wa.me/${value.replace(/\D/g, "")}`;
-                  break;
-                case "instagram":
-                  href = `https://instagram.com/${value}`;
-                  break;
-                case "threads":
-                  href = `https://threads.com/${value}`;
-                  break;
-                case "tiktok":
-                  href = `https://www.tiktok.com/@${value}`;
-                  break;
-                case "x":
-                  href = `https://x.com/${value}`;
-                  break;
-                case "twitch":
-                  href = `https://twitch.tv/${value}`;
-                  break;
-                case "facebook":
-                  href = `https://facebook.com/${value}`;
-                  break;
-                case "github":
-                  href = `https://github.com/${value}`;
-                  break;
-                case "linkedin":
-                  href = `https://linkedin.com/in/${value}`;
-                  break;
-                case "pinterest":
-                  href = `https://pinterest.com/${value}`;
-                  break;
-                case "behance":
-                  href = `https://behance.net/${value}`;
-                  break;
-                case "telegram":
-                  href = `https://t.me/${value}`;
-                  break;
-                default:
-                  href = value;
-                  break;
-              }
-            }
-
-            return (
-              <Link
-                key={key}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cursor-pointer"
-              >
-                <FontAwesomeIcon
-                  icon={iconObj.icon}
-                  className="h-5 w-5 text-xl hover:opacity-70"
-                />
-              </Link>
-            );
-          })}
-        </div>
+        <SocialMedia />
 
         <Button />
       </div>
@@ -505,90 +432,13 @@ const Phone = ({
         {showBio && (
           <p
             style={{ color: `${colors.text}80` }}
-            className={`line-clamp-3 max-w-full text-xs text-[10px] font-medium ${!profile?.showName ? "mt-2" : ""}`}
+            className={`line-clamp-3 max-w-full text-sm font-medium ${!profile?.showName ? "mt-2" : ""}`}
           >
             {profile?.bio}
           </p>
         )}
 
-        <div
-          style={{ color: colors.text }}
-          className="mt-4 flex flex-wrap justify-center gap-3"
-        >
-          {socialsOrder.map((key) => {
-            const iconObj = socialIcons.find((s) => s.key === key);
-            const value = socials[key];
-
-            if (!value) return null;
-
-            let href = value;
-
-            const isFullUrl =
-              value.startsWith("http://") || value.startsWith("https://");
-
-            if (!isFullUrl) {
-              switch (key) {
-                case "email":
-                  href = `mailto:${value}`;
-                  break;
-                case "whatsapp":
-                  href = `https://wa.me/${value.replace(/\D/g, "")}`;
-                  break;
-                case "instagram":
-                  href = `https://instagram.com/${value}`;
-                  break;
-                case "threads":
-                  href = `https://threads.com/${value}`;
-                  break;
-                case "tiktok":
-                  href = `https://www.tiktok.com/@${value}`;
-                  break;
-                case "x":
-                  href = `https://x.com/${value}`;
-                  break;
-                case "twitch":
-                  href = `https://twitch.tv/${value}`;
-                  break;
-                case "facebook":
-                  href = `https://facebook.com/${value}`;
-                  break;
-                case "github":
-                  href = `https://github.com/${value}`;
-                  break;
-                case "linkedin":
-                  href = `https://linkedin.com/in/${value}`;
-                  break;
-                case "pinterest":
-                  href = `https://pinterest.com/${value}`;
-                  break;
-                case "behance":
-                  href = `https://behance.net/${value}`;
-                  break;
-                case "telegram":
-                  href = `https://t.me/${value}`;
-                  break;
-                default:
-                  href = value;
-                  break;
-              }
-            }
-
-            return (
-              <Link
-                key={key}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cursor-pointer"
-              >
-                <FontAwesomeIcon
-                  icon={iconObj.icon}
-                  className="h-5 w-5 text-xl hover:opacity-70"
-                />
-              </Link>
-            );
-          })}
-        </div>
+        <SocialMedia />
 
         <Button />
       </div>
@@ -647,90 +497,13 @@ const Phone = ({
         {showBio && (
           <p
             style={{ color: `${colors.text}80` }}
-            className={`line-clamp-3 max-w-full text-xs text-[10px] font-medium ${!profile?.showName ? "mt-2" : ""}`}
+            className={`line-clamp-3 max-w-full text-sm font-medium ${!profile?.showName ? "mt-2" : ""}`}
           >
             {profile?.bio}
           </p>
         )}
 
-        <div
-          style={{ color: colors.text }}
-          className="mt-4 flex flex-wrap justify-center gap-3"
-        >
-          {socialsOrder.map((key) => {
-            const iconObj = socialIcons.find((s) => s.key === key);
-            const value = socials[key];
-
-            if (!value) return null;
-
-            let href = value;
-
-            const isFullUrl =
-              value.startsWith("http://") || value.startsWith("https://");
-
-            if (!isFullUrl) {
-              switch (key) {
-                case "email":
-                  href = `mailto:${value}`;
-                  break;
-                case "whatsapp":
-                  href = `https://wa.me/${value.replace(/\D/g, "")}`;
-                  break;
-                case "instagram":
-                  href = `https://instagram.com/${value}`;
-                  break;
-                case "threads":
-                  href = `https://threads.com/${value}`;
-                  break;
-                case "tiktok":
-                  href = `https://www.tiktok.com/@${value}`;
-                  break;
-                case "x":
-                  href = `https://x.com/${value}`;
-                  break;
-                case "twitch":
-                  href = `https://twitch.tv/${value}`;
-                  break;
-                case "facebook":
-                  href = `https://facebook.com/${value}`;
-                  break;
-                case "github":
-                  href = `https://github.com/${value}`;
-                  break;
-                case "linkedin":
-                  href = `https://linkedin.com/in/${value}`;
-                  break;
-                case "pinterest":
-                  href = `https://pinterest.com/${value}`;
-                  break;
-                case "behance":
-                  href = `https://behance.net/${value}`;
-                  break;
-                case "telegram":
-                  href = `https://t.me/${value}`;
-                  break;
-                default:
-                  href = value;
-                  break;
-              }
-            }
-
-            return (
-              <Link
-                key={key}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cursor-pointer"
-              >
-                <FontAwesomeIcon
-                  icon={iconObj.icon}
-                  className="h-5 w-5 text-xl hover:opacity-70"
-                />
-              </Link>
-            );
-          })}
-        </div>
+        <SocialMedia />
         <Button />
       </div>
     </div>
@@ -789,90 +562,13 @@ const Phone = ({
         {showBio && (
           <p
             style={{ color: `${colors.text}80` }}
-            className={`line-clamp-3 max-w-full text-xs text-[10px] font-medium ${!profile?.showName ? "mt-2" : ""}`}
+            className={`line-clamp-3 max-w-full text-sm font-medium ${!profile?.showName ? "mt-2" : ""}`}
           >
             {profile?.bio}
           </p>
         )}
 
-        <div
-          style={{ color: colors.text }}
-          className="mt-4 flex flex-wrap justify-center gap-3"
-        >
-          {socialsOrder.map((key) => {
-            const iconObj = socialIcons.find((s) => s.key === key);
-            const value = socials[key];
-
-            if (!value) return null;
-
-            let href = value;
-
-            const isFullUrl =
-              value.startsWith("http://") || value.startsWith("https://");
-
-            if (!isFullUrl) {
-              switch (key) {
-                case "email":
-                  href = `mailto:${value}`;
-                  break;
-                case "whatsapp":
-                  href = `https://wa.me/${value.replace(/\D/g, "")}`;
-                  break;
-                case "instagram":
-                  href = `https://instagram.com/${value}`;
-                  break;
-                case "threads":
-                  href = `https://threads.com/${value}`;
-                  break;
-                case "tiktok":
-                  href = `https://www.tiktok.com/@${value}`;
-                  break;
-                case "x":
-                  href = `https://x.com/${value}`;
-                  break;
-                case "twitch":
-                  href = `https://twitch.tv/${value}`;
-                  break;
-                case "facebook":
-                  href = `https://facebook.com/${value}`;
-                  break;
-                case "github":
-                  href = `https://github.com/${value}`;
-                  break;
-                case "linkedin":
-                  href = `https://linkedin.com/in/${value}`;
-                  break;
-                case "pinterest":
-                  href = `https://pinterest.com/${value}`;
-                  break;
-                case "behance":
-                  href = `https://behance.net/${value}`;
-                  break;
-                case "telegram":
-                  href = `https://t.me/${value}`;
-                  break;
-                default:
-                  href = value;
-                  break;
-              }
-            }
-
-            return (
-              <Link
-                key={key}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cursor-pointer"
-              >
-                <FontAwesomeIcon
-                  icon={iconObj.icon}
-                  className="h-5 w-5 text-xl hover:opacity-70"
-                />
-              </Link>
-            );
-          })}
-        </div>
+        <SocialMedia />
 
         <Button />
       </div>
@@ -917,89 +613,12 @@ const Phone = ({
         {showBio && (
           <p
             style={{ color: `${colors.text}80` }}
-            className={`line-clamp-3 max-w-full text-xs text-[10px] font-medium ${!profile?.showName ? "mt-2" : ""}`}
+            className={`line-clamp-3 max-w-full text-sm font-medium ${!profile?.showName ? "mt-2" : ""}`}
           >
             {profile?.bio}
           </p>
         )}
-        <div
-          style={{ color: colors.text }}
-          className="mt-4 flex flex-wrap justify-center gap-3"
-        >
-          {socialsOrder.map((key) => {
-            const iconObj = socialIcons.find((s) => s.key === key);
-            const value = socials[key];
-
-            if (!value) return null;
-
-            let href = value;
-
-            const isFullUrl =
-              value.startsWith("http://") || value.startsWith("https://");
-
-            if (!isFullUrl) {
-              switch (key) {
-                case "email":
-                  href = `mailto:${value}`;
-                  break;
-                case "whatsapp":
-                  href = `https://wa.me/${value.replace(/\D/g, "")}`;
-                  break;
-                case "instagram":
-                  href = `https://instagram.com/${value}`;
-                  break;
-                case "threads":
-                  href = `https://threads.com/${value}`;
-                  break;
-                case "tiktok":
-                  href = `https://www.tiktok.com/@${value}`;
-                  break;
-                case "x":
-                  href = `https://x.com/${value}`;
-                  break;
-                case "twitch":
-                  href = `https://twitch.tv/${value}`;
-                  break;
-                case "facebook":
-                  href = `https://facebook.com/${value}`;
-                  break;
-                case "github":
-                  href = `https://github.com/${value}`;
-                  break;
-                case "linkedin":
-                  href = `https://linkedin.com/in/${value}`;
-                  break;
-                case "pinterest":
-                  href = `https://pinterest.com/${value}`;
-                  break;
-                case "behance":
-                  href = `https://behance.net/${value}`;
-                  break;
-                case "telegram":
-                  href = `https://t.me/${value}`;
-                  break;
-                default:
-                  href = value;
-                  break;
-              }
-            }
-
-            return (
-              <Link
-                key={key}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cursor-pointer"
-              >
-                <FontAwesomeIcon
-                  icon={iconObj.icon}
-                  className="h-5 w-5 text-xl hover:opacity-70"
-                />
-              </Link>
-            );
-          })}
-        </div>
+        <SocialMedia />
         {desktop ? (
           <div className="scrollbar-hide inline-flex gap-1 overflow-x-auto pt-4">
             <Image

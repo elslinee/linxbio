@@ -9,7 +9,7 @@ export async function generateMetadata({ params }) {
   try {
     const userData = await getLinkBioByUsername(username);
     const user = userData?.data?.data;
-    console.log(user);
+
     return {
       title: `${user?.profile?.displayName} | LinkBio`,
       description: user?.profile?.bio || "View profile on LinkBio",

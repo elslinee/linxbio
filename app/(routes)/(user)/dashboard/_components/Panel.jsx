@@ -8,7 +8,6 @@ import { useSideBarTabsStore } from "@/stores/useSideBarTabsStore";
 import { AnimatePresence } from "framer-motion";
 function Panel({ desktop }) {
   const { tab } = useSideBarTabsStore();
-  console.log(tab);
   return (
     <AnimatePresence mode="wait">
       {tab === "Page" && <PageTab key="page" />}

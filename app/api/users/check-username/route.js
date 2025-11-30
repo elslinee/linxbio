@@ -9,10 +9,8 @@ export async function POST(req) {
 
     await connectDB();
 
-    // 🔍 Check username in Users
     const userExists = await User.findOne({ username });
 
-    // 🔍 Check username inside LinkBio profiles
     const linkBioExists = await LinkBio.findOne({
       "profile.username": username,
     });

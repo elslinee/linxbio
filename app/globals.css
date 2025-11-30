@@ -79,7 +79,6 @@ button {
     background: #e1ebc2;
   }
 
-  /* Hide scrollbar arrows */
   .custom-scroll::-webkit-scrollbar-button {
     display: none;
   }

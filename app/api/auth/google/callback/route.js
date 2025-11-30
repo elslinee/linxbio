@@ -76,7 +76,6 @@ export async function GET(req) {
 
     return NextResponse.redirect("http://localhost:3000");
   } catch (err) {
-    console.error("GOOGLE CALLBACK ERROR:", err);
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

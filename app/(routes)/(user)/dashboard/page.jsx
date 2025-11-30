@@ -27,32 +27,27 @@ function page() {
     setFont,
     setButtons,
   } = useTemplateStore();
-  const {
-    profile,
-    socials,
-    socialsOrder,
-    setSocials,
-    startUploadImage,
-    setStartUploadImage,
-  } = useUserInfoStore();
+  const { profile, socials, socialsOrder, setSocials, setStartUploadImage } =
+    useUserInfoStore();
   const { blocks, setBlocks } = useBlocksStore();
 
   const cover = useUserInfoStore((state) => state.profile.cover);
 
   const setProfile = useUserInfoStore((state) => state.setProfile);
   const getUserLinkBio_ = () => {
-    getLinkBioData().then((res) => {
-      const { profile, socials, template, blocks } = res?.data?.data;
-      console.log("api storage", profile);
+    getLinkBioData()
+      .then((res) => {
+        const { profile, socials, template, blocks } = res?.data?.data;
 
-      setProfile(profile);
-      setSocials(socials);
-      setBlocks(blocks || []);
-      setHeader(template.header);
-      setColors(template.colors);
-      setFont(template.font);
-      setButtons(template.buttons);
-    });
+        setProfile(profile);
+        setSocials(socials);
+        setBlocks(blocks || []);
+        setHeader(template.header);
+        setColors(template.colors);
+        setFont(template.font);
+        setButtons(template.buttons);
+      })
+      .catch((err) => {});
   };
   useEffect(() => {
     getUserLinkBio_();
@@ -80,6 +75,15 @@ function page() {
 
   const handlePublish = () => {
     setPublishLoading(true);
+
+    const cleanedBlocks = blocks.map((block) => {
+      if (block._id && block._id.startsWith("temp_")) {
+        const { _id, ...blockWithoutId } = block;
+        return blockWithoutId;
+      }
+      return block;
+    });
+
     updateLinkBioData({
       profile,
       socials,
@@ -90,17 +94,19 @@ function page() {
         buttons,
       },
       socialsOrder,
-      blocks,
+      blocks: cleanedBlocks,
     })
       .then((res) => {
-        console.log(res);
         setPublishLoading(false);
+        if (res?.data?.data?.blocks) {
+          setBlocks(res.data.data.blocks);
+        }
       })
       .finally(() => {
         setStartUploadImage("");
       });
   };
-  console.log("zustand storage", profile);
+
   return (
     <div className="min-h-screen overflow-hidden bg-gray-200">
       <Navbar

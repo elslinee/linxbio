@@ -1,22 +1,17 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Button from "@/components/Button";
 import {
-  Menu,
   Smartphone,
   Monitor,
-  Undo2,
   Share,
-  User2,
   User,
   LogOut,
   Copy,
   X,
-  MessageCircle,
-  Twitter,
-  Linkedin,
-  Facebook,
+  SquareArrowOutUpRight,
 } from "lucide-react";
 import { logout } from "@/utils/client/user/auth";
 import { motion, AnimatePresence } from "framer-motion";
@@ -27,22 +22,31 @@ import {
   faWhatsapp,
   faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
-import { faX } from "@fortawesome/free-solid-svg-icons";
+
+import useUserInfoStore from "@/stores/useUserInfoStore";
+import useTemplateStore from "@/stores/useTemplateStore";
+import Link from "next/link";
 function Navbar({ setDesktop, onClick, publishLoading, profile }) {
+  const router = useRouter();
   const { user } = useAuthStore();
   const [open, setOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const [activeScreenView, setActiveScreenView] = useState(1);
+  const resetUserInfo = useUserInfoStore((state) => state.resetUserInfo);
+  const resetTemplateInfo = useTemplateStore(
+    (state) => state.resetTemplateInfo,
+  );
+
   const logoutRequest = async () => {
     try {
       await logout();
 
       useAuthStore.getState().clearUser();
+      resetUserInfo();
+      resetTemplateInfo();
 
       router.push("/login");
-    } catch (error) {
-      console.log("Logout error:", error);
-    }
+    } catch (error) {}
   };
   return (
     <nav className="sticky top-0 z-9999 w-full border-b border-gray-200 bg-white/80">
@@ -67,12 +71,29 @@ function Navbar({ setDesktop, onClick, publishLoading, profile }) {
             >
               <Monitor size={20} className="text-neutral-600" />
             </button>
+            <Link
+              target="_blank"
+              className="ml-2 flex md:hidden"
+              href={`https://linxbio.vercel.app/${profile?.username}`}
+            >
+              <SquareArrowOutUpRight
+                size={18}
+                className="hover:text-primary text-gray-600 transition-all duration-300 ease-in-out"
+              />
+            </Link>
           </div>
         </div>
-        <div className="nav-part-2 hidden h-9 flex-1 items-center justify-start rounded-full bg-gray-200 px-4 md:flex">
-          <p className="text-sm font-medium">
+        <div className="nav-part-2 hidden h-9 flex-1 items-center justify-between rounded-full bg-gray-200 px-4 md:flex">
+          <p className="text-sm font-medium text-gray-500">
             linxbio.vercel.app/{profile?.username}
           </p>
+          <Link
+            className="hover:bg-primary/50 rounded-xl p-1.5 text-gray-500 transition-all duration-300 ease-in-out hover:text-white"
+            target="_blank"
+            href={`https://linxbio.vercel.app/${profile?.username}`}
+          >
+            <SquareArrowOutUpRight size={18} className="" />
+          </Link>
         </div>
         <div className="nav-part-3 ml-4 flex gap-2">
           <button

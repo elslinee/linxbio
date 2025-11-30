@@ -1,5 +1,3 @@
-import { useAlertDialog } from "@/components/AlertDialogProvider";
-import Button from "@/components/Button";
 import { useSideBarTabsStore } from "@/stores/useSideBarTabsStore";
 import {
   Brush,
@@ -8,7 +6,7 @@ import {
   Settings,
   ThumbsUp,
 } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 
 function Sidebar() {
   const tabs = [
