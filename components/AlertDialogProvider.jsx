@@ -7,11 +7,11 @@ const AlertDialogContext = createContext(null);
 export function AlertDialogProvider({ children }) {
   const [dialog, setDialog] = useState({
     open: false,
-    content: null, 
+    content: null,
     confirmText: "Confirm",
     cancelText: "Cancel",
     onConfirm: null,
-    hideActions: false, 
+    hideActions: false,
   });
 
   const showDialog = useCallback((options) => {
@@ -22,6 +22,7 @@ export function AlertDialogProvider({ children }) {
       cancelText: options.cancelText ?? "Cancel",
       hideActions: options.hideActions ?? false,
       onConfirm: options.onConfirm ?? null,
+      maxWidth: options.maxWidth ?? "max-w-sm",
     });
   }, []);
 
@@ -43,13 +44,12 @@ export function AlertDialogProvider({ children }) {
             onClick={closeDialog}
           >
             <motion.div
-              className="w-[90%] max-w-sm rounded-xl bg-white p-6 shadow-xl"
+              className={`w-[90%] ${dialog.maxWidth || "max-w-sm"} rounded-xl bg-white p-6 shadow-xl`}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-   
               <div>{dialog.content}</div>
             </motion.div>
           </motion.div>

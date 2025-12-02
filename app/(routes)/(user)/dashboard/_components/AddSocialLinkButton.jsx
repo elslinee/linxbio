@@ -15,6 +15,7 @@ import {
   faDiscord,
   faTelegram,
   faWhatsapp,
+  faSnapchat,
 } from "@fortawesome/free-brands-svg-icons";
 
 import {
@@ -93,6 +94,12 @@ const socialOptions = [
     placeholder: "+20123xxxxxxx",
   },
   {
+    id: "snapchat",
+    name: "Snapchat",
+    icon: faSnapchat,
+    placeholder: "username",
+  },
+  {
     id: "email",
     name: "Email",
     icon: faEnvelope,
@@ -151,7 +158,7 @@ function AddSocialDialogContent({ social }) {
         </button>
         <button
           onClick={handleSave}
-          className="bg-primary hover:bg-primary/80 rounded-full px-6 py-2 text-sm font-medium text-black"
+          className="bg-primary hover:bg-primary/80 rounded-full px-6 py-2 text-sm font-medium text-white"
         >
           Done
         </button>
@@ -188,7 +195,7 @@ export default function AddSocialLinkButton() {
     <div className="relative" ref={dropdownRef}>
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex min-w-[140px] items-center justify-center gap-2 rounded-full px-4! py-2! text-sm font-medium text-black"
+        className="flex min-w-[140px] items-center justify-center gap-2 rounded-full px-4! py-2! text-sm font-medium "
       >
         Add Social Link
       </Button>

@@ -16,6 +16,7 @@ import {
   faYoutube,
   faDiscord,
   faTelegram,
+  faSnapchat,
 } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faEarthAmericas } from "@fortawesome/free-solid-svg-icons";
 
@@ -45,6 +46,7 @@ const PhonePreview = ({
     { key: "youtube", icon: faYoutube },
     { key: "discord", icon: faDiscord },
     { key: "telegram", icon: faTelegram },
+    { key: "snapchat", icon: faSnapchat },
     { key: "whatsapp", icon: faWhatsapp },
     { key: "email", icon: faEnvelope },
     { key: "website", icon: faEarthAmericas },
@@ -151,7 +153,7 @@ const PhonePreview = ({
       style={{ backgroundColor: colors.bg }}
       className="relative flex h-full w-full flex-col overflow-hidden rounded-[2.5rem]"
     >
-      <div className="h-30 w-full bg-linear-to-b from-[#f4a8d4] to-[#E3E595]"></div>
+      <div className="h-30 w-full bg-linear-to-b from-gray-100 to-gray-100"></div>
 
       <div className="relative -mt-12 flex flex-col items-center px-6">
         <div
@@ -174,7 +176,7 @@ const PhonePreview = ({
           style={{
             color: colors.text,
           }}
-          className="mt-3 text-lg font-bold tracking-wide text-black uppercase"
+          className="mt-3 text-lg font-bold tracking-wide text-black"
         >
           {profile.displayName || "Your Name"}
         </h2>
@@ -221,7 +223,7 @@ const PhonePreview = ({
       style={{ backgroundColor: colors.bg }}
       className="relative flex h-full w-full flex-col overflow-hidden rounded-[2.5rem]"
     >
-      <div className="h-30 w-full bg-linear-to-b from-[#f4a8d4] to-[#E3E595]"></div>
+      <div className="h-30 w-full bg-linear-to-b from-gray-100 to-gray-100"></div>
 
       <div className="relative -mt-10 flex flex-col items-center px-6">
         <div
@@ -341,7 +343,7 @@ const PhonePreview = ({
       style={{ backgroundColor: colors.bg }}
       className="relative flex h-full w-full flex-col overflow-hidden rounded-[2.5rem]"
     >
-      <div className="relative h-50 w-full bg-linear-to-b from-[#f4a8d4] to-[#ffffff]">
+      <div className="relative h-50 w-full bg-linear-to-b from-gray-100 to-[#ffffff]">
         <Image
           src={profile.avatar || "/hero/hero-avatar.png"}
           alt="Profile"
@@ -415,7 +417,7 @@ const PhonePreview = ({
       style={{ backgroundColor: colors.bg }}
       className="relative flex h-full w-full flex-col overflow-hidden rounded-[2.5rem]"
     >
-      <div className="relative h-50 w-full bg-linear-to-b from-[#f4a8d4] to-[#ffffff]">
+      <div className="relative h-50 w-full bg-linear-to-b from-gray-100 to-[#ffffff]">
         <Image
           src={profile.avatar || "/hero/hero-avatar.png"}
           alt="Profile"
@@ -548,7 +550,7 @@ const PhonePreview = ({
             alt="Profile"
             width={100}
             height={100}
-            className="h-[128px] w-[128px] object-cover rounded-[8px]"
+            className="h-[128px] w-[128px] rounded-[8px] object-cover"
           />
           <Image
             src={profile.avatar || "/hero/hero-avatar.png"}

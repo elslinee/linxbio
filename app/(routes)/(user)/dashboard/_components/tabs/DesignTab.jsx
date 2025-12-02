@@ -33,54 +33,25 @@ function DesignTab() {
 
   const [selectedPage, setSelectedPage] = useState("");
 
-  const getUserLinkBio_ = () => {
-    getLinkBioData()
-      .then((res) => {
-        const { profile, socials, template, blocks } = res?.data?.data;
-        console.log("=== Template Debug ===");
-        console.log("template from API:", template);
-        console.log("headerOptions:", headerOptions);
-        console.log("template.header value:", template.header);
-
-        // Find the index of each template value in the options arrays
-        // Convert header to number since API returns it as string
-        const headerIndex = headerOptions.findIndex(
-          (opt) => opt === Number(template.header),
-        );
-        console.log("headerIndex found:", headerIndex);
-
-        const colorIndex = colorOptions.findIndex(
-          (opt) =>
-            opt.bg === template.colors?.bg &&
-            opt.text === template.colors?.text &&
-            opt.accent === template.colors?.accent,
-        );
-        const fontIndex = fontOptions.findIndex((opt) => opt === template.font);
-        const buttonIndex = buttonOptions.findIndex(
-          (opt) => opt === template.buttons,
-        );
-
-        console.log("All indices:", {
-          headerIndex,
-          colorIndex,
-          fontIndex,
-          buttonIndex,
-        });
-
-        // Set the indices (fallback to 0 if not found)
-        setSelectedHeader(headerIndex >= 0 ? headerIndex : 0);
-        setSelectedColor(colorIndex >= 0 ? colorIndex : 0);
-        setSelectedFont(fontIndex >= 0 ? fontIndex : 0);
-        setSelectedButton(buttonIndex >= 0 ? buttonIndex : 0);
-      })
-      .catch((err) => {
-        console.error("Failed to load template", err);
-      });
-  };
-
+  // Sync selected indices from current store values on mount
   useEffect(() => {
-    getUserLinkBio_();
+    const headerIndex = headerOptions.findIndex((opt) => opt === header);
+    const colorIndex = colorOptions.findIndex(
+      (opt) =>
+        opt.bg === colors?.bg &&
+        opt.text === colors?.text &&
+        opt.accent === colors?.accent,
+    );
+    const fontIndex = fontOptions.findIndex((opt) => opt === font);
+    const buttonIndex = buttonOptions.findIndex((opt) => opt === buttons);
+
+    // Set indices only if found, otherwise keep current selection
+    if (headerIndex >= 0) setSelectedHeader(headerIndex);
+    if (colorIndex >= 0) setSelectedColor(colorIndex);
+    if (fontIndex >= 0) setSelectedFont(fontIndex);
+    if (buttonIndex >= 0) setSelectedButton(buttonIndex);
   }, []);
+
   return (
     <AnimatedTab className="absolute bottom-24 left-1/2 w-[calc(100vw-2rem)] max-w-[425px] -translate-x-1/2 md:relative md:bottom-auto md:left-auto md:w-[425px] md:translate-x-0">
       {selectedPage === "" ? (
@@ -372,7 +343,7 @@ const TabPages = ({
         >
           <ArrowLeft
             size={20}
-            className="hover:text-secondary transition-colors duration-200"
+            className="hover:text-primary transition-colors duration-200"
           />
         </button>
         <p className="font-medium">Back</p>

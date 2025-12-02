@@ -444,7 +444,7 @@ const TabPages = ({
         >
           <ArrowLeft
             size={20}
-            className="hover:text-secondary transition-colors duration-200"
+            className="hover:text-primary transition-colors duration-200"
           />
         </button>
         <p className="font-medium">

@@ -33,13 +33,13 @@ function AdminSidebar({ activeTab, setActiveTab }) {
             onClick={() => setActiveTab(tab.id)}
             className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ${
               activeTab === tab.id
-                ? "bg-[#d4f758]/20 text-black"
+                ? "bg-primary text-white"
                 : "text-gray-600 hover:bg-gray-50 hover:text-black"
             }`}
           >
             <tab.icon
               size={20}
-              className={activeTab === tab.id ? "text-black" : "text-gray-500"}
+              className={activeTab === tab.id ? "text-white" : "text-gray-500"}
             />
             {tab.label}
           </button>

@@ -60,7 +60,7 @@ function SerialKeysTable() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-[#d4f758]"></div>
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-primary"></div>
       </div>
     );
   }
@@ -80,13 +80,13 @@ function SerialKeysTable() {
               placeholder="Search keys..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-64 rounded-lg border border-gray-200 py-2 pr-4 pl-10 text-sm outline-none focus:border-[#d4f758] focus:ring-1 focus:ring-[#d4f758]"
+              className="w-64 rounded-lg border border-gray-200 py-2 pr-4 pl-10 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             />
           </div>
           <button
             onClick={handleGenerate}
             disabled={generating}
-            className="flex items-center gap-2 rounded-lg bg-[#d4f758] px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-[#c6e84d] disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary disabled:opacity-50"
           >
             <Plus size={18} />
             {generating ? "Generating..." : "Generate Key"}
@@ -140,7 +140,7 @@ function SerialKeysTable() {
                 <td className="px-6 py-4 text-right">
                   <button
                     onClick={() => handleCopy(k.key)}
-                    className="rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-blue-600"
+                    className="rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-primary"
                     title="Copy Key"
                   >
                     {copiedKey === k.key ? (

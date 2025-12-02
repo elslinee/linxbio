@@ -99,7 +99,7 @@ function LinkBiosTable() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-[#d4f758]"></div>
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-primary"></div>
       </div>
     );
   }
@@ -118,7 +118,7 @@ function LinkBiosTable() {
             placeholder="Search linkbios..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-64 rounded-lg border border-gray-200 py-2 pr-4 pl-10 text-sm outline-none focus:border-[#d4f758] focus:ring-1 focus:ring-[#d4f758]"
+            className="w-64 rounded-lg border border-gray-200 py-2 pr-4 pl-10 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
           />
         </div>
       </div>
@@ -149,7 +149,7 @@ function LinkBiosTable() {
                   <Link
                     href={`/${lb.profile?.username}`}
                     target="_blank"
-                    className="flex items-center gap-1 text-blue-600 hover:underline"
+                    className="flex items-center gap-1 text-primary hover:underline"
                   >
                     <LinkIcon size={14} />/{lb.profile?.username}
                     <ExternalLink size={12} />
@@ -216,7 +216,7 @@ function LinkBiosTable() {
                         onClick={() => setCurrentPage(page)}
                         className={`h-8 w-8 rounded-lg text-sm font-medium transition-colors ${
                           currentPage === page
-                            ? "bg-[#d4f758] text-black"
+                            ? "bg-primary text-white"
                             : "text-gray-600 hover:bg-gray-100"
                         }`}
                       >
@@ -276,7 +276,7 @@ function LinkBiosTable() {
                     },
                   })
                 }
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#d4f758] focus:ring-1 focus:ring-[#d4f758]"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               />
             </div>
             {/* Add more fields here as needed, e.g., profile.displayName */}
@@ -296,7 +296,7 @@ function LinkBiosTable() {
                     },
                   })
                 }
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#d4f758] focus:ring-1 focus:ring-[#d4f758]"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               />
             </div>
             <div className="flex justify-between">

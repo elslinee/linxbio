@@ -35,6 +35,7 @@ const useUserInfoStore = create(
         youtube: "",
         discord: "",
         telegram: "",
+        snapchat: "",
       },
       socialsOrder: [
         "instagram",
@@ -53,6 +54,7 @@ const useUserInfoStore = create(
         "youtube",
         "discord",
         "telegram",
+        "snapchat",
       ],
 
       errors: {},
@@ -108,6 +110,7 @@ const useUserInfoStore = create(
             youtube: "",
             discord: "",
             telegram: "",
+            snapchat: "",
           },
           errors: {},
         }),

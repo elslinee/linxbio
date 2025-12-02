@@ -17,6 +17,7 @@ import {
   faYoutube,
   faDiscord,
   faTelegram,
+  faSnapchat,
 } from "@fortawesome/free-brands-svg-icons";
 import {
   faEnvelope,
@@ -74,6 +75,7 @@ export default function SocialLinksSortable() {
     { key: "discord", icon: faDiscord },
     { key: "telegram", icon: faTelegram },
     { key: "whatsapp", icon: faWhatsapp },
+    { key: "snapchat", icon: faSnapchat },
     { key: "email", icon: faEnvelope },
     { key: "website", icon: faEarthAmericas },
   ];
@@ -87,7 +89,20 @@ export default function SocialLinksSortable() {
   const dragOverItem = useRef(null);
 
   useEffect(() => {
-    setItems(socialsOrder);
+    // Self-healing: Ensure all supported socials are in socialsOrder
+    const supportedKeys = socialIcons.map((s) => s.key);
+    const missingKeys = supportedKeys.filter(
+      (key) => !socialsOrder.includes(key),
+    );
+
+    if (missingKeys.length > 0) {
+      const updatedOrder = [...socialsOrder, ...missingKeys];
+      setSocialsOrder(updatedOrder);
+      setItems(updatedOrder);
+    } else {
+      setItems(socialsOrder);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socialsOrder]);
 
   const onDragStart = (index) => {
@@ -134,7 +149,7 @@ export default function SocialLinksSortable() {
                 setSocials({ [key]: "" });
                 closeDialog();
               }}
-              className="bg-primary hover:bg-primary/80 rounded-full px-6 py-2 text-sm font-medium text-black"
+              className="bg-primary hover:bg-primary/80 rounded-full px-6 py-2 text-sm font-medium text-white"
             >
               Remove
             </button>

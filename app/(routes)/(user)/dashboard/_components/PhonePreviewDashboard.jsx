@@ -16,6 +16,7 @@ import {
   faYoutube,
   faDiscord,
   faTelegram,
+  faSnapchat,
 } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faEarthAmericas } from "@fortawesome/free-solid-svg-icons";
 import { VerifiedIcon } from "@/components/VerifiedIcon";
@@ -50,6 +51,7 @@ const PhonePreviewDashboard = ({
     { key: "youtube", icon: faYoutube },
     { key: "discord", icon: faDiscord },
     { key: "telegram", icon: faTelegram },
+    { key: "snapchat", icon: faSnapchat },
     { key: "whatsapp", icon: faWhatsapp },
     { key: "email", icon: faEnvelope },
     { key: "website", icon: faEarthAmericas },
@@ -227,7 +229,7 @@ const PhonePreviewDashboard = ({
             style={{
               color: colors.text,
             }}
-            className="mt-2 flex max-w-full items-center gap-1 text-base font-bold tracking-wide text-black uppercase md:mt-3 md:text-lg"
+            className="mt-2 flex max-w-full items-center gap-1 text-base font-bold tracking-wide text-black md:mt-3 md:text-lg"
           >
             <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
@@ -307,7 +309,7 @@ const PhonePreviewDashboard = ({
         {profile?.showName && (
           <div
             style={{ color: colors.text }}
-            className="mt-1 flex max-w-full items-center gap-1 text-base font-medium tracking-wide uppercase md:mt-3 md:text-lg"
+            className="mt-1 flex max-w-full items-center gap-1 text-base font-medium tracking-wide  md:mt-3 md:text-lg"
           >
             <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
@@ -377,7 +379,7 @@ const PhonePreviewDashboard = ({
         {profile?.showName && (
           <div
             style={{ color: colors.text }}
-            className="mt-3 flex max-w-full items-center gap-1 text-lg font-medium tracking-wide uppercase md:text-xl"
+            className="mt-3 flex max-w-full items-center gap-1 text-lg font-medium tracking-wide  md:text-xl"
           >
             <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
@@ -462,7 +464,7 @@ const PhonePreviewDashboard = ({
         {profile?.showName && (
           <div
             style={{ color: colors.text }}
-            className="mt-1 flex max-w-full items-center gap-1 text-lg font-bold tracking-wide uppercase md:text-xl"
+            className="mt-1 flex max-w-full items-center gap-1 text-lg font-bold tracking-wide  md:text-xl"
           >
             <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
@@ -546,7 +548,7 @@ const PhonePreviewDashboard = ({
         {profile?.showName && (
           <div
             style={{ color: colors.text }}
-            className="mt-1 flex max-w-full items-center gap-1 text-lg font-bold tracking-wide uppercase md:text-xl"
+            className="mt-1 flex max-w-full items-center gap-1 text-lg font-bold tracking-wide  md:text-xl"
           >
             <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
@@ -616,7 +618,7 @@ const PhonePreviewDashboard = ({
         {profile?.showName && (
           <div
             style={{ color: colors.text }}
-            className="mt-1 flex max-w-full items-center gap-1 font-bold tracking-wide uppercase md:text-xl"
+            className="mt-1 flex max-w-full items-center gap-1 font-bold tracking-wide  md:text-xl"
           >
             <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}

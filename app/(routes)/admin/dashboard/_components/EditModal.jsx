@@ -35,7 +35,7 @@ function EditModal({ isOpen, onClose, title, children, onSave, loading }) {
             <button
               onClick={onSave}
               disabled={loading}
-              className="flex items-center justify-center rounded-lg bg-[#d4f758] px-4 py-2 text-sm font-medium text-black shadow-sm transition-all hover:bg-[#c6e84d] hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-primary/80 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50"
             >
               {loading ? "Saving..." : "Save Changes"}
             </button>

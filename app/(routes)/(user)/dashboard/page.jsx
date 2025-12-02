@@ -27,8 +27,14 @@ function page() {
     setFont,
     setButtons,
   } = useTemplateStore();
-  const { profile, socials, socialsOrder, setSocials, setStartUploadImage } =
-    useUserInfoStore();
+  const {
+    profile,
+    socials,
+    socialsOrder,
+    setSocials,
+    setSocialsOrder,
+    setStartUploadImage,
+  } = useUserInfoStore();
   const { blocks, setBlocks } = useBlocksStore();
 
   const cover = useUserInfoStore((state) => state.profile.cover);
@@ -37,10 +43,14 @@ function page() {
   const getUserLinkBio_ = () => {
     getLinkBioData()
       .then((res) => {
-        const { profile, socials, template, blocks } = res?.data?.data;
+        const { profile, socials, socialsOrder, template, blocks } =
+          res?.data?.data;
 
         setProfile(profile);
         setSocials(socials);
+        if (socialsOrder) {
+          setSocialsOrder(socialsOrder);
+        }
         setBlocks(blocks || []);
         setHeader(template.header);
         setColors(template.colors);

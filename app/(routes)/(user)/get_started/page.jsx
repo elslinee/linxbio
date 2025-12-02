@@ -20,6 +20,7 @@ import {
   faYoutube,
   faDiscord,
   faTelegram,
+  faSnapchat,
 } from "@fortawesome/free-brands-svg-icons";
 import {
   faEnvelope,
@@ -35,8 +36,11 @@ import { checkUsername } from "@/utils/client/user/usersApi";
 import { createLinkBioData } from "@/utils/client/user/linkBioApi";
 import { upload } from "@/utils/client/user/upload";
 import { me } from "@/utils/client/user/auth";
+import ImageCropModal from "@/components/ImageCropModal";
+import { useAlertDialog } from "@/components/AlertDialogProvider";
 
 function GetStartedPage() {
+  const { showDialog, closeDialog } = useAlertDialog();
   const [isChecking, setIsChecking] = useState(false);
   const [isAvailable, setIsAvailable] = useState(true);
   const [usernameError, setUsernameError] = useState("");
@@ -215,6 +219,7 @@ function GetStartedPage() {
     "youtube",
     "discord",
     "telegram",
+    "snapchat",
   ];
 
   const hasStepErrors = (step) => {
@@ -252,6 +257,7 @@ function GetStartedPage() {
     }
   };
   const [uploadLoading, setUploadLoading] = useState(false);
+
   const upload_ = async (file) => {
     try {
       setUploadLoading(true);
@@ -262,6 +268,44 @@ function GetStartedPage() {
     } finally {
       setUploadLoading(false);
     }
+  };
+
+  const handleAvatarCropComplete = async (croppedBlob) => {
+    try {
+      setUploadLoading(true);
+      const url = await upload(croppedBlob);
+      if (url) {
+        setProfile({ avatar: url });
+      }
+      closeDialog();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setUploadLoading(false);
+    }
+  };
+
+  const handleAvatarUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        showDialog({
+          content: (
+            <ImageCropModal
+              imageSrc={reader.result}
+              aspect={1}
+              onCropComplete={handleAvatarCropComplete}
+              onCancel={closeDialog}
+            />
+          ),
+          hideActions: true,
+          maxWidth: "max-w-2xl",
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+    e.target.value = null;
   };
   useEffect(() => {
     if (loading) return;
@@ -283,7 +327,6 @@ function GetStartedPage() {
 
   return (
     <div className="flex min-h-screen w-full overflow-y-hidden">
-
       <div className="flex w-full flex-col justify-center overflow-y-hidden bg-white px-4 lg:w-1/2">
         <div className="mx-auto w-full max-w-lg">
           <button
@@ -355,19 +398,7 @@ function GetStartedPage() {
                       id="avatar-upload"
                       type="file"
                       accept="image/*"
-                      onChange={async (e) => {
-                        const file = e.target.files[0];
-                        if (!file) return;
-
-                        try {
-                          const imageUrl = await upload_(file);
-
-                          if (imageUrl) {
-                            setProfile({ avatar: imageUrl });
-                          } else {
-                          }
-                        } catch (err) {}
-                      }}
+                      onChange={handleAvatarUpload}
                       className="hidden"
                     />
                   </div>
@@ -574,6 +605,14 @@ function GetStartedPage() {
                   error={errors.telegram}
                 />
                 <SocialInput
+                  icon={faSnapchat}
+                  name="snapchat"
+                  placeholder="Snapchat (username)"
+                  value={socials.snapchat}
+                  onChange={handleSocialChange}
+                  error={errors.snapchat}
+                />
+                <SocialInput
                   icon={faEnvelope}
                   name="email"
                   placeholder="Email (you@example.com)"
@@ -619,8 +658,7 @@ function GetStartedPage() {
         </div>
       </div>
 
-
-      <div className="hidden min-h-full w-1/2 overflow-hidden bg-[#d5f75815] lg:flex">
+      <div className="bg-primary/5 hidden min-h-full w-1/2 overflow-hidden lg:flex">
         <div className="sticky mx-auto flex items-center justify-center">
           <PhonePreview
             font={font}

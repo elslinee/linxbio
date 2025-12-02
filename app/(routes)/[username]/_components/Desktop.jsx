@@ -16,6 +16,7 @@ import {
   faYoutube,
   faDiscord,
   faTelegram,
+  faSnapchat,
 } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faEarthAmericas } from "@fortawesome/free-solid-svg-icons";
 import { VerifiedIcon } from "@/components/VerifiedIcon";
@@ -50,6 +51,7 @@ const Desktop = ({
     { key: "youtube", icon: faYoutube },
     { key: "discord", icon: faDiscord },
     { key: "telegram", icon: faTelegram },
+    { key: "snapchat", icon: faSnapchat },
     { key: "whatsapp", icon: faWhatsapp },
     { key: "email", icon: faEnvelope },
     { key: "website", icon: faEarthAmericas },
@@ -119,6 +121,9 @@ const Desktop = ({
                 break;
               case "telegram":
                 href = `https://t.me/${value}`;
+                break;
+              case "snapchat":
+                href = `https://www.snapchat.com/add/${value}`;
                 break;
               default:
                 href = value;
@@ -308,7 +313,7 @@ const Desktop = ({
             style={{
               color: colors.text,
             }}
-            className="mt-3 flex max-w-full items-center gap-1 text-lg font-bold tracking-wide text-black uppercase"
+            className="mt-3 flex max-w-full items-center gap-1 text-lg font-bold tracking-wide text-black"
           >
             <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
@@ -461,7 +466,7 @@ const Desktop = ({
           style={{
             background: `linear-gradient(to bottom, transparent, ${colors.bg})`,
           }}
-          className="absolute bottom-0 h-28 w-full"
+          className="absolute -bottom-px h-28 w-full"
         ></div>
       </div>
 

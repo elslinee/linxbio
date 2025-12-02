@@ -11,6 +11,7 @@ import ToggleSwitch from "@/components/ToggleSwitch";
 import { VerifiedIcon } from "@/components/VerifiedIcon";
 import { redeemSerialKey } from "@/utils/client/user/serialKeysApi";
 import { updateLinkBioData } from "@/utils/client/user/linkBioApi";
+import ImageCropModal from "@/components/ImageCropModal";
 function HeaderTab({ desktop }) {
   const { setTab } = useSideBarTabsStore();
   const cover = useUserInfoStore((state) => state.profile.cover);
@@ -71,35 +72,84 @@ const Tab = ({
     fileInputAvatarRef.current.click();
   };
 
+  // Cover upload with crop
   const [uploadCoverLoading, setUploadCoverLoading] = useState(false);
-  const uploadCover_ = async (e) => {
+
+  const handleCoverCropComplete = async (croppedBlob) => {
     try {
       setUploadCoverLoading(true);
-      const file = e.target.files[0];
-      if (file) {
-        const url = await upload(file);
-        setProfile({ cover: url });
-      }
+      const url = await upload(croppedBlob);
+      setProfile({ cover: url });
+      closeDialog();
     } catch (err) {
-      return null;
+      console.error(err);
     } finally {
       setUploadCoverLoading(false);
     }
   };
+
+  const uploadCover_ = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        showDialog({
+          content: (
+            <ImageCropModal
+              imageSrc={reader.result}
+              aspect={16 / 10}
+              onCropComplete={handleCoverCropComplete}
+              onCancel={closeDialog}
+            />
+          ),
+          hideActions: true,
+          maxWidth: "max-w-2xl",
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+    // Reset input
+    e.target.value = null;
+  };
+
+  // Avatar upload with crop
   const [uploadAvatarLoading, setUploadAvatarLoading] = useState(false);
-  const uploadAvatar_ = async (e) => {
+
+  const handleAvatarCropComplete = async (croppedBlob) => {
     try {
       setUploadAvatarLoading(true);
-      const file = e.target.files[0];
-      if (file) {
-        const url = await upload(file);
-        setProfile({ avatar: url });
-      }
+      const url = await upload(croppedBlob);
+      setProfile({ avatar: url });
+      closeDialog();
     } catch (err) {
-      return null;
+      console.error(err);
     } finally {
       setUploadAvatarLoading(false);
     }
+  };
+
+  const uploadAvatar_ = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        showDialog({
+          content: (
+            <ImageCropModal
+              imageSrc={reader.result}
+              aspect={1}
+              onCropComplete={handleAvatarCropComplete}
+              onCancel={closeDialog}
+            />
+          ),
+          hideActions: true,
+          maxWidth: "max-w-2xl",
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+    // Reset input
+    e.target.value = null;
   };
 
   const handleColorDrag = (e) => {
@@ -176,7 +226,7 @@ const Tab = ({
             You Don't Have One ? Contact
             <a
               target="_blank"
-              className="text-secondary ml-2 font-bold underline"
+              className="text-primary ml-2 font-bold underline"
               href={`https://wa.me/+201001077694`}
             >
               Admin
@@ -202,7 +252,7 @@ const Tab = ({
           </button>
           <button
             onClick={handleKey}
-            className="bg-primary hover:bg-primary/80 rounded-full px-6 py-2 text-sm font-medium text-black"
+            className="bg-primary hover:bg-primary/80 rounded-full px-6 py-2 text-sm font-medium text-white"
           >
             Done
           </button>
@@ -303,7 +353,7 @@ const Tab = ({
                     style={{
                       backgroundImage: color
                         ? `linear-gradient(to bottom, ${profile?.cover}, ${profile?.cover})`
-                        : `linear-gradient(to bottom, #f4a8d4, #E3E595)`,
+                        : `linear-gradient(to bottom, #f4a8d4, #f64eff)`,
                     }}
                     className="h-full w-full p-2 pt-4"
                   ></div>
