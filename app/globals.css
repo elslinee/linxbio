@@ -5,6 +5,12 @@
   --foreground: #171717;
   --primary: #9300ff;
   --secondary: #6dd400;
+  --chart-1: #9300ff;
+  --chart-2: #b380ff; /* soft purple */
+  --chart-3: #a6a0ff; /* pale lavender */
+  --chart-4: #9ab8ff; /* soft bluish violet */
+  --chart-5: #8dd0ff; /* light aqua violet */
+  --chart-6: #80e7ff;
 }
 
 @theme inline {

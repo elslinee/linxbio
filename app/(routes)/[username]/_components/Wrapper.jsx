@@ -2,8 +2,11 @@
 import React, { useState } from "react";
 import Phone from "@/app/(routes)/[username]/_components/Phone";
 import Desktop from "@/app/(routes)/[username]/_components/Desktop";
+import useTrackUserPageView from "@/hooks/useTrackUserPageView";
 
 function Wrapper({ user }) {
+  const username = user?.profile?.username;
+  useTrackUserPageView(username);
   const [desktop, setDesktop] = useState(false);
   const font = user?.template?.font;
   const buttons = user?.template?.buttons;
@@ -15,7 +18,7 @@ function Wrapper({ user }) {
   const cover = user?.profile?.cover;
   const blocks = user?.blocks;
   return (
-    <div >
+    <div>
       <Phone
         desktop={desktop}
         font={font || "font-mulish"}

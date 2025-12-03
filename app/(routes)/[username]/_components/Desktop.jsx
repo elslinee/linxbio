@@ -21,6 +21,7 @@ import {
 import { faEnvelope, faEarthAmericas } from "@fortawesome/free-solid-svg-icons";
 import { VerifiedIcon } from "@/components/VerifiedIcon";
 import Link from "next/link";
+import useTrackClick from "@/hooks/useTrackClick";
 const Desktop = ({
   desktop = false,
   profile,
@@ -37,6 +38,9 @@ const Desktop = ({
   buttons = "btns_style_1",
   blocks = [],
 }) => {
+  const track = useTrackClick();
+  const username = profile?.username;
+
   const socialIcons = [
     { key: "instagram", icon: faInstagram },
     { key: "tiktok", icon: faTiktok },
@@ -138,6 +142,7 @@ const Desktop = ({
               target="_blank"
               rel="noopener noreferrer"
               className="cursor-pointer"
+              onClick={() => track(`${username}-social-${key}`)}
             >
               <FontAwesomeIcon
                 icon={iconObj.icon}
@@ -210,6 +215,7 @@ const Desktop = ({
                   key={block._id}
                   style={styleFn(colors)}
                   className={baseClasses}
+                  onClick={() => track(`${username}-button-${block.title}`)}
                 >
                   {block?.title}
                 </Link>
@@ -223,6 +229,7 @@ const Desktop = ({
                   key={block._id}
                   style={styleFn(colors)}
                   className={baseClasses}
+                  onClick={() => track(`${username}-button-${block.title}`)}
                 >
                   {block?.title}
                 </Link>
@@ -236,6 +243,7 @@ const Desktop = ({
                   key={block._id}
                   style={styleFn(colors)}
                   className={baseClasses}
+                  onClick={() => track(`${username}-button-${block.title}`)}
                 >
                   {block?.title}
                 </Link>
@@ -249,6 +257,7 @@ const Desktop = ({
                   key={block._id}
                   style={styleFn(colors)}
                   className={baseClasses}
+                  onClick={() => track(`${username}-button-${block.title}`)}
                 >
                   {block?.title}
                 </Link>
@@ -262,6 +271,7 @@ const Desktop = ({
                   key={block._id}
                   style={styleFn(colors)}
                   className={baseClasses}
+                  onClick={() => track(`${username}-button-${block.title}`)}
                 >
                   {block?.title}
                 </Link>

@@ -17,6 +17,7 @@
     "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv": "^17.2.3",
     "framer-motion": "^12.23.24",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
@@ -27,6 +28,7 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-easy-crop": "^5.5.6",
+    "recharts": "^2.15.4",
     "tailwind-merge": "^3.4.0",
     "zod": "^4.1.12",
     "zustand": "^5.0.8"

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Button from "@/components/Button";
 import {
@@ -12,6 +12,9 @@ import {
   Copy,
   X,
   SquareArrowOutUpRight,
+  ChartNoAxesCombined,
+  ArrowLeft,
+  Share2,
 } from "lucide-react";
 import { logout } from "@/utils/client/user/auth";
 import { motion, AnimatePresence } from "framer-motion";
@@ -26,8 +29,9 @@ import {
 import useUserInfoStore from "@/stores/useUserInfoStore";
 import useTemplateStore from "@/stores/useTemplateStore";
 import Link from "next/link";
-function Navbar({ setDesktop, onClick, publishLoading, profile }) {
+function Navbar({ setDesktop, onClick, publishLoading, profile, analytics }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { user } = useAuthStore();
   const [open, setOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
@@ -52,36 +56,48 @@ function Navbar({ setDesktop, onClick, publishLoading, profile }) {
     <nav className="sticky top-0 z-9999 w-full border-b border-gray-200 bg-white/80">
       <div className="flex h-16 items-center justify-between px-4 md:justify-center">
         <div className="nav-part-1 flex">
-          <div className="screenViewBtns flex items-center justify-center gap-2 border-neutral-300 px-2">
-            <button
-              className={`flex size-9 items-center justify-center rounded-lg transition-all duration-300 ease-in-out ${activeScreenView === 1 ? "bg-gray-200" : ""}`}
-              onClick={() => {
-                setActiveScreenView(1);
-                setDesktop(false);
-              }}
-            >
-              <Smartphone size={20} className="text-neutral-600" />
-            </button>
-            <button
-              className={`flex size-9 items-center justify-center rounded-lg transition-all duration-300 ease-in-out ${activeScreenView === 2 ? "bg-gray-200" : ""}`}
-              onClick={() => {
-                setActiveScreenView(2);
-                setDesktop(true);
-              }}
-            >
-              <Monitor size={20} className="text-neutral-600" />
-            </button>
+          {!analytics ? (
+            <div className="screenViewBtns flex items-center justify-center gap-2 border-neutral-300 px-2">
+              <button
+                className={`flex size-9 items-center justify-center rounded-lg transition-all duration-300 ease-in-out ${activeScreenView === 1 ? "bg-gray-200" : ""}`}
+                onClick={() => {
+                  setActiveScreenView(1);
+                  setDesktop(false);
+                }}
+              >
+                <Smartphone size={20} className="text-neutral-600" />
+              </button>
+              <button
+                className={`flex size-9 items-center justify-center rounded-lg transition-all duration-300 ease-in-out ${activeScreenView === 2 ? "bg-gray-200" : ""}`}
+                onClick={() => {
+                  setActiveScreenView(2);
+                  setDesktop(true);
+                }}
+              >
+                <Monitor size={20} className="text-neutral-600" />
+              </button>
+              <Link
+                target="_blank"
+                className="ml-2 flex md:hidden"
+                href={`https://linxbio.vercel.app/${profile?.username}`}
+              >
+                <SquareArrowOutUpRight
+                  size={18}
+                  className="hover:text-primary text-gray-600 transition-all duration-300 ease-in-out"
+                />
+              </Link>
+            </div>
+          ) : (
             <Link
-              target="_blank"
-              className="ml-2 flex md:hidden"
-              href={`https://linxbio.vercel.app/${profile?.username}`}
+              href={"/dashboard"}
+              className={`relative mr-3 flex size-9 min-w-9 items-center justify-center rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-200`}
             >
-              <SquareArrowOutUpRight
-                size={18}
-                className="hover:text-primary text-gray-600 transition-all duration-300 ease-in-out"
+              <ArrowLeft
+                size={20}
+                className="text-gray-600 transition-all duration-300 ease-in-out"
               />
             </Link>
-          </div>
+          )}
         </div>
         <div className="nav-part-2 hidden h-9 flex-1 items-center justify-between rounded-full bg-gray-200 px-4 md:flex">
           <p className="text-sm font-medium text-gray-500">
@@ -95,7 +111,7 @@ function Navbar({ setDesktop, onClick, publishLoading, profile }) {
             <SquareArrowOutUpRight size={18} className="" />
           </Link>
         </div>
-        <div className="nav-part-3 ml-4 flex gap-2">
+        <div className="nav-part-3 flex gap-2 md:ml-4">
           <button
             onClick={() => {
               setOpen(!open);
@@ -103,6 +119,7 @@ function Navbar({ setDesktop, onClick, publishLoading, profile }) {
             className={`relative flex size-9 min-w-9 items-center justify-center rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-200`}
           >
             <User size={22} className="text-neutral-600" />
+
             <AnimatePresence>
               {open && (
                 <motion.div
@@ -125,12 +142,18 @@ function Navbar({ setDesktop, onClick, publishLoading, profile }) {
               )}
             </AnimatePresence>
           </button>
+          <Link
+            href={"/dashboard/analytics"}
+            className={`relative flex size-9 min-w-9 items-center justify-center rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-200 ${pathname === "/dashboard/analytics" ? "bg-gray-200" : ""}`}
+          >
+            <ChartNoAxesCombined size={22} className="text-neutral-600" />
+          </Link>
           <div className="border-r border-neutral-300"></div>
           <div
             onClick={() => setShareOpen(!shareOpen)}
-            className={`relative flex size-9 min-w-9 items-center justify-center rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-200`}
+            className={`relative flex size-9 min-w-9 cursor-pointer items-center justify-center rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-200`}
           >
-            <Share size={20} className="text-neutral-600" />
+            <Share2 size={20} className="text-neutral-600" />
             <AnimatePresence>
               {shareOpen && (
                 <motion.div
@@ -234,9 +257,10 @@ function Navbar({ setDesktop, onClick, publishLoading, profile }) {
             loading={publishLoading}
             onClick={onClick}
             variant="primary"
-            className="bg-primary hover:bg-primary/90 hover:shadow-primary flex h-9 min-w-[100px] items-center justify-center rounded-full px-4 text-black shadow-md transition-all duration-300 ease-out hover:shadow-[0_0_20px_var(--tw-shadow-color)] active:scale-95"
+            className="bg-primary hover:bg-primary/90 hover:shadow-primary flex h-9 items-center justify-center rounded-full px-4 text-black shadow-md transition-all duration-300 ease-out hover:shadow-[0_0_20px_var(--tw-shadow-color)] active:scale-95 md:min-w-[100px]"
           >
-            Publish
+            <p className="hidden md:flex">Publish</p>
+            <Share size={20} className="flex md:hidden" />
           </Button>
         </div>
       </div>
