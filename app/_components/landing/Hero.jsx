@@ -11,7 +11,7 @@ import {
   faGithub,
 } from "@fortawesome/free-brands-svg-icons";
 import Image from "next/image";
-import { Eye, MousePointerClick } from "lucide-react";
+import { Eye, MousePointerClick, Sparkles } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -28,10 +28,6 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="space-y-8 text-center lg:text-left"
         >
-          <div className="mb-4 inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-bold tracking-wide text-gray-600 uppercase">
-            The Ultimate Link-in-Bio Tool
-          </div>
-
           <h1 className="text-5xl leading-[1.1] font-black tracking-tight lg:text-7xl">
             One Link. <br />
             <span className="from-primary to-secondary bg-linear-to-r bg-clip-text text-transparent">
@@ -71,12 +67,12 @@ export default function Hero() {
               {/* Screen Content */}
               <div className="scrollbar-hide h-full w-full overflow-y-auto bg-white">
                 {/* Header */}
-                <div className="relative h-32 bg-linear-to-b from-purple-400 to-pink-300">
-                  <div className="absolute -bottom-10 left-1/2 h-20 w-20 -translate-x-1/2 overflow-hidden rounded-full border-4 border-white bg-gray-200">
+                <div className="relative h-32  ">
+                  <div className="absolute -bottom-10 left-1/2 h-26 w-26 -translate-x-1/2 overflow-hidden rounded-full  bg-gray-200">
                     <Image
-                      src="/hero/hero-avatar.png"
-                      width={80}
-                      height={80}
+                      src="/hero/hero-avatar2.png"
+                      width={120}
+                      height={120}
                       alt="Avatar"
                       className="h-full w-full object-cover"
                     />
@@ -121,9 +117,9 @@ export default function Hero() {
                     (item, i) => (
                       <motion.div
                         key={i}
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 0 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.5 + i * 0.1 }}
+                        transition={{ ease: "easeInOut" }}
                         className="w-full rounded-full border-2 py-3 text-center text-[14px] font-bold transition-transform hover:translate-x-[2px] hover:translate-y-[2px]"
                         style={{
                           boxShadow: `4px 4px 0px 0px #000`,

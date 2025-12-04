@@ -307,9 +307,9 @@ const Phone = ({
           className="relative h-32 w-32 overflow-hidden rounded-full"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             onError={(e) => {
-              e.target.src = "/hero/hero-avatar.png";
+              e.target.src = "/hero/hero-avatar2.png";
             }}
             alt="Profile"
             width={100}
@@ -368,9 +368,9 @@ const Phone = ({
           className="relative h-24 w-24 overflow-hidden rounded-full"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             onError={(e) => {
-              e.target.src = "/hero/hero-avatar.png";
+              e.target.src = "/hero/hero-avatar2.png";
             }}
             alt="Profile"
             width={100}
@@ -419,9 +419,9 @@ const Phone = ({
           className="relative h-24 w-24 overflow-hidden rounded-full"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             onError={(e) => {
-              e.target.src = "/hero/hero-avatar.png";
+              e.target.src = "/hero/hero-avatar2.png";
             }}
             alt="Profile"
             width={100}
@@ -466,7 +466,7 @@ const Phone = ({
     >
       <div className="relative h-60 w-full bg-linear-to-b to-[#ffffff]">
         <Image
-          src={coverIsImage ? cover : "/hero/hero-avatar.png"}
+          src={coverIsImage ? cover : "/hero/hero-avatar2.png"}
           alt="Profile"
           fill
           className="object-cover"
@@ -485,9 +485,9 @@ const Phone = ({
           className="relative h-24 w-24 overflow-hidden rounded-full"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             onError={(e) => {
-              e.target.src = "/hero/hero-avatar.png";
+              e.target.src = "/hero/hero-avatar2.png";
             }}
             alt="Profile"
             width={100}
@@ -550,9 +550,9 @@ const Phone = ({
           className="relative h-24 w-24 overflow-hidden rounded-full"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             onError={(e) => {
-              e.target.src = "/hero/hero-avatar.png";
+              e.target.src = "/hero/hero-avatar2.png";
             }}
             alt="Profile"
             width={100}
@@ -601,9 +601,9 @@ const Phone = ({
           className="relative h-18 w-18 overflow-hidden rounded-full"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             onError={(e) => {
-              e.target.src = "/hero/hero-avatar.png";
+              e.target.src = "/hero/hero-avatar2.png";
             }}
             alt="Profile"
             width={100}
@@ -636,9 +636,9 @@ const Phone = ({
         {desktop ? (
           <div className="scrollbar-hide inline-flex gap-1 overflow-x-auto pt-4">
             <Image
-              src={profile.avatar || "/hero/hero-avatar.png"}
+              src={profile.avatar || "/hero/hero-avatar2.png"}
               onError={(e) => {
-                e.target.src = "/hero/hero-avatar.png";
+                e.target.src = "/hero/hero-avatar2.png";
               }}
               alt="Profile"
               width={100}
@@ -646,9 +646,9 @@ const Phone = ({
               //   className="absolute -left-[22%] left-0 h-[90px] h-[180px] w-[90px] w-[220px] rounded-[8px] object-cover"
             />
             <Image
-              src={profile.avatar || "/hero/hero-avatar.png"}
+              src={profile.avatar || "/hero/hero-avatar2.png"}
               onError={(e) => {
-                e.target.src = "/hero/hero-avatar.png";
+                e.target.src = "/hero/hero-avatar2.png";
               }}
               alt="Profile"
               width={100}
@@ -656,9 +656,9 @@ const Phone = ({
               //   className="h-[90px] h-[180px] w-[90px] w-[220px] rounded-[8px] object-cover"
             />
             <Image
-              src={profile.avatar || "/hero/hero-avatar.png"}
+              src={profile.avatar || "/hero/hero-avatar2.png"}
               onError={(e) => {
-                e.target.src = "/hero/hero-avatar.png";
+                e.target.src = "/hero/hero-avatar2.png";
               }}
               alt="Profile"
               width={100}
@@ -669,9 +669,9 @@ const Phone = ({
         ) : (
           <div className="scrollbar-hide inline-flex gap-1 overflow-x-auto pt-4">
             <Image
-              src={profile.avatar || "/hero/hero-avatar.png"}
+              src={profile.avatar || "/hero/hero-avatar2.png"}
               onError={(e) => {
-                e.target.src = "/hero/hero-avatar.png";
+                e.target.src = "/hero/hero-avatar2.png";
               }}
               alt="Profile"
               width={100}
@@ -679,9 +679,9 @@ const Phone = ({
               //   className="absolute -left-[16%] -left-[22%] h-[90px] h-[128px] w-[90px] w-[128px] rounded-[8px] object-cover"
             />
             <Image
-              src={profile.avatar || "/hero/hero-avatar.png"}
+              src={profile.avatar || "/hero/hero-avatar2.png"}
               onError={(e) => {
-                e.target.src = "/hero/hero-avatar.png";
+                e.target.src = "/hero/hero-avatar2.png";
               }}
               alt="Profile"
               width={100}
@@ -689,9 +689,9 @@ const Phone = ({
               //   className="h-[90px] h-[128px] w-[90px] w-[128px] rounded-[8px] object-cover"
             />
             <Image
-              src={profile.avatar || "/hero/hero-avatar.png"}
+              src={profile.avatar || "/hero/hero-avatar2.png"}
               onError={(e) => {
-                e.target.src = "/hero/hero-avatar.png";
+                e.target.src = "/hero/hero-avatar2.png";
               }}
               alt="Profile"
               width={100}

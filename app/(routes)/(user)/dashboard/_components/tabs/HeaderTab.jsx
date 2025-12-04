@@ -344,7 +344,7 @@ const Tab = ({
                     src={cover}
                     alt="Cover"
                     onError={(e) => {
-                      e.target.src = "/hero/hero-avatar.png";
+                      e.target.src = "/hero/hero-avatar2.png";
                     }}
                     className="h-full w-full object-cover"
                   />
@@ -425,9 +425,9 @@ const Tab = ({
                 className={`relative h-24 w-24 min-w-24 cursor-pointer overflow-hidden rounded-xl border border-gray-200 transition-all`}
               >
                 <Image
-                  src={avatar || "/hero/hero-avatar.png"}
+                  src={avatar || "/hero/hero-avatar2.png"}
                   onError={(e) => {
-                    e.target.src = "/hero/hero-avatar.png";
+                    e.target.src = "/hero/hero-avatar2.png";
                   }}
                   width={100}
                   height={100}

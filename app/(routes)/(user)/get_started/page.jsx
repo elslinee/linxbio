@@ -373,7 +373,7 @@ function GetStartedPage() {
                             className="object-cover"
                             onError={() =>
                               setProfile({
-                                avatar: "/hero/hero-avatar.png",
+                                avatar: "/hero/hero-avatar2.png",
                               })
                             }
                           />

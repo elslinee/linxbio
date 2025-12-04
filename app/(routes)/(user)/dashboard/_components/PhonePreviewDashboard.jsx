@@ -214,9 +214,9 @@ const PhonePreviewDashboard = ({
           className="relative h-24 w-24 overflow-hidden rounded-full md:h-32 md:w-32"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             onError={(e) => {
-              e.target.src = "/hero/hero-avatar.png";
+              e.target.src = "/hero/hero-avatar2.png";
             }}
             alt="Profile"
             width={100}
@@ -296,9 +296,9 @@ const PhonePreviewDashboard = ({
           className="relative h-16 w-16 overflow-hidden rounded-full md:h-24 md:w-24"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             onError={(e) => {
-              e.target.src = "/hero/hero-avatar.png";
+              e.target.src = "/hero/hero-avatar2.png";
             }}
             alt="Profile"
             width={100}
@@ -309,7 +309,7 @@ const PhonePreviewDashboard = ({
         {profile?.showName && (
           <div
             style={{ color: colors.text }}
-            className="mt-1 flex max-w-full items-center gap-1 text-base font-medium tracking-wide  md:mt-3 md:text-lg"
+            className="mt-1 flex max-w-full items-center gap-1 text-base font-medium tracking-wide md:mt-3 md:text-lg"
           >
             <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
@@ -366,9 +366,9 @@ const PhonePreviewDashboard = ({
           className="relative h-18 w-18 overflow-hidden rounded-full md:h-24 md:w-24"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             onError={(e) => {
-              e.target.src = "/hero/hero-avatar.png";
+              e.target.src = "/hero/hero-avatar2.png";
             }}
             alt="Profile"
             width={100}
@@ -379,7 +379,7 @@ const PhonePreviewDashboard = ({
         {profile?.showName && (
           <div
             style={{ color: colors.text }}
-            className="mt-3 flex max-w-full items-center gap-1 text-lg font-medium tracking-wide  md:text-xl"
+            className="mt-3 flex max-w-full items-center gap-1 text-lg font-medium tracking-wide md:text-xl"
           >
             <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
@@ -432,7 +432,7 @@ const PhonePreviewDashboard = ({
     >
       <div className="relative h-40 w-full bg-linear-to-b to-[#ffffff] md:h-60">
         <Image
-          src={coverIsImage ? cover : "/hero/hero-avatar.png"}
+          src={coverIsImage ? cover : "/hero/hero-avatar2.png"}
           alt="Profile"
           fill
           className="object-cover"
@@ -451,9 +451,9 @@ const PhonePreviewDashboard = ({
           className="relative h-18 w-18 overflow-hidden rounded-full md:h-24 md:w-24"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             onError={(e) => {
-              e.target.src = "/hero/hero-avatar.png";
+              e.target.src = "/hero/hero-avatar2.png";
             }}
             alt="Profile"
             width={100}
@@ -464,7 +464,7 @@ const PhonePreviewDashboard = ({
         {profile?.showName && (
           <div
             style={{ color: colors.text }}
-            className="mt-1 flex max-w-full items-center gap-1 text-lg font-bold tracking-wide  md:text-xl"
+            className="mt-1 flex max-w-full items-center gap-1 text-lg font-bold tracking-wide md:text-xl"
           >
             <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
@@ -535,9 +535,9 @@ const PhonePreviewDashboard = ({
           className="relative h-18 w-18 overflow-hidden rounded-full md:h-24 md:w-24"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             onError={(e) => {
-              e.target.src = "/hero/hero-avatar.png";
+              e.target.src = "/hero/hero-avatar2.png";
             }}
             alt="Profile"
             width={100}
@@ -548,7 +548,7 @@ const PhonePreviewDashboard = ({
         {profile?.showName && (
           <div
             style={{ color: colors.text }}
-            className="mt-1 flex max-w-full items-center gap-1 text-lg font-bold tracking-wide  md:text-xl"
+            className="mt-1 flex max-w-full items-center gap-1 text-lg font-bold tracking-wide md:text-xl"
           >
             <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
@@ -605,9 +605,9 @@ const PhonePreviewDashboard = ({
           className="relative h-18 w-18 overflow-hidden rounded-full"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             onError={(e) => {
-              e.target.src = "/hero/hero-avatar.png";
+              e.target.src = "/hero/hero-avatar2.png";
             }}
             alt="Profile"
             width={100}
@@ -618,7 +618,7 @@ const PhonePreviewDashboard = ({
         {profile?.showName && (
           <div
             style={{ color: colors.text }}
-            className="mt-1 flex max-w-full items-center gap-1 font-bold tracking-wide  md:text-xl"
+            className="mt-1 flex max-w-full items-center gap-1 font-bold tracking-wide md:text-xl"
           >
             <h2 className="line-clamp-2 text-center">
               {profile.displayName || "Your Name"}
@@ -659,9 +659,9 @@ const PhonePreviewDashboard = ({
         {desktop ? (
           <div className="scrollbar-hide inline-flex gap-1 overflow-x-auto pt-2 md:pt-4">
             <Image
-              src={profile.avatar || "/hero/hero-avatar.png"}
+              src={profile.avatar || "/hero/hero-avatar2.png"}
               onError={(e) => {
-                e.target.src = "/hero/hero-avatar.png";
+                e.target.src = "/hero/hero-avatar2.png";
               }}
               alt="Profile"
               width={100}
@@ -669,9 +669,9 @@ const PhonePreviewDashboard = ({
               className="absolute left-0 h-[90px] w-[90px] rounded-[8px] object-cover md:-left-[22%] md:h-[180px] md:w-[220px]"
             />
             <Image
-              src={profile.avatar || "/hero/hero-avatar.png"}
+              src={profile.avatar || "/hero/hero-avatar2.png"}
               onError={(e) => {
-                e.target.src = "/hero/hero-avatar.png";
+                e.target.src = "/hero/hero-avatar2.png";
               }}
               alt="Profile"
               width={100}
@@ -679,9 +679,9 @@ const PhonePreviewDashboard = ({
               className="h-[90px] w-[90px] rounded-[8px] object-cover md:h-[180px] md:w-[220px]"
             />
             <Image
-              src={profile.avatar || "/hero/hero-avatar.png"}
+              src={profile.avatar || "/hero/hero-avatar2.png"}
               onError={(e) => {
-                e.target.src = "/hero/hero-avatar.png";
+                e.target.src = "/hero/hero-avatar2.png";
               }}
               alt="Profile"
               width={100}
@@ -692,9 +692,9 @@ const PhonePreviewDashboard = ({
         ) : (
           <div className="scrollbar-hide inline-flex gap-1 overflow-x-auto pt-2 md:pt-4">
             <Image
-              src={profile.avatar || "/hero/hero-avatar.png"}
+              src={profile.avatar || "/hero/hero-avatar2.png"}
               onError={(e) => {
-                e.target.src = "/hero/hero-avatar.png";
+                e.target.src = "/hero/hero-avatar2.png";
               }}
               alt="Profile"
               width={100}
@@ -702,9 +702,9 @@ const PhonePreviewDashboard = ({
               className="absolute -left-[16%] h-[90px] w-[90px] rounded-[8px] object-cover md:-left-[22%] md:h-[128px] md:w-[128px]"
             />
             <Image
-              src={profile.avatar || "/hero/hero-avatar.png"}
+              src={profile.avatar || "/hero/hero-avatar2.png"}
               onError={(e) => {
-                e.target.src = "/hero/hero-avatar.png";
+                e.target.src = "/hero/hero-avatar2.png";
               }}
               alt="Profile"
               width={100}
@@ -712,9 +712,9 @@ const PhonePreviewDashboard = ({
               className="h-[90px] w-[90px] rounded-[8px] object-cover md:h-[128px] md:w-[128px]"
             />
             <Image
-              src={profile.avatar || "/hero/hero-avatar.png"}
+              src={profile.avatar || "/hero/hero-avatar2.png"}
               onError={(e) => {
-                e.target.src = "/hero/hero-avatar.png";
+                e.target.src = "/hero/hero-avatar2.png";
               }}
               alt="Profile"
               width={100}

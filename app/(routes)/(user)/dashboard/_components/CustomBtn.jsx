@@ -24,7 +24,7 @@ export default function CustomBtn({
   return (
     <Button
       onClick={handleClick}
-      className={`border-primary w-fit! min-w-[70px] border px-4! py-[4.5px]!  text-sm font-bold ${outLine ? "border-primary text-primary! border bg-transparent shadow-none" : ""}`}
+      className={`border-primary w-fit! min-w-[70px] border px-4! py-[4.5px]!  text-sm font-bold ${outLine ? "border-primary text-primary! border bg-transparent hover:text-white! shadow-none" : ""}`}
     >
       {name}
     </Button>

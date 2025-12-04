@@ -53,7 +53,7 @@ function Navbar({ setDesktop, onClick, publishLoading, profile, analytics }) {
     } catch (error) {}
   };
   return (
-    <nav className="sticky top-0 z-9999 w-full border-b border-gray-200 bg-white/80">
+    <nav className="sticky top-0 z-9999 w-full border-b border-gray-200 bg-white">
       <div className="flex h-16 items-center justify-between px-4 md:justify-center">
         <div className="nav-part-1 flex">
           {!analytics ? (
@@ -99,8 +99,8 @@ function Navbar({ setDesktop, onClick, publishLoading, profile, analytics }) {
             </Link>
           )}
         </div>
-        <div className="nav-part-2 hidden h-9 flex-1 items-center justify-between rounded-full bg-gray-200 px-4 md:flex">
-          <p className="text-sm font-medium text-gray-500">
+        <div className="nav-part-2 hidden h-9 flex-1 items-center justify-between rounded-full bg-background px-4 md:flex">
+          <p className="text-sm font-medium text-gray-700">
             linxbio.vercel.app/{profile?.username}
           </p>
           <Link

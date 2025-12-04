@@ -118,7 +118,7 @@ function page() {
   };
 
   return (
-    <div className="min-h-screen overflow-hidden bg-gray-200">
+    <div className="min-h-screen overflow-hidden bg-background">
       <Navbar
         publishLoading={publishLoading}
         profile={profile}

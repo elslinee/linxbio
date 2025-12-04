@@ -208,9 +208,8 @@ const Tab = ({ setTab }) => {
           </div>
         </div>
       </div>
-
-      <div className="custom-scroll flex flex-1 flex-col gap-4 overflow-y-auto px-4 pb-6">
-        <div className="flex w-full items-center justify-center gap-4">
+      <div className="flex h-full flex-col justify-between">
+        <div className="px-4 pb-4">
           <div className="flex flex-1 flex-col gap-3">
             <div>
               <label className="mb-1 block text-sm font-bold text-gray-700">
@@ -261,18 +260,18 @@ const Tab = ({ setTab }) => {
             </div>
           </div>
         </div>
-      </div>
-      <hr className="mb-4 text-gray-200" />
-      <div className="px-4 pb-4">
-        <label className="mb-2 block text-sm font-bold text-gray-700">
-          Danger zone
-        </label>
-        <button
-          onClick={handleDeleteProfile}
-          className="mb-2 flex w-full items-center justify-center gap-2 rounded-xl bg-red-100 p-4 text-sm font-bold text-red-500"
-        >
-          Remove Profile <Trash2 size={18} />
-        </button>
+
+        <div className="px-4 pb-4">
+          <label className="mb-2 block text-sm font-bold text-gray-700">
+            Danger zone
+          </label>
+          <button
+            onClick={handleDeleteProfile}
+            className="mb-2 flex w-full items-center justify-center gap-2 rounded-xl bg-red-100 p-4 text-sm font-bold text-red-500"
+          >
+            Remove Profile <Trash2 size={18} />
+          </button>
+        </div>
       </div>
     </div>
   );

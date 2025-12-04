@@ -41,29 +41,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 export const description = "A horizontal bar chart";
 
-const chartData = [
-  { platform: "instagram", click: 10 },
-  { platform: "tiktok", click: 0 },
-  { platform: "twitter", click: 0 },
-  { platform: "threads", click: 20 },
-  { platform: "twitch", click: 3 },
-  { platform: "facebook", click: 5 },
-  { platform: "whatsapp", click: 1 },
-  { platform: "github", click: 0 },
-  { platform: "linkedin", click: 0 },
-  { platform: "pinterest", click: 0 },
-  { platform: "behance", click: 4 },
-  { platform: "youtube", click: 0 },
-  { platform: "discord", click: 0 },
-  { platform: "telegram", click: 0 },
-  { platform: "snapchat", click: 0 },
-  { platform: "email", click: 0 },
-  { platform: "website", click: 0 },
-];
-const fixedData = chartData.map((item) => ({
-  ...item,
-  click: item.click === 0 ? 0.00001 : item.click,
-}));
 const socialIcons = {
   instagram: faInstagram,
   tiktok: faTiktok,
@@ -126,7 +103,8 @@ export function ChartBarHorizontal({
         {chartData.length > 0 ? (
           <ChartContainer
             config={chartConfig}
-            className={`h-[${chartHeight}px] w-full`}
+            className="aspect-auto w-full"
+            style={{ height: chartHeight }}
           >
             <BarChart
               accessibilityLayer

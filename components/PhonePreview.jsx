@@ -164,7 +164,7 @@ const PhonePreview = ({
           className="relative h-32 w-32 overflow-hidden rounded-full shadow-md"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             alt="Profile"
             width={100}
             height={100}
@@ -231,7 +231,7 @@ const PhonePreview = ({
           className="relative h-18 w-18 overflow-hidden rounded-full shadow-md"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             alt="Profile"
             width={100}
             height={100}
@@ -290,7 +290,7 @@ const PhonePreview = ({
           className="relative h-18 w-18 overflow-hidden rounded-full shadow-md"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             alt="Profile"
             width={100}
             height={100}
@@ -345,7 +345,7 @@ const PhonePreview = ({
     >
       <div className="relative h-50 w-full bg-linear-to-b from-gray-100 to-[#ffffff]">
         <Image
-          src={profile.avatar || "/hero/hero-avatar.png"}
+          src={profile.avatar || "/hero/hero-avatar2.png"}
           alt="Profile"
           fill
           className="object-cover"
@@ -364,7 +364,7 @@ const PhonePreview = ({
           className="relative h-18 w-18 overflow-hidden rounded-full shadow-md"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             alt="Profile"
             width={100}
             height={100}
@@ -419,7 +419,7 @@ const PhonePreview = ({
     >
       <div className="relative h-50 w-full bg-linear-to-b from-gray-100 to-[#ffffff]">
         <Image
-          src={profile.avatar || "/hero/hero-avatar.png"}
+          src={profile.avatar || "/hero/hero-avatar2.png"}
           alt="Profile"
           fill
           className="object-cover"
@@ -432,7 +432,7 @@ const PhonePreview = ({
           className="relative h-18 w-18 overflow-hidden rounded-full shadow-md"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             alt="Profile"
             width={100}
             height={100}
@@ -493,7 +493,7 @@ const PhonePreview = ({
           className="relative h-18 w-18 overflow-hidden rounded-full shadow-md"
         >
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             alt="Profile"
             width={100}
             height={100}
@@ -539,21 +539,21 @@ const PhonePreview = ({
 
         <div className="scrollbar-hide inline-flex gap-1 overflow-x-auto pt-4">
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             alt="Profile"
             width={100}
             height={100}
             className="absolute -left-[22%] h-[128px] w-[128px] rounded-[8px] object-cover"
           />
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             alt="Profile"
             width={100}
             height={100}
             className="h-[128px] w-[128px] rounded-[8px] object-cover"
           />
           <Image
-            src={profile.avatar || "/hero/hero-avatar.png"}
+            src={profile.avatar || "/hero/hero-avatar2.png"}
             alt="Profile"
             width={100}
             height={100}
