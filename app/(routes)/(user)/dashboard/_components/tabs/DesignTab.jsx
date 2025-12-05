@@ -33,7 +33,6 @@ function DesignTab() {
 
   const [selectedPage, setSelectedPage] = useState("");
 
-  // Sync selected indices from current store values on mount
   useEffect(() => {
     const headerIndex = headerOptions.findIndex((opt) => opt === header);
     const colorIndex = colorOptions.findIndex(
@@ -45,7 +44,6 @@ function DesignTab() {
     const fontIndex = fontOptions.findIndex((opt) => opt === font);
     const buttonIndex = buttonOptions.findIndex((opt) => opt === buttons);
 
-    // Set indices only if found, otherwise keep current selection
     if (headerIndex >= 0) setSelectedHeader(headerIndex);
     if (colorIndex >= 0) setSelectedColor(colorIndex);
     if (fontIndex >= 0) setSelectedFont(fontIndex);

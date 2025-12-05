@@ -644,7 +644,6 @@ const Desktop = ({
               alt="Profile"
               width={100}
               height={100}
-              //   className="absolute -left-[22%] left-0 h-[90px] h-[180px] w-[90px] w-[220px] rounded-[8px] object-cover"
             />
             <Image
               src={profile.avatar || "/hero/hero-avatar2.png"}
@@ -654,7 +653,6 @@ const Desktop = ({
               alt="Profile"
               width={100}
               height={100}
-              //   className="h-[90px] h-[180px] w-[90px] w-[220px] rounded-[8px] object-cover"
             />
             <Image
               src={profile.avatar || "/hero/hero-avatar2.png"}
@@ -664,7 +662,6 @@ const Desktop = ({
               alt="Profile"
               width={100}
               height={100}
-              //   className="absolute -right-[22%] right-0 h-[90px] h-[180px] w-[90px] w-[220px] rounded-[8px] object-cover"
             />
           </div>
         ) : (
@@ -677,7 +674,6 @@ const Desktop = ({
               alt="Profile"
               width={100}
               height={100}
-              //   className="absolute -left-[16%] -left-[22%] h-[90px] h-[128px] w-[90px] w-[128px] rounded-[8px] object-cover"
             />
             <Image
               src={profile.avatar || "/hero/hero-avatar2.png"}
@@ -687,7 +683,6 @@ const Desktop = ({
               alt="Profile"
               width={100}
               height={100}
-              //   className="h-[90px] h-[128px] w-[90px] w-[128px] rounded-[8px] object-cover"
             />
             <Image
               src={profile.avatar || "/hero/hero-avatar2.png"}
@@ -697,7 +692,6 @@ const Desktop = ({
               alt="Profile"
               width={100}
               height={100}
-              //   className="absolute -right-[16%] -right-[22%] h-[90px] h-[128px] w-[90px] w-[128px] rounded-[8px] object-cover"
             />
           </div>
         )}

@@ -16,18 +16,6 @@ const signUpMethods = [
     name: "Google",
     href: "/api/auth/google",
   },
-  // {
-  //   id: "facebook",
-  //   icon: faFacebook,
-  //   name: "Facebook",
-  //   href: "/api/auth/facebook",
-  // },
-  // {
-  //   id: "instagram",
-  //   icon: faInstagram,
-  //   name: "Instagram",
-  //   href: "/api/auth/instagram",
-  // },
 ];
 export default function RegisterPage() {
   const setUser = useAuthStore((state) => state.setUser);
@@ -67,7 +55,6 @@ export default function RegisterPage() {
       else if (value !== userData.password) message = "Passwords do not match";
     }
 
-    // Update one field only
     setErrors((prev) => ({ ...prev, [name]: message }));
   };
 

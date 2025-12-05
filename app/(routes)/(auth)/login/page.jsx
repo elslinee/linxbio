@@ -16,16 +16,6 @@ const signInMethods = [
     name: "Google",
     href: "/api/auth/google",
   },
-  // {
-  //   id: "facebook",
-  //   icon: faFacebook,
-  //   name: "Facebook",
-  // },
-  // {
-  //   id: "instagram",
-  //   icon: faInstagram,
-  //   name: "Instagram",
-  // },
 ];
 export default function LoginPage() {
   const setUser = useAuthStore((state) => state.setUser);
@@ -78,7 +68,6 @@ export default function LoginPage() {
       const res = await login(userData);
       setUser(res.data.data);
       setUserData({ email: "", password: "" });
-      // ????
       setServerError("");
       router.push("/");
     } catch (err) {

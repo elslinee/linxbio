@@ -72,7 +72,6 @@ const Tab = ({
     fileInputAvatarRef.current.click();
   };
 
-  // Cover upload with crop
   const [uploadCoverLoading, setUploadCoverLoading] = useState(false);
 
   const handleCoverCropComplete = async (croppedBlob) => {
@@ -108,11 +107,9 @@ const Tab = ({
       };
       reader.readAsDataURL(file);
     }
-    // Reset input
     e.target.value = null;
   };
 
-  // Avatar upload with crop
   const [uploadAvatarLoading, setUploadAvatarLoading] = useState(false);
 
   const handleAvatarCropComplete = async (croppedBlob) => {
@@ -148,7 +145,6 @@ const Tab = ({
       };
       reader.readAsDataURL(file);
     }
-    // Reset input
     e.target.value = null;
   };
 
@@ -199,14 +195,6 @@ const Tab = ({
         .catch((err) => {
           setErr(err?.response?.data?.message);
         });
-
-      // if (value === key) {
-      //   setProfile({ verifiedBadge: true });
-      //   setProfile({ keyEntered: true });
-      //   closeDialog();
-      // } else {
-      //   setErr("Invalid Key");
-      // }
     };
 
     return (

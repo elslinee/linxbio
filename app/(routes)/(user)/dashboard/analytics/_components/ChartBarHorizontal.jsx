@@ -35,7 +35,6 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import {
   faEnvelope,
-  faArrowLeft,
   faUser,
   faEarthAmericas,
 } from "@fortawesome/free-solid-svg-icons";
@@ -84,14 +83,12 @@ export function ChartBarHorizontal({
   clicksData = [],
   title = "Social Media Clicks",
 }) {
-  // عرض فقط الـ platforms التي عندها clicks
   const chartData = clicksData.map((item) => ({
     platform: item.platform,
     clicks: item.clicks,
   }));
 
-  // حساب ارتفاع الـ chart بناءً على عدد العناصر
-  const chartHeight = Math.max(200, chartData.length * 40);
+  const chartHeight = Math.max(60, Math.min(400, chartData.length * 50));
 
   return (
     <Card className={"w-full border-0 bg-white"}>
@@ -128,7 +125,12 @@ export function ChartBarHorizontal({
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
               />
-              <Bar dataKey="clicks" fill="var(--color-primary)" radius={5} />
+              <Bar
+                dataKey="clicks"
+                fill="var(--color-primary)"
+                radius={5}
+                maxBarSize={40}
+              />
             </BarChart>
           </ChartContainer>
         ) : (

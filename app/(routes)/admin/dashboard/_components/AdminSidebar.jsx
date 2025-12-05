@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Users, Link as LinkIcon, LayoutDashboard, Key } from "lucide-react";
+import { Users, Link as LinkIcon, Key } from "lucide-react";
 
 function AdminSidebar({ activeTab, setActiveTab }) {
   const tabs = [

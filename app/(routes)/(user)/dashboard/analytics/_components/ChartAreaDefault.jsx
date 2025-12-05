@@ -10,7 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
@@ -25,21 +24,7 @@ const chartConfig = {
   },
 };
 
-export function ChartAreaDefault({}) {
-  const chartData = [
-    { month: "Jan", views: 10 },
-    { month: "Feb", views: 10 },
-    { month: "Mar", views: 100 },
-    { month: "Apr", views: 810 },
-    { month: "May", views: 550 },
-    { month: "Jun", views: 150 },
-    { month: "Jul", views: 400 },
-    { month: "Aug", views: 1500 },
-    { month: "Sep", views: 100 },
-    { month: "Oct", views: 450 },
-    { month: "Nov", views: 550 },
-    { month: "Dec", views: 200 },
-  ];
+export function ChartAreaDefault({ chartData = [] }) {
   return (
     <Card className={"h-[250px] border-0 bg-white md:h-[400px]"}>
       <CardHeader>

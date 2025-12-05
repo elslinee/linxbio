@@ -11,11 +11,12 @@ import {
   Search,
   Link as LinkIcon,
   ExternalLink,
+  BarChart3,
 } from "lucide-react";
 import EditModal from "./EditModal";
 import Link from "next/link";
 
-function LinkBiosTable() {
+function LinkBiosTable({ onViewAnalytics }) {
   const [linkBios, setLinkBios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -28,11 +29,10 @@ function LinkBiosTable() {
     try {
       setLoading(true);
       const res = await getAllLinkBios();
-      // console.log("getAllLinkBios response:", res.data);
+
       setLinkBios(res.data.data.data || []);
     } catch (error) {
       console.error("Failed to fetch linkBios", error);
-      // toast.error("Failed to load linkBios");
     } finally {
       setLoading(false);
     }
@@ -47,7 +47,6 @@ function LinkBiosTable() {
     try {
       await deleteLinkBio(id);
       setLinkBios(linkBios.filter((lb) => lb._id !== id));
-      // toast.success("LinkBio deleted successfully");
     } catch (error) {
       console.error("Failed to delete linkBio", error);
       alert("Failed to delete linkBio");
@@ -58,8 +57,6 @@ function LinkBiosTable() {
     if (!editLinkBio) return;
     try {
       setEditLoading(true);
-      // Assuming we are updating the profile part of the linkbio for simplicity in this example
-      // Adjust based on actual API structure if needed
       await updateLinkBio(editLinkBio._id, editLinkBio);
       setLinkBios(
         linkBios.map((lb) =>
@@ -67,7 +64,6 @@ function LinkBiosTable() {
         ),
       );
       setEditLinkBio(null);
-      // toast.success("LinkBio updated successfully");
     } catch (error) {
       console.error("Failed to update linkBio", error);
       alert("Failed to update linkBio");
@@ -82,7 +78,6 @@ function LinkBiosTable() {
       lb.profile?.displayName?.toLowerCase().includes(search.toLowerCase()),
   );
 
-  // Pagination calculations
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredLinkBios.slice(
@@ -91,7 +86,6 @@ function LinkBiosTable() {
   );
   const totalPages = Math.ceil(filteredLinkBios.length / itemsPerPage);
 
-  // Reset to page 1 when search changes
   useEffect(() => {
     setCurrentPage(1);
   }, [search]);
@@ -99,7 +93,7 @@ function LinkBiosTable() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-primary"></div>
+        <div className="border-t-primary h-8 w-8 animate-spin rounded-full border-4 border-gray-200"></div>
       </div>
     );
   }
@@ -118,7 +112,7 @@ function LinkBiosTable() {
             placeholder="Search linkbios..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-64 rounded-lg border border-gray-200 py-2 pr-4 pl-10 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+            className="focus:border-primary focus:ring-primary w-64 rounded-lg border border-gray-200 py-2 pr-4 pl-10 text-sm outline-none focus:ring-1"
           />
         </div>
       </div>
@@ -149,7 +143,7 @@ function LinkBiosTable() {
                   <Link
                     href={`/${lb.profile?.username}`}
                     target="_blank"
-                    className="flex items-center gap-1 text-primary hover:underline"
+                    className="text-primary flex items-center gap-1 hover:underline"
                   >
                     <LinkIcon size={14} />/{lb.profile?.username}
                     <ExternalLink size={12} />
@@ -158,14 +152,23 @@ function LinkBiosTable() {
                 <td className="px-6 py-4 text-right">
                   <div className="flex justify-end gap-2">
                     <button
+                      onClick={() => onViewAnalytics?.(lb.profile?.username)}
+                      className="rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-green-600"
+                      title="View Analytics"
+                    >
+                      <BarChart3 size={18} />
+                    </button>
+                    <button
                       onClick={() => setEditLinkBio(lb)}
                       className="rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-blue-600"
+                      title="Edit"
                     >
                       <Pencil size={18} />
                     </button>
                     <button
                       onClick={() => handleDelete(lb._id)}
                       className="rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-red-600"
+                      title="Delete"
                     >
                       <Trash2 size={18} />
                     </button>
@@ -204,7 +207,6 @@ function LinkBiosTable() {
             <div className="flex items-center gap-1">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                 (page) => {
-                  // Show first page, last page, current page, and pages around current
                   if (
                     page === 1 ||
                     page === totalPages ||
@@ -276,7 +278,7 @@ function LinkBiosTable() {
                     },
                   })
                 }
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                className="focus:border-primary focus:ring-primary w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-1"
               />
             </div>
             {/* Add more fields here as needed, e.g., profile.displayName */}
@@ -296,7 +298,7 @@ function LinkBiosTable() {
                     },
                   })
                 }
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                className="focus:border-primary focus:ring-primary w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-1"
               />
             </div>
             <div className="flex justify-between">

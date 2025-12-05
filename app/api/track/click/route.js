@@ -49,18 +49,15 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const username = searchParams.get("username");
 
-    // Admin can see all clicks
     if (currentUser.role === "admin") {
       const allClicks = await Click.find().sort({ count: -1 });
       return apiResponse.success("All clicks fetched (admin)", allClicks, 200);
     }
 
-    // Regular users need to provide username
     if (!username) {
       return apiResponse.fail("username is required for non-admin users", 400);
     }
 
-    // Filter clicks by actions that contain the username
     const userClicks = await Click.find({
       action: { $regex: username, $options: "i" },
     }).sort({ count: -1 });

@@ -14,7 +14,6 @@ function generateLast12Months(data) {
     "Dec",
   ];
 
-  // Step 1: Start empty structure
   const result = months.map((m) => ({ month: m, views: 0 }));
 
   data.forEach((item) => {

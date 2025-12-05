@@ -46,7 +46,6 @@ export async function POST(request) {
       return apiResponse.fail("Admins only", 403);
     }
 
-    // Generate a random key (e.g., XXXX-XXXX-XXXX)
     const key = crypto
       .randomBytes(6)
       .toString("hex")

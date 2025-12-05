@@ -31,7 +31,6 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const username = searchParams.get("username");
 
-    // ADMIN → show all analytics
     if (currentUser.role === "admin") {
       const allViews = await PageView.aggregate([
         {

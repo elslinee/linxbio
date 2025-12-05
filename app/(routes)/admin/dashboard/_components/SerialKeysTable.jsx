@@ -5,7 +5,6 @@ import {
   generateSerialKey,
 } from "@/utils/client/admin/serialKeysApi";
 import { Search, Key, Plus, Copy, Check } from "lucide-react";
-// import { toast } from "sonner";
 
 function SerialKeysTable() {
   const [keys, setKeys] = useState([]);
@@ -18,11 +17,9 @@ function SerialKeysTable() {
     try {
       setLoading(true);
       const res = await getSerialKeys();
-      // console.log("getSerialKeys response:", res.data);
       setKeys(res.data.data || []);
     } catch (error) {
       console.error("Failed to fetch keys", error);
-      // toast.error("Failed to load serial keys");
     } finally {
       setLoading(false);
     }
@@ -60,7 +57,7 @@ function SerialKeysTable() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-primary"></div>
+        <div className="border-t-primary h-8 w-8 animate-spin rounded-full border-4 border-gray-200"></div>
       </div>
     );
   }
@@ -80,13 +77,13 @@ function SerialKeysTable() {
               placeholder="Search keys..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-64 rounded-lg border border-gray-200 py-2 pr-4 pl-10 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+              className="focus:border-primary focus:ring-primary w-64 rounded-lg border border-gray-200 py-2 pr-4 pl-10 text-sm outline-none focus:ring-1"
             />
           </div>
           <button
             onClick={handleGenerate}
             disabled={generating}
-            className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary disabled:opacity-50"
+            className="bg-primary hover:bg-primary flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors disabled:opacity-50"
           >
             <Plus size={18} />
             {generating ? "Generating..." : "Generate Key"}
@@ -140,7 +137,7 @@ function SerialKeysTable() {
                 <td className="px-6 py-4 text-right">
                   <button
                     onClick={() => handleCopy(k.key)}
-                    className="rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-primary"
+                    className="hover:text-primary rounded-lg p-2 text-gray-400 hover:bg-gray-100"
                     title="Copy Key"
                   >
                     {copiedKey === k.key ? (

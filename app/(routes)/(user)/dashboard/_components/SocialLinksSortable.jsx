@@ -89,7 +89,6 @@ export default function SocialLinksSortable() {
   const dragOverItem = useRef(null);
 
   useEffect(() => {
-    // Self-healing: Ensure all supported socials are in socialsOrder
     const supportedKeys = socialIcons.map((s) => s.key);
     const missingKeys = supportedKeys.filter(
       (key) => !socialsOrder.includes(key),
@@ -102,7 +101,6 @@ export default function SocialLinksSortable() {
     } else {
       setItems(socialsOrder);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socialsOrder]);
 
   const onDragStart = (index) => {

@@ -25,18 +25,15 @@ const colors = [
   "var(--chart-4)",
   "var(--chart-5)",
   "var(--chart-6)",
-
 ];
 
 export function ChartPieLabel({ clicksData = [], title = "Button Clicks" }) {
-  // تحويل البيانات للـ Pie Chart
   const chartData = clicksData.map((item, index) => ({
     name: item.name,
     clicks: item.clicks,
     fill: colors[index % colors.length],
   }));
 
-  // إنشاء chartConfig ديناميكي
   const chartConfig = {
     clicks: {
       label: "Clicks",
@@ -50,7 +47,6 @@ export function ChartPieLabel({ clicksData = [], title = "Button Clicks" }) {
     }, {}),
   };
 
-  // حساب إجمالي الـ clicks
   const totalClicks = clicksData.reduce((sum, item) => sum + item.clicks, 0);
 
   return (
@@ -62,7 +58,7 @@ export function ChartPieLabel({ clicksData = [], title = "Button Clicks" }) {
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="[&_.recharts-pie-label-text]:fill-foreground mx-auto max-h-[300px] aspect-square pb-0"
+          className="[&_.recharts-pie-label-text]:fill-foreground mx-auto aspect-square max-h-[300px] pb-0"
         >
           <PieChart>
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />

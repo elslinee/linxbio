@@ -21,11 +21,9 @@ function UsersTable() {
     try {
       setLoading(true);
       const res = await getAllUsers();
-      // console.log("getAllUsers response:", res.data);
       setUsers(res.data.data.users || []);
     } catch (error) {
       console.error("Failed to fetch users", error);
-      // toast.error("Failed to load users");
     } finally {
       setLoading(false);
     }
@@ -40,7 +38,6 @@ function UsersTable() {
     try {
       await deleteUser(id);
       setUsers(users.filter((user) => user.id !== id));
-      // toast.success("User deleted successfully");
     } catch (error) {
       console.error("Failed to delete user", error);
       alert("Failed to delete user");
@@ -56,7 +53,6 @@ function UsersTable() {
         users.map((u) => (u.id === editUser.id ? { ...u, ...editUser } : u)),
       );
       setEditUser(null);
-      // toast.success("User updated successfully");
     } catch (error) {
       console.error("Failed to update user", error);
       alert("Failed to update user");
@@ -72,13 +68,11 @@ function UsersTable() {
       user.fullName?.toLowerCase().includes(search.toLowerCase()),
   );
 
-  // Pagination calculations
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
-  // Reset to page 1 when search changes
   useEffect(() => {
     setCurrentPage(1);
   }, [search]);
@@ -86,7 +80,7 @@ function UsersTable() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-primary"></div>
+        <div className="border-t-primary h-8 w-8 animate-spin rounded-full border-4 border-gray-200"></div>
       </div>
     );
   }
@@ -105,7 +99,7 @@ function UsersTable() {
             placeholder="Search users..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-64 rounded-lg border border-gray-200 py-2 pr-4 pl-10 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+            className="focus:border-primary focus:ring-primary w-64 rounded-lg border border-gray-200 py-2 pr-4 pl-10 text-sm outline-none focus:ring-1"
           />
         </div>
       </div>
@@ -204,7 +198,6 @@ function UsersTable() {
             <div className="flex items-center gap-1">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                 (page) => {
-                  // Show first page, last page, current page, and pages around current
                   if (
                     page === 1 ||
                     page === totalPages ||
@@ -270,7 +263,7 @@ function UsersTable() {
                 onChange={(e) =>
                   setEditUser({ ...editUser, fullName: e.target.value })
                 }
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                className="focus:border-primary focus:ring-primary w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-1"
               />
             </div>
             <div>
@@ -283,7 +276,7 @@ function UsersTable() {
                 onChange={(e) =>
                   setEditUser({ ...editUser, username: e.target.value })
                 }
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                className="focus:border-primary focus:ring-primary w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-1"
               />
             </div>
             <div>
@@ -296,7 +289,7 @@ function UsersTable() {
                 onChange={(e) =>
                   setEditUser({ ...editUser, email: e.target.value })
                 }
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                className="focus:border-primary focus:ring-primary w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-1"
               />
             </div>
             <div>
@@ -308,7 +301,7 @@ function UsersTable() {
                 onChange={(e) =>
                   setEditUser({ ...editUser, role: e.target.value })
                 }
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                className="focus:border-primary focus:ring-primary w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-1"
               >
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
